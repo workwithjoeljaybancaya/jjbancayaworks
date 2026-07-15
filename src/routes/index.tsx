@@ -78,11 +78,11 @@ function Header() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-white/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 lg:px-8">
         <a href="#home" className="flex min-w-0 items-center gap-2.5">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand text-brand-foreground shadow-md shadow-brand/25">
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3c-3 0-5 2-5 5 0 2 1 3 1 5s-.5 4 1 6c.6.8 1.4 1 2 1 1 0 1-1 1-3 0-1 0-2 1-2s1 1 1 2c0 2 0 3 1 3 .6 0 1.4-.2 2-1 1.5-2 1-4 1-6s1-3 1-5c0-3-2-5-5-5-1 0-2 .5-2 1-.5-.5-1-1-2-1z"/></svg>
+          <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-xl bg-brand shadow-md shadow-brand/25">
+            <img src={joelAvatar.url} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
           </span>
           <div className="min-w-0 leading-tight">
-            <div className="truncate text-sm font-extrabold text-navy sm:text-base">[BUSINESS NAME]</div>
+            <div className="truncate text-sm font-extrabold text-navy sm:text-base">Joel Jay Bancaya</div>
             <div className="hidden text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:block">Dental Clinic Workflow Systems</div>
           </div>
         </a>
