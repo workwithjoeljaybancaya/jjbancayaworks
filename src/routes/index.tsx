@@ -746,7 +746,7 @@ function Footer() {
           This website describes administrative workflow and automation services. It does not provide dental, medical, legal, or regulatory advice.
         </div>
         <div className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center">
-          <div>© {new Date().getFullYear()} [BUSINESS NAME]. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} Joel Jay Bancaya. All rights reserved.</div>
           <div>Dental clinic workflow systems</div>
         </div>
       </div>
