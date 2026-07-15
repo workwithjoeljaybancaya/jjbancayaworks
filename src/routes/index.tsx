@@ -717,10 +717,10 @@ function Footer() {
         <div className="grid gap-10 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand text-white">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3c-3 0-5 2-5 5 0 2 1 3 1 5s-.5 4 1 6c.6.8 1.4 1 2 1 1 0 1-1 1-3 0-1 0-2 1-2s1 1 1 2c0 2 0 3 1 3 .6 0 1.4-.2 2-1 1.5-2 1-4 1-6s1-3 1-5c0-3-2-5-5-5-1 0-2 .5-2 1-.5-.5-1-1-2-1z"/></svg>
+              <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-brand">
+                <img src={joelAvatar.url} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
               </span>
-              <span className="text-base font-extrabold text-white">[BUSINESS NAME]</span>
+              <span className="text-base font-extrabold text-white">Joel Jay Bancaya</span>
             </div>
             <p className="mt-4 max-w-md text-sm">Workflow systems for orthodontic and cosmetic dental clinics.</p>
             <div className="mt-6 space-y-1.5 text-sm">
