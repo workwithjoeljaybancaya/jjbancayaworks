@@ -417,30 +417,38 @@ function Problems() {
 }
 
 /* ---------------- Flagship Solution ---------------- */
-const SOLUTION_ITEMS = [
-  "Capture patient inquiries from connected channels",
-  "Respond promptly using clinic-approved messaging",
-  "Collect contact details and treatment interest",
-  "Identify new vs. returning patients",
-  "Check consultation availability against clinic rules",
-  "Book preferred times, suggest alternatives when unavailable",
-  "Send confirmations and scheduled reminders",
-  "Allow rescheduling based on clinic policy",
-  "Notify staff and record appointment status",
-  "Structured follow-up for unbooked leads",
-  "Escalate unusual requests to a staff member",
+const SOLUTION_OUTCOMES = [
+  {
+    title: "Complete Patient Information",
+    body: "Captures inquiry details, identifies missing information, and follows up when completion is needed.",
+  },
+  {
+    title: "Smarter Consultation Scheduling",
+    body: "Checks the preferred schedule, confirms available appointments, and offers alternatives when necessary.",
+  },
+  {
+    title: "Clear Patient Communication",
+    body: "Sends acknowledgements, booking confirmations, and scheduled appointment reminders.",
+  },
+  {
+    title: "Staff Visibility and Control",
+    body: "Notifies the clinic team, escalates special cases, and keeps appointment statuses organized.",
+  },
 ];
 function Solution() {
   return (
     <section id="solution" className="py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
-        <div className="relative order-2 lg:order-1">
-          <div className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
-            <img src={solutionImg} alt="Clean modern dental consultation room" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
-          </div>
-          <div className="absolute -bottom-6 -right-4 hidden max-w-[260px] rounded-2xl border border-border bg-card p-5 shadow-2xl shadow-navy/10 sm:block">
-            <div className="text-xs font-semibold uppercase tracking-wider text-brand">Connected workflow</div>
-            <div className="mt-2 text-sm font-semibold text-foreground">One system from inquiry to follow-up</div>
+        <div className="order-2 lg:order-1">
+          <div className="rounded-3xl border border-border bg-white p-4 shadow-xl shadow-navy/5 sm:p-6">
+            <img
+              src={processMapImg}
+              alt="Dental lead-to-consultation system process map: inquiry received, details completed, inquiry triaged, availability checked, appointment confirmed, patient reminded"
+              loading="lazy"
+              width={2048}
+              height={2048}
+              className="mx-auto block h-auto w-full object-contain"
+            />
           </div>
         </div>
 
@@ -450,14 +458,17 @@ function Solution() {
           <p className="mt-5 text-foreground/70">
             One connected workflow for handling a patient inquiry from first contact through consultation booking and follow-up.
           </p>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-            {SOLUTION_ITEMS.map((item) => (
-              <li key={item} className="flex gap-3 rounded-xl border border-border bg-card p-3.5">
-                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-[11px] font-bold text-brand-foreground">✓</span>
-                <span className="text-sm leading-snug text-foreground/80">{item}</span>
-              </li>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {SOLUTION_OUTCOMES.map((o) => (
+              <div key={o.title} className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/10">
+                <div className="mb-3 grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12l5 5L20 7"/></svg>
+                </div>
+                <h3 className="text-sm font-bold text-foreground sm:text-base">{o.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground/65">{o.body}</p>
+              </div>
             ))}
-          </ul>
+          </div>
           <div className="mt-8 rounded-2xl border-l-4 border-brand bg-brand-soft/50 p-5">
             <p className="text-sm font-medium text-foreground">
               Your clinic remains in control of appointment rules, messages, availability, exceptions, and staff handoffs.
@@ -471,6 +482,7 @@ function Solution() {
     </section>
   );
 }
+
 
 /* ---------------- How It Works ---------------- */
 const STEPS = [
