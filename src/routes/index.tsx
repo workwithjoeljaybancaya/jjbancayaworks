@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent, type ReactNode } from "react";
-import heroImg from "@/assets/hero-clinic.jpg";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import aboutImg from "@/assets/about-clinic.jpg";
 import solutionImg from "@/assets/solution-clinic.jpg";
 import joelAvatar from "@/assets/joel-avatar.jpg.asset.json";
@@ -132,6 +131,208 @@ function Header() {
 /* ---------------- Hero ---------------- */
 const WORKFLOW = ["Patient Inquiry", "Qualification", "Availability Check", "Consultation Booking", "Confirmation", "Reminder", "Follow-Up"];
 
+const DEMO_STEPS = [
+  {
+    tag: "New Inquiry",
+    title: "New Inquiry Received",
+    detail: "Patient interested in braces consultation",
+    meta: "via clinic website form",
+  },
+  {
+    tag: "Availability Checked",
+    title: "Checking Schedule",
+    detail: "Three suitable schedules found",
+    meta: "Jul 22 · Jul 24 · Jul 26",
+  },
+  {
+    tag: "Consultation Booked",
+    title: "Consultation Booked",
+    detail: "July 24 · 1:30 PM · Confirmed",
+    meta: "Dr. Reyes · Orthodontics",
+  },
+  {
+    tag: "Clinic Notified",
+    title: "Clinic Notified",
+    detail: "Calendar updated · Front desk notified",
+    meta: "Staff alert sent",
+  },
+  {
+    tag: "Follow-Up Scheduled",
+    title: "Follow-Up Scheduled",
+    detail: "Reminder scheduled 24 hours before",
+    meta: "SMS + email reminder",
+  },
+];
+
+const STEP_MS = 2000;
+const RESTART_PAUSE_MS = 1200;
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const on = () => setReduced(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  return reduced;
+}
+
+function DemoWorkflow() {
+  const reduced = usePrefersReducedMotion();
+  const [active, setActive] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const timerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (reduced) {
+      setActive(DEMO_STEPS.length - 1);
+      return;
+    }
+    if (!playing) return;
+    const isLast = active === DEMO_STEPS.length - 1;
+    const delay = isLast ? RESTART_PAUSE_MS : STEP_MS;
+    timerRef.current = window.setTimeout(() => {
+      setActive((i) => (i + 1) % DEMO_STEPS.length);
+    }, delay);
+    return () => {
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+    };
+  }, [active, playing, reduced]);
+
+  const showCompleted = reduced;
+  const canControl = !reduced;
+
+  return (
+    <div
+      className="relative rounded-3xl border border-border bg-white p-5 shadow-2xl shadow-brand/15 sm:p-6"
+      role="group"
+      aria-label="Animated demo of the inquiry-to-consultation workflow"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3 border-b border-border pb-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand" aria-hidden>
+            <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 7h16M4 12h16M4 17h10" />
+            </svg>
+          </div>
+          <div className="min-w-0">
+            <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand">Demo Workflow</div>
+            <div className="truncate text-sm font-semibold text-navy">Inquiry → Consultation</div>
+          </div>
+        </div>
+        {canControl && (
+          <button
+            type="button"
+            onClick={() => setPlaying((p) => !p)}
+            aria-label={playing ? "Pause demo workflow animation" : "Play demo workflow animation"}
+            aria-pressed={!playing}
+            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-navy/15 bg-white px-3 text-xs font-semibold text-navy transition hover:border-navy/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {playing ? (
+              <>
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor" aria-hidden><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
+                Pause
+              </>
+            ) : (
+              <>
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor" aria-hidden><path d="M8 5v14l11-7z" /></svg>
+                Play
+              </>
+            )}
+          </button>
+        )}
+      </div>
+
+      {/* Progress rail */}
+      <ol className="mt-5 space-y-3" aria-live="polite">
+        {DEMO_STEPS.map((step, i) => {
+          const state = showCompleted || i < active ? "done" : i === active ? "active" : "upcoming";
+          return (
+            <li key={step.tag} className="relative">
+              {i < DEMO_STEPS.length - 1 && (
+                <span
+                  aria-hidden
+                  className={`absolute left-[19px] top-10 h-[calc(100%-8px)] w-0.5 rounded-full transition-colors duration-500 ${
+                    state === "done" ? "bg-brand" : "bg-border"
+                  }`}
+                />
+              )}
+              <div
+                className={`relative flex items-start gap-3 rounded-2xl border p-3.5 transition-all duration-500 ${
+                  state === "active"
+                    ? "border-brand/40 bg-brand-soft/60 shadow-sm shadow-brand/10"
+                    : state === "done"
+                      ? "border-border bg-white"
+                      : "border-border/70 bg-surface/60"
+                }`}
+              >
+                <div
+                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 transition-colors duration-500 ${
+                    state === "done"
+                      ? "border-brand bg-brand text-brand-foreground"
+                      : state === "active"
+                        ? "border-brand bg-white text-brand"
+                        : "border-border bg-white text-navy/40"
+                  }`}
+                  aria-hidden
+                >
+                  {state === "done" ? (
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12l5 5L20 7" />
+                    </svg>
+                  ) : (
+                    <span className="text-sm font-bold">{i + 1}</span>
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span
+                      className={`text-[10px] font-bold uppercase tracking-[0.14em] ${
+                        state === "upcoming" ? "text-navy/40" : "text-brand"
+                      }`}
+                    >
+                      {step.tag}
+                    </span>
+                    {state === "active" && !reduced && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
+                        <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                        Processing
+                      </span>
+                    )}
+                    {state === "done" && (
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-navy/50">Complete</span>
+                    )}
+                  </div>
+                  <div className={`mt-0.5 truncate text-sm font-semibold ${state === "upcoming" ? "text-navy/50" : "text-navy"}`}>
+                    {step.title}
+                  </div>
+                  <div className={`text-xs ${state === "upcoming" ? "text-navy/40" : "text-navy/65"}`}>{step.detail}</div>
+                  {state !== "upcoming" && (
+                    <div className="mt-1 text-[11px] text-navy/45">{step.meta}</div>
+                  )}
+                  {state === "active" && !reduced && (
+                    <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-border">
+                      <div
+                        className="h-full rounded-full bg-brand"
+                        style={{ animation: `demo-progress ${STEP_MS}ms linear forwards` }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+
+      <style>{`@keyframes demo-progress { from { width: 0% } to { width: 100% } }`}</style>
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-b from-brand-soft/70 via-white to-white">
@@ -156,31 +357,8 @@ function Hero() {
           </p>
         </div>
 
-        <div className="relative">
-          <div className="relative overflow-hidden rounded-3xl border border-white/60 shadow-2xl shadow-brand/15">
-            <img src={heroImg} alt="Modern orthodontic clinic consultation" width={1024} height={1024} className="h-full w-full object-cover" />
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy/25 to-transparent" />
-          </div>
-
-          <div className="absolute -left-3 top-6 hidden max-w-[220px] rounded-2xl border border-border bg-white p-4 shadow-xl shadow-navy/5 sm:block">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand">
-              <span className="h-2 w-2 rounded-full bg-brand animate-pulse" /> New inquiry
-            </div>
-            <div className="mt-2 text-sm font-semibold text-navy">New Patient Inquiry</div>
-            <div className="text-xs text-navy/60">Treatment interest collected</div>
-          </div>
-
-          <div className="absolute -right-3 top-1/2 hidden max-w-[240px] -translate-y-1/2 rounded-2xl border border-border bg-white p-4 shadow-xl shadow-navy/5 md:block">
-            <div className="text-xs font-semibold uppercase tracking-wider text-brand">Schedule</div>
-            <div className="mt-2 text-sm font-semibold text-navy">Consultation Availability</div>
-            <div className="text-xs text-navy/60">Preferred schedule checked</div>
-          </div>
-
-          <div className="absolute -bottom-6 left-6 hidden max-w-[240px] rounded-2xl border border-border bg-white p-4 shadow-xl shadow-navy/5 sm:block">
-            <div className="text-xs font-semibold uppercase tracking-wider text-brand">Staff</div>
-            <div className="mt-2 text-sm font-semibold text-navy">Staff Notification</div>
-            <div className="text-xs text-navy/60">Booking status recorded</div>
-          </div>
+        <div className="relative min-w-0">
+          <DemoWorkflow />
         </div>
       </div>
 
