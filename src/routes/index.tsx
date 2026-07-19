@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent, type ReactNode } from "react";
-import heroImg from "@/assets/hero-clinic.jpg";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import aboutImg from "@/assets/about-clinic.jpg";
 import solutionImg from "@/assets/solution-clinic.jpg";
 import joelAvatar from "@/assets/joel-avatar.jpg.asset.json";
