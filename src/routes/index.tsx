@@ -955,10 +955,12 @@ function Footer() {
             </div>
             <p className="mt-4 max-w-md text-sm">Workflow systems for orthodontic and cosmetic dental clinics.</p>
             <div className="mt-6 space-y-1.5 text-sm">
-              <div>[EMAIL ADDRESS]</div>
-              <div>[PHONE NUMBER]</div>
-              <div>[BUSINESS LOCATION OR SERVICE AREA]</div>
+              <div><a href="mailto:Joeljaybancaya16@gmail.com" className="hover:text-white">Joeljaybancaya16@gmail.com</a></div>
+              <div><a href="tel:+639310905178" className="hover:text-white">09310905178</a></div>
+              <div>LinkedIn: Joel Jay Bancaya</div>
+              <div>Metro Manila, Philippines</div>
             </div>
+
           </div>
           <div>
             <div className="text-xs font-bold uppercase tracking-wider text-white">Navigate</div>
