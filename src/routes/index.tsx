@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import aboutImg from "@/assets/about-clinic.jpg";
-import solutionImg from "@/assets/solution-clinic.jpg";
-import joelAvatar from "@/assets/joel-avatar.jpg.asset.json";
+import processMapImg from "@/assets/process-map.jpg";
+import joelAvatar from "@/assets/joel-avatar.jpg";
+
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
 const PAGE_DESC = "Workflow systems for orthodontic and cosmetic dental clinics: patient inquiry response, consultation booking, appointment reminders, staff notifications, and lead follow-up.";
