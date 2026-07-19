@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import aboutImg from "@/assets/about-clinic.jpg";
-import solutionImg from "@/assets/solution-clinic.jpg";
-import joelAvatar from "@/assets/joel-avatar.jpg.asset.json";
+import processMapImg from "@/assets/process-map.jpg";
+import joelAvatar from "@/assets/joel-avatar.jpg";
+
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
 const PAGE_DESC = "Workflow systems for orthodontic and cosmetic dental clinics: patient inquiry response, consultation booking, appointment reminders, staff notifications, and lead follow-up.";
@@ -46,7 +47,7 @@ function CtaSecondary({ href, children, className = "" }: { href: string; childr
   return (
     <a
       href={href}
-      className={`inline-flex items-center justify-center gap-2 rounded-full border border-navy/15 bg-white px-6 py-3.5 text-sm font-semibold text-navy transition hover:border-navy/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full border border-foreground/15 bg-card px-6 py-3.5 text-sm font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
     >
       {children}
     </a>
@@ -64,9 +65,44 @@ function PlaceholderCallout({ title, children }: { title: string; children: Reac
   return (
     <div className="placeholder-note">
       <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand">Development Placeholder</div>
-      <div className="mb-2 font-semibold text-navy">{title}</div>
-      <div className="text-sm leading-relaxed text-navy/70">{children}</div>
+      <div className="mb-2 font-semibold text-foreground">{title}</div>
+      <div className="text-sm leading-relaxed text-foreground/70">{children}</div>
     </div>
+  );
+}
+
+/* ---------------- Theme toggle ---------------- */
+function ThemeToggle({ className = "" }: { className?: string }) {
+  const [dark, setDark] = useState(false);
+  useEffect(() => {
+    setDark(document.documentElement.classList.contains("dark"));
+  }, []);
+  function toggle() {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    try { localStorage.setItem("theme", next ? "dark" : "light"); } catch {}
+  }
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      title={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={dark}
+      className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border border-border bg-card text-foreground transition hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
+    >
+      {dark ? (
+        <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 24 24" className="h-4.5 w-4.5" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      )}
+    </button>
   );
 }
 
@@ -74,47 +110,51 @@ function PlaceholderCallout({ title, children }: { title: string; children: Reac
 function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-white/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-card/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 lg:px-8">
         <a href="#home" className="flex min-w-0 items-center gap-2.5">
           <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-xl bg-brand shadow-md shadow-brand/25">
-            <img src={joelAvatar.url} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
+            <img src={joelAvatar} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
           </span>
           <div className="min-w-0 leading-tight">
-            <div className="truncate text-sm font-extrabold text-navy sm:text-base">Joel Jay Bancaya</div>
+            <div className="truncate text-sm font-extrabold text-foreground sm:text-base">Joel Jay Bancaya</div>
             <div className="hidden text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:block">Dental Clinic Workflow Systems</div>
           </div>
         </a>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="text-sm font-medium text-navy/75 transition hover:text-brand">
+            <a key={n.href} href={n.href} className="text-sm font-medium text-foreground/75 transition hover:text-brand">
               {n.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="hidden items-center gap-3 lg:flex">
+          <ThemeToggle />
           <CtaPrimary href="#contact">Book a Workflow Audit</CtaPrimary>
         </div>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          className="grid h-11 w-11 place-items-center rounded-lg border border-border text-navy lg:hidden"
-        >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            {open ? <><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></> : <><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></>}
-          </svg>
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            className="grid h-10 w-10 place-items-center rounded-lg border border-border text-foreground"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              {open ? <><path d="M6 6l12 12"/><path d="M18 6l-12 12"/></> : <><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></>}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {open && (
-        <div className="border-t border-border bg-white lg:hidden">
+        <div className="border-t border-border bg-card lg:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4">
             {NAV.map((n) => (
-              <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-sm font-medium text-navy hover:bg-brand-soft">
+              <a key={n.href} href={n.href} onClick={() => setOpen(false)} className="rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-brand-soft">
                 {n.label}
               </a>
             ))}
@@ -127,6 +167,7 @@ function Header() {
     </header>
   );
 }
+
 
 /* ---------------- Hero ---------------- */
 const WORKFLOW = ["Patient Inquiry", "Qualification", "Availability Check", "Consultation Booking", "Confirmation", "Reminder", "Follow-Up"];
@@ -206,7 +247,7 @@ function DemoWorkflow() {
 
   return (
     <div
-      className="relative rounded-3xl border border-border bg-white p-5 shadow-2xl shadow-brand/15 sm:p-6"
+      className="relative rounded-3xl border border-border bg-card p-5 shadow-2xl shadow-brand/15 sm:p-6"
       role="group"
       aria-label="Animated demo of the inquiry-to-consultation workflow"
     >
@@ -220,7 +261,7 @@ function DemoWorkflow() {
           </div>
           <div className="min-w-0">
             <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand">Demo Workflow</div>
-            <div className="truncate text-sm font-semibold text-navy">Inquiry → Consultation</div>
+            <div className="truncate text-sm font-semibold text-foreground">Inquiry → Consultation</div>
           </div>
         </div>
         {canControl && (
@@ -229,7 +270,7 @@ function DemoWorkflow() {
             onClick={() => setPlaying((p) => !p)}
             aria-label={playing ? "Pause demo workflow animation" : "Play demo workflow animation"}
             aria-pressed={!playing}
-            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-navy/15 bg-white px-3 text-xs font-semibold text-navy transition hover:border-navy/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-foreground/15 bg-card px-3 text-xs font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {playing ? (
               <>
@@ -265,7 +306,7 @@ function DemoWorkflow() {
                   state === "active"
                     ? "border-brand/40 bg-brand-soft/60 shadow-sm shadow-brand/10"
                     : state === "done"
-                      ? "border-border bg-white"
+                      ? "border-border bg-card"
                       : "border-border/70 bg-surface/60"
                 }`}
               >
@@ -274,8 +315,8 @@ function DemoWorkflow() {
                     state === "done"
                       ? "border-brand bg-brand text-brand-foreground"
                       : state === "active"
-                        ? "border-brand bg-white text-brand"
-                        : "border-border bg-white text-navy/40"
+                        ? "border-brand bg-card text-brand"
+                        : "border-border bg-card text-foreground/40"
                   }`}
                   aria-hidden
                 >
@@ -291,7 +332,7 @@ function DemoWorkflow() {
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span
                       className={`text-[10px] font-bold uppercase tracking-[0.14em] ${
-                        state === "upcoming" ? "text-navy/40" : "text-brand"
+                        state === "upcoming" ? "text-foreground/40" : "text-brand"
                       }`}
                     >
                       {step.tag}
@@ -303,15 +344,15 @@ function DemoWorkflow() {
                       </span>
                     )}
                     {state === "done" && (
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-navy/50">Complete</span>
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground/50">Complete</span>
                     )}
                   </div>
-                  <div className={`mt-0.5 truncate text-sm font-semibold ${state === "upcoming" ? "text-navy/50" : "text-navy"}`}>
+                  <div className={`mt-0.5 truncate text-sm font-semibold ${state === "upcoming" ? "text-foreground/50" : "text-foreground"}`}>
                     {step.title}
                   </div>
-                  <div className={`text-xs ${state === "upcoming" ? "text-navy/40" : "text-navy/65"}`}>{step.detail}</div>
+                  <div className={`text-xs ${state === "upcoming" ? "text-foreground/40" : "text-foreground/65"}`}>{step.detail}</div>
                   {state !== "upcoming" && (
-                    <div className="mt-1 text-[11px] text-navy/45">{step.meta}</div>
+                    <div className="mt-1 text-[11px] text-foreground/45">{step.meta}</div>
                   )}
                   {state === "active" && !reduced && (
                     <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-border">
@@ -342,17 +383,17 @@ function Hero() {
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:px-8 lg:py-24">
         <div className="min-w-0">
           <SectionEyebrow>For orthodontic & cosmetic dental clinics</SectionEyebrow>
-          <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-navy sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             Turn More Dental Inquiries Into <span className="text-brand">Confirmed Consultations</span>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-navy/70 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/70 sm:text-lg">
             I build connected inquiry, consultation-booking, reminder, and follow-up systems that help dental clinics respond consistently, reduce administrative back-and-forth, and keep staff informed throughout the patient journey.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <CtaPrimary href="#contact">Book a Clinic Workflow Audit</CtaPrimary>
             <CtaSecondary href="#how-it-works">See How the System Works</CtaSecondary>
           </div>
-          <p className="mt-6 max-w-lg text-sm text-navy/55">
+          <p className="mt-6 max-w-lg text-sm text-foreground/55">
             Designed around your clinic's existing process, staff responsibilities, and appointment rules.
           </p>
         </div>
@@ -364,14 +405,14 @@ function Hero() {
 
       {/* Workflow strip */}
       <div className="mx-auto max-w-7xl px-5 pb-16 lg:px-8 lg:pb-24">
-        <div className="rounded-3xl border border-border bg-white p-6 shadow-lg shadow-navy/5 sm:p-8">
-          <div className="mb-5 text-xs font-semibold uppercase tracking-[0.14em] text-navy/60">Inquiry-to-Consultation Workflow</div>
+        <div className="rounded-3xl border border-border bg-card p-6 shadow-lg shadow-navy/5 sm:p-8">
+          <div className="mb-5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60">Inquiry-to-Consultation Workflow</div>
           <ol className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-2">
             {WORKFLOW.map((step, i) => (
               <li key={step} className="flex items-center gap-2 lg:flex-1">
                 <div className="flex flex-1 items-center gap-3 rounded-xl border border-border bg-brand-soft/40 px-3.5 py-3">
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-brand-foreground">{i + 1}</span>
-                  <span className="text-sm font-semibold text-navy">{step}</span>
+                  <span className="text-sm font-semibold text-foreground">{step}</span>
                 </div>
                 {i < WORKFLOW.length - 1 && <span aria-hidden className="hidden text-brand lg:inline">→</span>}
               </li>
@@ -396,17 +437,17 @@ function Problems() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Common breakdowns</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-navy sm:text-4xl lg:text-5xl">Where Dental Clinics Commonly Lose Inquiries and Appointments</h2>
-          <p className="mt-5 text-navy/65">
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Where Dental Clinics Commonly Lose Inquiries and Appointments</h2>
+          <p className="mt-5 text-foreground/65">
             Small breakdowns in response, booking, confirmation, and follow-up can create unnecessary work for staff and a frustrating experience for potential patients.
           </p>
         </div>
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PROBLEMS.map((p) => (
-            <div key={p.title} className="group rounded-3xl border border-border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/10">
+            <div key={p.title} className="group rounded-3xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/10">
               <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-xl font-bold text-brand">{p.icon}</div>
-              <h3 className="mt-5 text-lg font-bold text-navy">{p.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-navy/65">{p.body}</p>
+              <h3 className="mt-5 text-lg font-bold text-foreground">{p.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/65">{p.body}</p>
             </div>
           ))}
         </div>
@@ -416,49 +457,60 @@ function Problems() {
 }
 
 /* ---------------- Flagship Solution ---------------- */
-const SOLUTION_ITEMS = [
-  "Capture patient inquiries from connected channels",
-  "Respond promptly using clinic-approved messaging",
-  "Collect contact details and treatment interest",
-  "Identify new vs. returning patients",
-  "Check consultation availability against clinic rules",
-  "Book preferred times, suggest alternatives when unavailable",
-  "Send confirmations and scheduled reminders",
-  "Allow rescheduling based on clinic policy",
-  "Notify staff and record appointment status",
-  "Structured follow-up for unbooked leads",
-  "Escalate unusual requests to a staff member",
+const SOLUTION_OUTCOMES = [
+  {
+    title: "Complete Patient Information",
+    body: "Captures inquiry details, identifies missing information, and follows up when completion is needed.",
+  },
+  {
+    title: "Smarter Consultation Scheduling",
+    body: "Checks the preferred schedule, confirms available appointments, and offers alternatives when necessary.",
+  },
+  {
+    title: "Clear Patient Communication",
+    body: "Sends acknowledgements, booking confirmations, and scheduled appointment reminders.",
+  },
+  {
+    title: "Staff Visibility and Control",
+    body: "Notifies the clinic team, escalates special cases, and keeps appointment statuses organized.",
+  },
 ];
 function Solution() {
   return (
     <section id="solution" className="py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
-        <div className="relative order-2 lg:order-1">
-          <div className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
-            <img src={solutionImg} alt="Clean modern dental consultation room" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
-          </div>
-          <div className="absolute -bottom-6 -right-4 hidden max-w-[260px] rounded-2xl border border-border bg-white p-5 shadow-2xl shadow-navy/10 sm:block">
-            <div className="text-xs font-semibold uppercase tracking-wider text-brand">Connected workflow</div>
-            <div className="mt-2 text-sm font-semibold text-navy">One system from inquiry to follow-up</div>
+        <div className="order-2 lg:order-1">
+          <div className="rounded-3xl border border-border bg-white p-4 shadow-xl shadow-navy/5 sm:p-6">
+            <img
+              src={processMapImg}
+              alt="Dental lead-to-consultation system process map: inquiry received, details completed, inquiry triaged, availability checked, appointment confirmed, patient reminded"
+              loading="lazy"
+              width={2048}
+              height={2048}
+              className="mx-auto block h-auto w-full object-contain"
+            />
           </div>
         </div>
 
         <div className="order-1 min-w-0 lg:order-2">
           <SectionEyebrow>Flagship solution</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-navy sm:text-4xl lg:text-5xl">Dental Lead-to-Consultation System</h2>
-          <p className="mt-5 text-navy/70">
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Dental Lead-to-Consultation System</h2>
+          <p className="mt-5 text-foreground/70">
             One connected workflow for handling a patient inquiry from first contact through consultation booking and follow-up.
           </p>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-            {SOLUTION_ITEMS.map((item) => (
-              <li key={item} className="flex gap-3 rounded-xl border border-border bg-white p-3.5">
-                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand text-[11px] font-bold text-brand-foreground">✓</span>
-                <span className="text-sm leading-snug text-navy/80">{item}</span>
-              </li>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            {SOLUTION_OUTCOMES.map((o) => (
+              <div key={o.title} className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/10">
+                <div className="mb-3 grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12l5 5L20 7"/></svg>
+                </div>
+                <h3 className="text-sm font-bold text-foreground sm:text-base">{o.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground/65">{o.body}</p>
+              </div>
             ))}
-          </ul>
+          </div>
           <div className="mt-8 rounded-2xl border-l-4 border-brand bg-brand-soft/50 p-5">
-            <p className="text-sm font-medium text-navy">
+            <p className="text-sm font-medium text-foreground">
               Your clinic remains in control of appointment rules, messages, availability, exceptions, and staff handoffs.
             </p>
           </div>
@@ -470,6 +522,7 @@ function Solution() {
     </section>
   );
 }
+
 
 /* ---------------- How It Works ---------------- */
 const STEPS = [
@@ -487,14 +540,14 @@ function HowItWorks() {
     <section id="how-it-works" className="bg-navy py-20 text-white lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
+          <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Process
           </span>
           <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">How the Inquiry-to-Consultation Workflow Works</h2>
         </div>
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
-            <div key={s.t} className="relative rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition hover:bg-white/10">
+            <div key={s.t} className="relative rounded-3xl border border-white/10 bg-card/5 p-6 backdrop-blur-sm transition hover:bg-card/10">
               <div className="mb-4 flex items-center gap-3">
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand text-sm font-bold">{String(i + 1).padStart(2, "0")}</span>
                 <span className="text-xs font-semibold uppercase tracking-wider text-white/50">Step {i + 1}</span>
@@ -519,19 +572,19 @@ function Demo() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>System demo</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-navy sm:text-4xl lg:text-5xl">See the System in Action</h2>
-          <p className="mt-5 text-navy/65">
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">See the System in Action</h2>
+          <p className="mt-5 text-foreground/65">
             A demonstration environment can show how a patient inquiry moves through qualification, availability checking, booking, reminders, staff notification, and follow-up.
           </p>
         </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <div className="rounded-3xl border border-border bg-white p-4 shadow-lg shadow-navy/5">
+          <div className="rounded-3xl border border-border bg-card p-4 shadow-lg shadow-navy/5">
             <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-navy to-brand text-white">
               <div className="absolute inset-0 opacity-20" style={{ background: "radial-gradient(circle at 30% 30%, white, transparent 40%)" }} />
               <button
                 type="button"
-                className="relative grid h-20 w-20 place-items-center rounded-full bg-white/95 text-navy shadow-2xl transition hover:scale-105"
+                className="relative grid h-20 w-20 place-items-center rounded-full bg-card/95 text-foreground shadow-2xl transition hover:scale-105"
                 aria-label="View demonstration"
               >
                 <svg viewBox="0 0 24 24" className="ml-1 h-8 w-8" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
@@ -542,7 +595,7 @@ function Demo() {
               </div>
             </div>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-navy/60">Sample flow. Not tied to a real clinic.</p>
+              <p className="text-sm text-foreground/60">Sample flow. Not tied to a real clinic.</p>
               <CtaSecondary href="#contact">View Demonstration</CtaSecondary>
             </div>
           </div>
@@ -554,9 +607,9 @@ function Demo() {
               { l: "Booking Confirmation", v: "Thu, 10:00 AM · Confirmed" },
               { l: "Staff Notification", v: "New consultation added to schedule" },
             ].map((c) => (
-              <div key={c.l} className="rounded-2xl border border-border bg-white p-4 shadow-sm">
+              <div key={c.l} className="rounded-2xl border border-border bg-card p-4 shadow-sm">
                 <div className="text-xs font-semibold uppercase tracking-wider text-brand">{c.l}</div>
-                <div className="mt-1 text-sm font-semibold text-navy">{c.v}</div>
+                <div className="mt-1 text-sm font-semibold text-foreground">{c.v}</div>
               </div>
             ))}
           </div>
@@ -579,8 +632,8 @@ function CaseStudy() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Results & case studies</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-navy sm:text-4xl lg:text-5xl">Clinic Results and Case Studies</h2>
-          <p className="mt-5 text-navy/65">
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Clinic Results and Case Studies</h2>
+          <p className="mt-5 text-foreground/65">
             Verified results will be added after the system has been implemented and measured in a real dental clinic environment.
           </p>
         </div>
@@ -610,39 +663,39 @@ function WhyWorkWithMe() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Why work with me</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-navy sm:text-4xl lg:text-5xl">Built Around How Your Clinic Already Works</h2>
-          <p className="mt-5 text-navy/65">
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Built Around How Your Clinic Already Works</h2>
+          <p className="mt-5 text-foreground/65">
             The goal is not to force your clinic into a generic system. The workflow should support your existing process, staff responsibilities, patient communication style, and appointment rules.
           </p>
         </div>
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {VALUES.map((v, i) => (
-            <div key={v.t} className="rounded-3xl border border-border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-brand/10">
+            <div key={v.t} className="rounded-3xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-brand/10">
               <div className="text-xs font-bold text-brand">0{i + 1}</div>
-              <h3 className="mt-2 text-lg font-bold text-navy">{v.t}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-navy/65">{v.d}</p>
+              <h3 className="mt-2 text-lg font-bold text-foreground">{v.t}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/65">{v.d}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-10 rounded-2xl border-l-4 border-brand bg-white p-5 shadow-sm">
-          <p className="text-sm text-navy/80">
-            <span className="font-semibold text-navy">Important:</span> The system supports administrative processes. It does not replace clinical judgment, diagnosis, treatment decisions, or professional patient care.
+        <div className="mt-10 rounded-2xl border-l-4 border-brand bg-card p-5 shadow-sm">
+          <p className="text-sm text-foreground/80">
+            <span className="font-semibold text-foreground">Important:</span> The system supports administrative processes. It does not replace clinical judgment, diagnosis, treatment decisions, or professional patient care.
           </p>
         </div>
 
-        <div className="mt-14 rounded-3xl border border-border bg-white p-8">
+        <div className="mt-14 rounded-3xl border border-border bg-card p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h3 className="text-lg font-bold text-navy">Designed to Work With Your Existing Process</h3>
-              <p className="mt-2 max-w-2xl text-sm text-navy/60">
+              <h3 className="text-lg font-bold text-foreground">Designed to Work With Your Existing Process</h3>
+              <p className="mt-2 max-w-2xl text-sm text-foreground/60">
                 Depending on the clinic's current setup, the workflow may connect with existing calendars, forms, email, messaging channels, spreadsheets, booking tools, or clinic-management platforms.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
               {TOOLS.map((t) => (
-                <span key={t} className="rounded-full border border-border bg-brand-soft/50 px-3.5 py-1.5 text-xs font-semibold text-navy">{t}</span>
+                <span key={t} className="rounded-full border border-border bg-brand-soft/50 px-3.5 py-1.5 text-xs font-semibold text-foreground">{t}</span>
               ))}
             </div>
           </div>
@@ -661,14 +714,14 @@ function About() {
           <div className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
             <img src={aboutImg} alt="Front-desk staff coordinating patient scheduling" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
           </div>
-          <div className="mt-4 text-xs text-navy/50">
+          <div className="mt-4 text-xs text-foreground/50">
             PLACEHOLDER: Replace this image with a professional portrait that matches the website's clean healthcare style.
           </div>
         </div>
         <div className="min-w-0">
           <SectionEyebrow>About</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-navy sm:text-4xl lg:text-5xl">Focused on Better Dental Clinic Workflows</h2>
-          <div className="mt-6 space-y-4 text-navy/70">
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Focused on Better Dental Clinic Workflows</h2>
+          <div className="mt-6 space-y-4 text-foreground/70">
             <p>I specialize in building practical workflow systems for orthodontic and cosmetic dental clinics.</p>
             <p>My approach begins with understanding how the clinic currently handles patient inquiries, consultation booking, appointment confirmation, reminders, follow-up, and staff handoffs.</p>
             <p>The goal is to reduce repetitive administrative work, create a more consistent patient communication process, and give clinic staff clearer visibility over inquiries and appointments.</p>
@@ -701,26 +754,26 @@ function FAQ() {
       <div className="mx-auto max-w-4xl px-5 lg:px-8">
         <div className="text-center">
           <SectionEyebrow>FAQ</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-navy sm:text-4xl lg:text-5xl">Frequently Asked Questions</h2>
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Frequently Asked Questions</h2>
         </div>
         <div className="mt-12 space-y-3">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
-              <div key={f.q} className="overflow-hidden rounded-2xl border border-border bg-white">
+              <div key={f.q} className="overflow-hidden rounded-2xl border border-border bg-card">
                 <button
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
-                  <span className="text-base font-semibold text-navy sm:text-lg">{f.q}</span>
+                  <span className="text-base font-semibold text-foreground sm:text-lg">{f.q}</span>
                   <span aria-hidden className={`grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-soft text-brand transition ${isOpen ? "rotate-45" : ""}`}>
                     <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
                   </span>
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 text-sm leading-relaxed text-navy/70">{f.a}</div>
+                  <div className="px-5 pb-5 text-sm leading-relaxed text-foreground/70">{f.a}</div>
                 )}
               </div>
             );
@@ -768,7 +821,7 @@ function Contact() {
     setTimeout(() => setStatus("success"), 700);
   }
 
-  const inputCls = "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand focus:bg-white/10";
+  const inputCls = "w-full rounded-xl border border-white/15 bg-card/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand focus:bg-card/10";
   const labelCls = "mb-1.5 block text-xs font-semibold uppercase tracking-wider text-white/70";
   const errCls = "mt-1 text-xs text-red-300";
 
@@ -778,7 +831,7 @@ function Contact() {
       <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-20 h-[380px] w-[380px] rounded-full bg-brand/10 blur-3xl" />
       <div className="relative mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1fr_1.1fr] lg:px-8">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
+          <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Workflow audit
           </span>
           <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">Find Where Your Clinic Is Losing Inquiries and Appointments</h2>
@@ -800,7 +853,7 @@ function Contact() {
           </ul>
         </div>
 
-        <form onSubmit={submit} noValidate className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur sm:p-8">
+        <form onSubmit={submit} noValidate className="rounded-3xl border border-white/10 bg-card/[0.03] p-6 shadow-2xl backdrop-blur sm:p-8">
           {status === "success" ? (
             <div className="grid place-items-center py-16 text-center">
               <div className="grid h-14 w-14 place-items-center rounded-full bg-brand text-2xl">✓</div>
@@ -896,16 +949,18 @@ function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
               <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-brand">
-                <img src={joelAvatar.url} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
+                <img src={joelAvatar} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
               </span>
               <span className="text-base font-extrabold text-white">Joel Jay Bancaya</span>
             </div>
             <p className="mt-4 max-w-md text-sm">Workflow systems for orthodontic and cosmetic dental clinics.</p>
             <div className="mt-6 space-y-1.5 text-sm">
-              <div>[EMAIL ADDRESS]</div>
-              <div>[PHONE NUMBER]</div>
-              <div>[BUSINESS LOCATION OR SERVICE AREA]</div>
+              <div><a href="mailto:Joeljaybancaya16@gmail.com" className="hover:text-white">Joeljaybancaya16@gmail.com</a></div>
+              <div><a href="tel:+639310905178" className="hover:text-white">09310905178</a></div>
+              <div>LinkedIn: Joel Jay Bancaya</div>
+              <div>Metro Manila, Philippines</div>
             </div>
+
           </div>
           <div>
             <div className="text-xs font-bold uppercase tracking-wider text-white">Navigate</div>
@@ -920,7 +975,7 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-xs leading-relaxed text-white/60">
+        <div className="mt-12 rounded-2xl border border-white/10 bg-card/[0.03] p-5 text-xs leading-relaxed text-white/60">
           This website describes administrative workflow and automation services. It does not provide dental, medical, legal, or regulatory advice.
         </div>
         <div className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center">
