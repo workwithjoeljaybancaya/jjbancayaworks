@@ -79,7 +79,7 @@ function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 lg:px-8">
         <a href="#home" className="flex min-w-0 items-center gap-2.5">
           <span className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-xl bg-brand shadow-md shadow-brand/25">
-            <img src={joelAvatar.url} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
+            <img src={joelAvatar} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
           </span>
           <div className="min-w-0 leading-tight">
             <div className="truncate text-sm font-extrabold text-foreground sm:text-base">Joel Jay Bancaya</div>
@@ -897,7 +897,7 @@ function Footer() {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5">
               <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-xl bg-brand">
-                <img src={joelAvatar.url} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
+                <img src={joelAvatar} alt="Joel Jay Bancaya" className="h-full w-full object-cover" />
               </span>
               <span className="text-base font-extrabold text-white">Joel Jay Bancaya</span>
             </div>
