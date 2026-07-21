@@ -573,64 +573,268 @@ function HowItWorks() {
 }
 
 /* ---------------- Demo ---------------- */
+const DEMO_CHAPTERS = [
+  { time: 0, label: "Inquiry and Validation", desc: "See how patient information is captured, organized, and checked before scheduling begins." },
+  { time: 48, label: "Missing Details and Follow-Up", desc: "See how incomplete inquiries are recovered through completion requests and structured follow-ups." },
+  { time: 112, label: "Scheduling and Safe Booking", desc: "See how availability is checked, alternatives are offered, and the selected time is rechecked before confirmation." },
+  { time: 184, label: "Staff Handoff and Reminders", desc: "See how exceptions reach clinic staff while confirmed patients receive scheduled appointment reminders." },
+];
+
+const WORKFLOW_SLIDES = [
+  { src: wf1, title: "Lead Intake and Validation", desc: "Captures the inquiry, checks required information, and routes incomplete records for completion." },
+  { src: wf2, title: "Missing Patient Details Completion", desc: "Merges submitted information into the existing patient record and prepares it for scheduling." },
+  { src: wf3, title: "Incomplete Intake Follow-Up", desc: "Sends controlled follow-ups and records every contact attempt until completion or staff handoff." },
+  { src: wf4, title: "Inquiry Triage and Direct Booking", desc: "Separates routine and special requests, checks availability, and handles direct booking or alternative schedules." },
+  { src: wf5, title: "Alternative Slot Selection", desc: "Validates the patient's selection, rechecks availability, and prevents conflicting or duplicate bookings." },
+  { src: wf6, title: "Appointment Reminder Sequence", desc: "Sends and records 48-hour, 24-hour, and 2-hour appointment reminders." },
+];
+
+function formatTime(sec: number) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+}
+
 function Demo() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [slide, setSlide] = useState(0);
+  const [lightbox, setLightbox] = useState(false);
+  const galleryRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
+
+  const activeChapter = (() => {
+    let idx = 0;
+    for (let i = 0; i < DEMO_CHAPTERS.length; i++) {
+      if (currentTime + 0.25 >= DEMO_CHAPTERS[i].time) idx = i;
+    }
+    return idx;
+  })();
+
+  const seekTo = (t: number) => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = t;
+    void v.play().catch(() => {});
+  };
+
+  const prev = useCallback(() => setSlide((s) => (s - 1 + WORKFLOW_SLIDES.length) % WORKFLOW_SLIDES.length), []);
+  const next = useCallback(() => setSlide((s) => (s + 1) % WORKFLOW_SLIDES.length), []);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(false);
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox, prev, next]);
+
+  const onGalleryKey = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+    if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+  };
+
+  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    touchStartX.current = null;
+  };
+
   return (
     <section id="demo" className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <SectionEyebrow>System demo</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">See the System in Action</h2>
+          <SectionEyebrow>System Demo</SectionEyebrow>
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
+            See the Complete Patient Journey in Action
+          </h2>
           <p className="mt-5 text-foreground/65">
-            A demonstration environment can show how a patient inquiry moves through qualification, availability checking, booking, reminders, staff notification, and follow-up.
+            Watch how a patient inquiry moves through validation, missing-detail recovery, follow-up, scheduling, booking, staff handoff, and appointment reminders.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+        <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:items-start">
           <div className="rounded-3xl border border-border bg-card p-4 shadow-lg shadow-navy/5">
-            <div className="relative flex aspect-video w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-navy to-brand text-white">
-              <div className="absolute inset-0 opacity-20" style={{ background: "radial-gradient(circle at 30% 30%, white, transparent 40%)" }} />
+            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-navy">
+              <video
+                ref={videoRef}
+                src={systemDemoVideo}
+                controls
+                playsInline
+                preload="metadata"
+                className="h-full w-full"
+                onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+                aria-label="System demo walkthrough video"
+              />
+            </div>
+            <p className="mt-3 text-center text-xs text-foreground/60">Sample demonstration—not tied to a real clinic.</p>
+          </div>
+
+          <ol className="grid gap-3" aria-label="Video chapters">
+            {DEMO_CHAPTERS.map((c, i) => {
+              const active = i === activeChapter;
+              return (
+                <li key={c.label}>
+                  <button
+                    type="button"
+                    onClick={() => seekTo(c.time)}
+                    aria-current={active ? "true" : undefined}
+                    className={`w-full rounded-2xl border p-4 text-left transition ${
+                      active
+                        ? "border-brand bg-brand-soft shadow-md"
+                        : "border-border bg-card hover:border-brand/40 hover:bg-brand-soft/40"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className={`inline-flex min-w-[54px] justify-center rounded-full px-2.5 py-1 text-xs font-bold tabular-nums ${active ? "bg-brand text-brand-foreground" : "bg-muted text-foreground/70"}`}>
+                        {formatTime(c.time)}
+                      </span>
+                      <span className="text-base font-bold text-foreground">{c.label}</span>
+                    </div>
+                    <p className="mt-2 text-sm text-foreground/65">{c.desc}</p>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+
+        {/* Behind the System */}
+        <div className="mt-20 lg:mt-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionEyebrow>Behind the System</SectionEyebrow>
+            <h3 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl">
+              Explore the Workflows Powering the Patient Journey
+            </h3>
+            <p className="mt-5 text-foreground/65">
+              Six connected workflows manage intake, missing information, follow-up, scheduling, booking, and appointment reminders.
+            </p>
+          </div>
+
+          <div
+            ref={galleryRef}
+            className="mx-auto mt-10 max-w-5xl focus:outline-none"
+            tabIndex={0}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Workflow screenshots"
+            onKeyDown={onGalleryKey}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            <div className="rounded-3xl border border-border bg-card p-4 shadow-lg shadow-navy/5">
               <button
                 type="button"
-                className="relative grid h-20 w-20 place-items-center rounded-full bg-card/95 text-foreground shadow-2xl transition hover:scale-105"
-                aria-label="View demonstration"
+                onClick={() => setLightbox(true)}
+                className="group relative block aspect-video w-full overflow-hidden rounded-2xl bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label={`Open screenshot ${slide + 1} of ${WORKFLOW_SLIDES.length}: ${WORKFLOW_SLIDES[slide].title}`}
               >
-                <svg viewBox="0 0 24 24" className="ml-1 h-8 w-8" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <img
+                  src={WORKFLOW_SLIDES[slide].src}
+                  alt={WORKFLOW_SLIDES[slide].title}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-contain"
+                />
               </button>
-              <div className="absolute bottom-5 left-5 text-left">
-                <div className="text-xs font-semibold uppercase tracking-widest text-white/70">Demonstration</div>
-                <div className="text-lg font-bold">Inquiry → Consultation walkthrough</div>
+              <div className="mt-4 flex flex-col gap-1 px-1 sm:px-2">
+                <div className="text-xs font-semibold uppercase tracking-wider text-brand">
+                  Workflow {slide + 1} of {WORKFLOW_SLIDES.length}
+                </div>
+                <div className="text-lg font-bold text-foreground">{WORKFLOW_SLIDES[slide].title}</div>
+                <p className="text-sm text-foreground/65">{WORKFLOW_SLIDES[slide].desc}</p>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={prev}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  aria-label="Previous screenshot"
+                >
+                  <span aria-hidden>←</span> Prev
+                </button>
+
+                <div className="flex items-center gap-2" role="tablist" aria-label="Screenshot navigation">
+                  {WORKFLOW_SLIDES.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      role="tab"
+                      aria-selected={i === slide}
+                      aria-label={`Go to workflow ${i + 1}`}
+                      onClick={() => setSlide(i)}
+                      className={`h-2.5 rounded-full transition-all ${i === slide ? "w-6 bg-brand" : "w-2.5 bg-foreground/25 hover:bg-foreground/50"}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={next}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  aria-label="Next screenshot"
+                >
+                  Next <span aria-hidden>→</span>
+                </button>
               </div>
             </div>
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-foreground/60">Sample flow. Not tied to a real clinic.</p>
-              <CtaSecondary href="#contact">View Demonstration</CtaSecondary>
-            </div>
           </div>
-
-          <div className="grid gap-4">
-            {[
-              { l: "Patient Inquiry", v: "Interested in Invisalign consultation" },
-              { l: "Available Schedule", v: "Tue 2:30 PM · Thu 10:00 AM · Sat 9:15 AM" },
-              { l: "Booking Confirmation", v: "Thu, 10:00 AM · Confirmed" },
-              { l: "Staff Notification", v: "New consultation added to schedule" },
-            ].map((c) => (
-              <div key={c.l} className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-                <div className="text-xs font-semibold uppercase tracking-wider text-brand">{c.l}</div>
-                <div className="mt-1 text-sm font-semibold text-foreground">{c.v}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-10">
-          <PlaceholderCallout title="Add a short video or screenshots showing the complete inquiry-to-consultation workflow.">
-            The demonstration should include: sample patient inquiry, detail collection, treatment interest, preferred schedule, availability check, alternative time suggestions, booking confirmation, reminder example, staff notification, and appointment status tracking. Label all sample content as a demonstration system until implemented for a real dental clinic.
-          </PlaceholderCallout>
         </div>
       </div>
+
+      {lightbox && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${WORKFLOW_SLIDES[slide].title} — enlarged`}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4"
+          onClick={() => setLightbox(false)}
+        >
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); setLightbox(false); }}
+            className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Close lightbox"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Previous screenshot"
+          >
+            <span aria-hidden className="text-xl">←</span>
+          </button>
+          <img
+            src={WORKFLOW_SLIDES[slide].src}
+            alt={WORKFLOW_SLIDES[slide].title}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[85vh] max-w-[92vw] object-contain"
+          />
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); next(); }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Next screenshot"
+          >
+            <span aria-hidden className="text-xl">→</span>
+          </button>
+          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white">
+            {slide + 1} / {WORKFLOW_SLIDES.length}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
+
 
 /* ---------------- Case Study ---------------- */
 function CaseStudy() {
