@@ -1,8 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import aboutImg from "@/assets/about-clinic.jpg";
 import processMapImg from "@/assets/process-map.jpg";
 import joelAvatar from "@/assets/joel-avatar.jpg";
+import systemDemoVideo from "@/assets/demo/system-demo.mp4";
+import wf1 from "@/assets/demo/workflow-01-lead-intake.webp";
+import wf2 from "@/assets/demo/workflow-02-missing-details.webp";
+import wf3 from "@/assets/demo/workflow-03-follow-up.webp";
+import wf4 from "@/assets/demo/workflow-04-triage-booking.webp";
+import wf5 from "@/assets/demo/workflow-05-alternative-slot.webp";
+import wf6 from "@/assets/demo/workflow-06-reminders.webp";
 
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
