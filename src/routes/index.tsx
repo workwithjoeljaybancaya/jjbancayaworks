@@ -848,10 +848,23 @@ function CaseStudy() {
             Verified results will be added after the system has been implemented and measured in a real dental clinic environment.
           </p>
         </div>
-        <div className="mx-auto mt-12 max-w-4xl">
-          <PlaceholderCallout title="Add a real dental clinic case study after completing a project.">
-            Include: clinic type, original process, main bottleneck, system implemented, channels connected, response-time improvement, consultations booked, confirmation rate, no-show reduction, staff time saved, follow-up improvement, implementation period, verified testimonial, and client permission for any names, images, or data shown. Leave the primary case-study area intentionally empty until real data is available.
-          </PlaceholderCallout>
+        <div className="mx-auto mt-12 max-w-3xl">
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
+            <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-brand/10 blur-3xl" />
+            <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-brand/5 blur-3xl" />
+            <div className="relative text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-brand-soft/50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-brand">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Case Studies Coming Soon
+              </span>
+              <h3 className="mt-5 text-2xl font-extrabold text-foreground sm:text-3xl">Verified Clinic Results Will Be Added Here</h3>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/70 sm:text-base">
+                This section will feature measured outcomes from real dental clinic implementations, including response times, confirmed consultations, no-show reduction, and staff time saved.
+              </p>
+              <p className="mx-auto mt-6 max-w-lg text-xs text-foreground/55">
+                Only verified results and approved client information will be published.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -924,9 +937,6 @@ function About() {
         <div className="relative">
           <div className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
             <img src={aboutImg} alt="Front-desk staff coordinating patient scheduling" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
-          </div>
-          <div className="mt-4 text-xs text-foreground/50">
-            PLACEHOLDER: Replace this image with a professional portrait that matches the website's clean healthcare style.
           </div>
         </div>
         <div className="min-w-0">
@@ -1008,7 +1018,8 @@ function Contact() {
   const empty: FormState = { name: "", clinic: "", email: "", phone: "", website: "", clinicType: "", problem: "", channels: "", contactMethod: "", notes: "" };
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   function update<K extends keyof FormState>(k: K, v: FormState[K]) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -1025,11 +1036,28 @@ function Contact() {
     setErrors(e);
     return Object.keys(e).length === 0;
   }
-  function submit(ev: FormEvent) {
+  async function submit(ev: FormEvent) {
     ev.preventDefault();
+    if (status === "loading") return;
     if (!validate()) return;
     setStatus("loading");
-    setTimeout(() => setStatus("success"), 700);
+    setErrorMsg("");
+    try {
+      const res = await fetch("https://n8n.automatebancaya.com/webhook/405f03ec-b691-4abb-a0ff-16cf5419bada", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          source: "Website Workflow Audit Form",
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
   }
 
   const inputCls = "w-full rounded-xl border border-white/15 bg-card/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand focus:bg-card/10";
@@ -1132,12 +1160,18 @@ function Contact() {
                   <textarea id="notes" rows={4} className={inputCls} value={form.notes} onChange={(e) => update("notes", e.target.value)} />
                 </div>
               </div>
+              {status === "error" && (
+                <div role="alert" className="mt-6 rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  <span className="font-semibold">We couldn't send your request.</span> {errorMsg} Your details are still here — please try again.
+                </div>
+              )}
               <button
                 type="submit"
                 disabled={status === "loading"}
+                aria-busy={status === "loading"}
                 className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-4 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition hover:brightness-110 disabled:opacity-60"
               >
-                {status === "loading" ? "Sending…" : "Book My Clinic Workflow Audit"}
+                {status === "loading" ? "Sending…" : status === "error" ? "Retry Sending" : "Book My Clinic Workflow Audit"}
                 <span aria-hidden>→</span>
               </button>
               <p className="mt-3 text-center text-xs text-white/50">
@@ -1167,7 +1201,7 @@ function Footer() {
             <p className="mt-4 max-w-md text-sm">Workflow systems for orthodontic and cosmetic dental clinics.</p>
             <div className="mt-6 space-y-1.5 text-sm">
               <div><a href="mailto:Joeljaybancaya16@gmail.com" className="hover:text-white">Joeljaybancaya16@gmail.com</a></div>
-              <div><a href="tel:+639310905178" className="hover:text-white">09310905178</a></div>
+              <div><a href="tel:+639310905178" className="hover:text-white">+63 931 090 5178</a></div>
               <div>LinkedIn: Joel Jay Bancaya</div>
               <div>Metro Manila, Philippines</div>
             </div>
