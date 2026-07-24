@@ -1201,7 +1201,7 @@ function Footer() {
             <p className="mt-4 max-w-md text-sm">Workflow systems for orthodontic and cosmetic dental clinics.</p>
             <div className="mt-6 space-y-1.5 text-sm">
               <div><a href="mailto:Joeljaybancaya16@gmail.com" className="hover:text-white">Joeljaybancaya16@gmail.com</a></div>
-              <div><a href="tel:+639310905178" className="hover:text-white">09310905178</a></div>
+              <div><a href="tel:+639310905178" className="hover:text-white">+63 931 090 5178</a></div>
               <div>LinkedIn: Joel Jay Bancaya</div>
               <div>Metro Manila, Philippines</div>
             </div>
