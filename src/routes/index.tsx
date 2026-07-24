@@ -938,9 +938,6 @@ function About() {
           <div className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
             <img src={aboutImg} alt="Front-desk staff coordinating patient scheduling" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
           </div>
-          <div className="mt-4 text-xs text-foreground/50">
-            PLACEHOLDER: Replace this image with a professional portrait that matches the website's clean healthcare style.
-          </div>
         </div>
         <div className="min-w-0">
           <SectionEyebrow>About</SectionEyebrow>
