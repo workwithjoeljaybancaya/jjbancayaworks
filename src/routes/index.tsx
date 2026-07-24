@@ -848,10 +848,23 @@ function CaseStudy() {
             Verified results will be added after the system has been implemented and measured in a real dental clinic environment.
           </p>
         </div>
-        <div className="mx-auto mt-12 max-w-4xl">
-          <PlaceholderCallout title="Add a real dental clinic case study after completing a project.">
-            Include: clinic type, original process, main bottleneck, system implemented, channels connected, response-time improvement, consultations booked, confirmation rate, no-show reduction, staff time saved, follow-up improvement, implementation period, verified testimonial, and client permission for any names, images, or data shown. Leave the primary case-study area intentionally empty until real data is available.
-          </PlaceholderCallout>
+        <div className="mx-auto mt-12 max-w-3xl">
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
+            <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-brand/10 blur-3xl" />
+            <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-brand/5 blur-3xl" />
+            <div className="relative text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-brand-soft/50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-brand">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Case Studies Coming Soon
+              </span>
+              <h3 className="mt-5 text-2xl font-extrabold text-foreground sm:text-3xl">Verified Clinic Results Will Be Added Here</h3>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/70 sm:text-base">
+                This section will feature measured outcomes from real dental clinic implementations, including response times, confirmed consultations, no-show reduction, and staff time saved.
+              </p>
+              <p className="mx-auto mt-6 max-w-lg text-xs text-foreground/55">
+                Only verified results and approved client information will be published.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
