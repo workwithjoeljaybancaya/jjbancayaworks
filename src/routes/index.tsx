@@ -1160,12 +1160,18 @@ function Contact() {
                   <textarea id="notes" rows={4} className={inputCls} value={form.notes} onChange={(e) => update("notes", e.target.value)} />
                 </div>
               </div>
+              {status === "error" && (
+                <div role="alert" className="mt-6 rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  <span className="font-semibold">We couldn't send your request.</span> {errorMsg} Your details are still here — please try again.
+                </div>
+              )}
               <button
                 type="submit"
                 disabled={status === "loading"}
+                aria-busy={status === "loading"}
                 className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-4 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition hover:brightness-110 disabled:opacity-60"
               >
-                {status === "loading" ? "Sending…" : "Book My Clinic Workflow Audit"}
+                {status === "loading" ? "Sending…" : status === "error" ? "Retry Sending" : "Book My Clinic Workflow Audit"}
                 <span aria-hidden>→</span>
               </button>
               <p className="mt-3 text-center text-xs text-white/50">
