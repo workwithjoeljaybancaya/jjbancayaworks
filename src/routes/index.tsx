@@ -1018,7 +1018,8 @@ function Contact() {
   const empty: FormState = { name: "", clinic: "", email: "", phone: "", website: "", clinicType: "", problem: "", channels: "", contactMethod: "", notes: "" };
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   function update<K extends keyof FormState>(k: K, v: FormState[K]) {
     setForm((f) => ({ ...f, [k]: v }));
@@ -1035,11 +1036,28 @@ function Contact() {
     setErrors(e);
     return Object.keys(e).length === 0;
   }
-  function submit(ev: FormEvent) {
+  async function submit(ev: FormEvent) {
     ev.preventDefault();
+    if (status === "loading") return;
     if (!validate()) return;
     setStatus("loading");
-    setTimeout(() => setStatus("success"), 700);
+    setErrorMsg("");
+    try {
+      const res = await fetch("https://n8n.automatebancaya.com/webhook/405f03ec-b691-4abb-a0ff-16cf5419bada", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          source: "Website Workflow Audit Form",
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    }
   }
 
   const inputCls = "w-full rounded-xl border border-white/15 bg-card/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-brand focus:bg-card/10";
