@@ -10,6 +10,8 @@ import wf3 from "@/assets/demo/workflow-03-follow-up.webp";
 import wf4 from "@/assets/demo/workflow-04-triage-booking.webp";
 import wf5 from "@/assets/demo/workflow-05-alternative-slot.webp";
 import wf6 from "@/assets/demo/workflow-06-reminders.webp";
+import sampleFacebookWorkflow from "@/assets/demo/sample-facebook-page-agent.png";
+import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.png";
 
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
@@ -34,6 +36,7 @@ const NAV = [
   { label: "Solution", href: "#solution" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Demo", href: "#demo" },
+  { label: "Sample Projects", href: "#sample-projects" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
@@ -836,6 +839,151 @@ function Demo() {
 }
 
 
+/* ---------------- Sample Projects ---------------- */
+const SAMPLE_PROJECTS = [
+  {
+    label: "Sample Project 01",
+    title: "24/7 AI Patient Chat Assistant (Messenger)",
+    description:
+      "A demonstration of how a dental clinic could respond to common Messenger inquiries after hours while keeping clinical questions and sensitive concerns with the clinic team.",
+    features: [
+      "Answers clinic-approved questions about services, hours, location, and consultation steps",
+      "Collects contact details, treatment interest, and preferred appointment times",
+      "Routes urgent, unusual, or clinical questions to a staff member",
+      "Keeps inquiry details organized for front-desk follow-up",
+    ],
+    channel: "Facebook Messenger concept",
+    image: sampleFacebookWorkflow,
+    imageAlt: "Sample n8n workflow for a Facebook Messenger patient chat assistant",
+  },
+  {
+    label: "Sample Project 02",
+    title: "AI Front-Desk Assistant (Chat-Based Scheduling)",
+    description:
+      "A demonstration of a chat-based scheduling flow that could guide prospective patients from an initial inquiry to a requested consultation slot using clinic-defined rules.",
+    features: [
+      "Guides patients through a short, clinic-approved intake conversation",
+      "Checks available consultation times and presents suitable options",
+      "Collects missing details before confirming or handing off a request",
+      "Prepares confirmations, reminders, and staff notifications",
+    ],
+    channel: "Website chat concept",
+    image: sampleTelegramWorkflow,
+    imageAlt: "Sample n8n workflow for a chat-based scheduling assistant connected to records and Google Calendar",
+  },
+];
+
+function SampleProjectCard({ project, index }: { project: (typeof SAMPLE_PROJECTS)[number]; index: number }) {
+  const [expanded, setExpanded] = useState(false);
+  const panelId = `sample-project-workflow-${index + 1}`;
+
+  return (
+    <article className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-lg shadow-navy/5 sm:p-8">
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute -top-20 h-52 w-52 rounded-full bg-brand/10 blur-3xl ${
+          index === 0 ? "-right-16" : "-left-16"
+        }`}
+      />
+      <div className="relative">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+            {project.label}
+          </span>
+          <span className="text-xs font-semibold text-foreground/50">{project.channel}</span>
+        </div>
+        <h3 className="mt-6 text-2xl font-extrabold text-foreground sm:text-3xl">{project.title}</h3>
+        <p className="mt-4 text-sm leading-relaxed text-foreground/70 sm:text-base">{project.description}</p>
+
+        <ul className="mt-7 space-y-3">
+          {project.features.map((feature) => (
+            <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed text-foreground/75">
+              <span
+                aria-hidden
+                className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-soft text-xs font-bold text-brand"
+              >
+                ✓
+              </span>
+              {feature}
+            </li>
+          ))}
+        </ul>
+
+        <button
+          type="button"
+          onClick={() => setExpanded((value) => !value)}
+          aria-expanded={expanded}
+          aria-controls={panelId}
+          className="mt-8 inline-flex w-full items-center justify-between gap-3 rounded-2xl border border-border bg-surface px-5 py-4 text-left text-sm font-bold text-foreground transition hover:border-brand/40 hover:bg-brand-soft/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <span>{expanded ? "Hide workflow" : "View workflow"}</span>
+          <span
+            aria-hidden
+            className={`grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand transition-transform ${
+              expanded ? "rotate-180" : ""
+            }`}
+          >
+            ↓
+          </span>
+        </button>
+
+        {expanded && (
+          <div id={panelId} className="mt-4 overflow-hidden rounded-2xl border border-border bg-navy">
+            <a
+              href={project.image}
+              target="_blank"
+              rel="noreferrer"
+              className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
+              aria-label={`Open full-size workflow image for ${project.title}`}
+            >
+              <img
+                src={project.image}
+                alt={project.imageAlt}
+                loading="lazy"
+                decoding="async"
+                className="h-auto w-full transition group-hover:brightness-110"
+              />
+              <span className="block border-t border-white/10 px-4 py-3 text-center text-xs font-semibold text-white/70">
+                Click the workflow image to view it full size
+              </span>
+            </a>
+          </div>
+        )}
+
+        <div className="mt-8 border-t border-border pt-5 text-xs leading-relaxed text-foreground/55">
+          Demonstration only. This concept does not represent a deployed client system or measured clinic results.
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function SampleProjects() {
+  return (
+    <section id="sample-projects" className="py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <SectionEyebrow>Sample Projects</SectionEyebrow>
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
+            Demonstration Systems for Dental Clinic Inquiries
+          </h2>
+          <p className="mt-5 text-foreground/65">
+            These conceptual projects show how patient communication and scheduling workflows could be designed for a dental clinic. They are demonstrations, not live client implementations or case studies.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {SAMPLE_PROJECTS.map((project, index) => (
+            <SampleProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 /* ---------------- Case Study ---------------- */
 function CaseStudy() {
   return (
@@ -1243,6 +1391,7 @@ function Home() {
         <Solution />
         <HowItWorks />
         <Demo />
+        <SampleProjects />
         <CaseStudy />
         <WhyWorkWithMe />
         <About />
