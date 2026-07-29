@@ -12,6 +12,9 @@ import wf5 from "@/assets/demo/workflow-05-alternative-slot.webp";
 import wf6 from "@/assets/demo/workflow-06-reminders.webp";
 import sampleFacebookWorkflow from "@/assets/demo/sample-facebook-page-agent.png";
 import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.png";
+import n8nCertificate from "@/assets/credentials/n8n-training-certificate.webp";
+import makeCertificate from "@/assets/credentials/make-training-certificate.webp";
+import zapierCertificate from "@/assets/credentials/zapier-training-certificate.webp";
 
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
@@ -546,27 +549,60 @@ const STEPS = [
   { t: "Unbooked Leads Receive Follow-Up", d: "Patients who do not complete the booking process receive structured follow-up or are handed over to clinic staff." },
 ];
 function HowItWorks() {
+  const [activeStep, setActiveStep] = useState<number | null>(null);
+
   return (
-    <section id="how-it-works" className="bg-navy py-20 text-white lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
+    <section id="how-it-works" className="relative overflow-hidden bg-navy py-20 text-white lg:py-28">
+      <div aria-hidden className="pointer-events-none absolute -left-24 top-1/3 h-72 w-72 rounded-full bg-brand/10 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Process
           </span>
           <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">How the Inquiry-to-Consultation Workflow Works</h2>
+          <p className="mx-auto mt-5 max-w-2xl text-white/65">
+            Follow the journey from the first patient inquiry to booking, staff updates, reminders, and structured follow-up.
+          </p>
         </div>
+
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s, i) => (
-            <div key={s.t} className="relative rounded-3xl border border-white/10 bg-card/5 p-6 backdrop-blur-sm transition hover:bg-card/10">
-              <div className="mb-4 flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand text-sm font-bold">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-xs font-semibold uppercase tracking-wider text-white/50">Step {i + 1}</span>
-              </div>
-              <h3 className="text-base font-bold">{s.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/70">{s.d}</p>
-            </div>
-          ))}
+          {STEPS.map((step, index) => {
+            const stepNumber = index + 1;
+            const isSelected = activeStep === stepNumber;
+            const isMuted = activeStep !== null && !isSelected;
+
+            return (
+              <article
+                key={step.t}
+                onMouseEnter={() => setActiveStep(stepNumber)}
+                onMouseLeave={() => setActiveStep(null)}
+                className={[
+                  "relative min-h-[14rem] rounded-3xl border bg-card/5 p-6 backdrop-blur-sm",
+                  "transition-[transform,opacity,filter,background-color,border-color,box-shadow] duration-300 ease-out",
+                  isSelected
+                    ? "z-20 -translate-y-2 scale-[1.045] border-brand/80 bg-card/15 opacity-100 shadow-2xl shadow-brand/25 blur-0"
+                    : "z-10 border-white/10",
+                  isMuted ? "scale-[0.985] opacity-30 grayscale blur-[1.5px]" : "opacity-100",
+                ].join(" ")}
+              >
+                <div className="mb-4 flex items-center gap-3">
+                  <span className={[
+                    "grid h-10 w-10 place-items-center rounded-xl text-sm font-bold transition-all duration-300",
+                    isSelected ? "bg-white text-navy shadow-lg shadow-brand/30" : "bg-brand text-brand-foreground",
+                  ].join(" ")}>
+                    {String(stepNumber).padStart(2, "0")}
+                  </span>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-white/50">Step {stepNumber}</span>
+                </div>
+                <h3 className="text-base font-bold">{step.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/70">{step.d}</p>
+              </article>
+            );
+          })}
         </div>
+
         <p className="mx-auto mt-12 max-w-3xl text-center text-sm text-white/60">
           The final workflow is customized to the clinic's services, operating hours, appointment rules, communication channels, and staff responsibilities.
         </p>
@@ -1029,7 +1065,87 @@ const VALUES = [
   { t: "Ongoing Monitoring and Support", d: "The workflow can be reviewed, maintained, and adjusted as clinic processes change." },
 ];
 const TOOLS = ["Calendar", "Website Forms", "Email", "Messaging", "Appointment Records", "Staff Notifications"];
+function MovingValueRow({
+  values,
+  direction,
+}: {
+  values: Array<(typeof VALUES)[number] & { number: number }>;
+  direction: "right" | "left";
+}) {
+  const reducedMotion = usePrefersReducedMotion();
+  const [activeValue, setActiveValue] = useState<number | null>(null);
+  const items = reducedMotion ? values : [...values, ...values];
+
+  if (reducedMotion) {
+    return (
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {values.map((value) => (
+          <article key={value.number} className="min-h-[11.5rem] rounded-3xl border border-border bg-card p-6 shadow-sm">
+            <div className="text-xs font-bold text-brand">0{value.number}</div>
+            <h3 className="mt-2 text-lg font-bold text-foreground">{value.t}</h3>
+            <p className="mt-3 text-sm leading-relaxed text-foreground/65">{value.d}</p>
+          </article>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="why-values-row relative overflow-hidden py-5"
+      onMouseLeave={() => setActiveValue(null)}
+      aria-label={direction === "right" ? "Clinic value cards moving right" : "Clinic value cards moving left"}
+    >
+      <div
+        className={[
+          "why-values-marquee flex w-max gap-5",
+          direction === "right" ? "why-values-right" : "why-values-left",
+          activeValue !== null ? "why-values-paused" : "",
+        ].join(" ")}
+      >
+        {items.map((value, copyIndex) => {
+          const isSelected = activeValue === value.number;
+          const isMuted = activeValue !== null && !isSelected;
+
+          return (
+            <article
+              key={value.number + "-" + copyIndex}
+              aria-hidden={copyIndex >= values.length}
+              onMouseEnter={() => setActiveValue(value.number)}
+              onMouseLeave={() => setActiveValue(null)}
+              className={[
+                "why-value-card relative min-h-[11.5rem] w-[min(82vw,25rem)] shrink-0 rounded-3xl border bg-card p-6 text-left shadow-sm",
+                "transition-[transform,opacity,filter,box-shadow,border-color] duration-300 ease-out",
+                isSelected
+                  ? "z-10 -translate-y-1 scale-[1.045] border-brand/60 opacity-100 shadow-2xl shadow-brand/20 blur-0"
+                  : "border-border",
+                isMuted ? "scale-[0.98] opacity-35 grayscale blur-[1.5px]" : "opacity-100",
+              ].join(" ")}
+            >
+              <div className="text-xs font-bold text-brand">0{value.number}</div>
+              <h3 className="mt-2 text-lg font-bold text-foreground">{value.t}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/65">{value.d}</p>
+            </article>
+          );
+        })}
+      </div>
+
+      <div
+        aria-hidden
+        className="pointer-events-auto absolute inset-y-0 left-0 z-20 w-10 bg-gradient-to-r from-surface via-surface/85 to-transparent backdrop-blur-[2px] sm:w-24 lg:w-32"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-auto absolute inset-y-0 right-0 z-20 w-10 bg-gradient-to-l from-surface via-surface/85 to-transparent backdrop-blur-[2px] sm:w-24 lg:w-32"
+      />
+    </div>
+  );
+}
+
 function WhyWorkWithMe() {
+  const topValues = VALUES.slice(0, 3).map((value, index) => ({ ...value, number: index + 1 }));
+  const bottomValues = VALUES.slice(3, 6).map((value, index) => ({ ...value, number: index + 4 }));
+
   return (
     <section className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -1041,15 +1157,12 @@ function WhyWorkWithMe() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {VALUES.map((v, i) => (
-            <div key={v.t} className="rounded-3xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-brand/10">
-              <div className="text-xs font-bold text-brand">0{i + 1}</div>
-              <h3 className="mt-2 text-lg font-bold text-foreground">{v.t}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/65">{v.d}</p>
-            </div>
-          ))}
+        <div className="mt-10 space-y-1">
+          <MovingValueRow values={topValues} direction="right" />
+          <MovingValueRow values={bottomValues} direction="left" />
         </div>
+
+        <style>{"@keyframes why-values-scroll-right{from{transform:translateX(calc(-50% - .625rem))}to{transform:translateX(0)}}@keyframes why-values-scroll-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - .625rem))}}.why-values-right{animation:why-values-scroll-right 22s linear infinite}.why-values-left{animation:why-values-scroll-left 24s linear infinite}.why-values-marquee{will-change:transform}.why-values-paused{animation-play-state:paused!important}@media(prefers-reduced-motion:reduce){.why-values-marquee{animation:none;transform:none}}"}</style>
 
         <div className="mt-10 rounded-2xl border-l-4 border-brand bg-card p-5 shadow-sm">
           <p className="text-sm text-foreground/80">
@@ -1101,6 +1214,158 @@ function About() {
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+
+/* ---------------- Training credentials ---------------- */
+const CREDENTIALS = [
+  {
+    id: "n8n",
+    platform: "n8n",
+    title: "AI Automation with n8n — Full Training",
+    provider: "Tara AI Community / Technical Virtual Assistants PH",
+    date: "July 5, 2026",
+    image: n8nCertificate,
+    alt: "Certificate of completion for Joel Jay in AI Automation with n8n training",
+  },
+  {
+    id: "make",
+    platform: "Make.com",
+    title: "No-Code Automation with Make.com — Full Training",
+    provider: "Technical Virtual Assistants PH",
+    date: "May 14, 2026",
+    image: makeCertificate,
+    alt: "Certificate of completion for Joel Jay in No-Code Automation with Make.com training",
+  },
+  {
+    id: "zapier",
+    platform: "Zapier",
+    title: "No-Code Automation with Zapier — Full Training",
+    provider: "Technical Virtual Assistants PH",
+    date: "May 4, 2026",
+    image: zapierCertificate,
+    alt: "Certificate of completion for Joel Jay Bancaya in No-Code Automation with Zapier training",
+  },
+];
+
+function Credentials() {
+  const reducedMotion = usePrefersReducedMotion();
+  const [activeCredential, setActiveCredential] = useState<string | null>(null);
+  const [selectedCredential, setSelectedCredential] = useState<(typeof CREDENTIALS)[number] | null>(null);
+  const carouselItems = reducedMotion ? CREDENTIALS : [...CREDENTIALS, ...CREDENTIALS];
+
+  useEffect(() => {
+    if (!selectedCredential) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedCredential(null);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [selectedCredential]);
+
+  return (
+    <section id="credentials" className="overflow-hidden bg-surface py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 text-center lg:px-8">
+        <SectionEyebrow>Training &amp; Credentials</SectionEyebrow>
+        <h2 className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
+          Training Across Leading Automation Platforms
+        </h2>
+        <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-foreground/70 sm:text-lg">
+          Hands-on training in n8n, Make.com, and Zapier covering workflow design, triggers, actions,
+          branching, data processing, webhooks, API connections, HTTP requests, and AI agents.
+        </p>
+        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
+          These are training-completion credentials issued by independent training providers.
+          Practical workflow builds and demonstrations remain the primary proof of capability.
+        </p>
+      </div>
+
+      <div
+        className="credentials-stage mt-10 py-5"
+        onMouseLeave={() => setActiveCredential(null)}
+      >
+        <div className={reducedMotion ? "mx-auto flex max-w-7xl snap-x gap-5 overflow-x-auto px-5 pb-4 lg:px-8" : "credentials-marquee flex w-max gap-5 px-5"}>
+          {carouselItems.map((credential, index) => {
+            const isMuted = activeCredential !== null && activeCredential !== credential.id;
+            return (
+              <button
+                key={credential.id + "-" + index}
+                type="button"
+                onClick={() => setSelectedCredential(credential)}
+                onMouseEnter={() => setActiveCredential(credential.id)}
+                onFocus={() => setActiveCredential(credential.id)}
+                onBlur={() => setActiveCredential(null)}
+                aria-label={"View " + credential.platform + " training certificate"}
+                className={[
+                  "credential-card group w-[min(82vw,25rem)] shrink-0 snap-center overflow-hidden rounded-3xl border border-border bg-card text-left shadow-lg shadow-navy/5",
+                  "transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.045] hover:border-brand/50 hover:shadow-2xl hover:shadow-brand/20",
+                  "focus-visible:-translate-y-2 focus-visible:scale-[1.045] focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  isMuted ? "scale-[0.98] opacity-40 grayscale blur-[1px]" : "opacity-100",
+                ].join(" ")}
+              >
+                <div className="relative aspect-[2048/1448] overflow-hidden bg-white">
+                  <img
+                    src={credential.image}
+                    alt={credential.alt}
+                    loading="lazy"
+                    width={1400}
+                    height={990}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white">
+                    <span className="text-xs font-bold uppercase tracking-[0.16em]">View certificate</span>
+                    <span aria-hidden className="grid h-8 w-8 place-items-center rounded-full bg-white/15 backdrop-blur">↗</span>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
+                      {credential.platform}
+                    </span>
+                    <span className="text-xs font-medium text-muted-foreground">{credential.date}</span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold text-foreground">{credential.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground/60">Issued by {credential.provider}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <style>{"@keyframes credentials-scroll-right{from{transform:translateX(calc(-50% - .625rem))}to{transform:translateX(0)}}.credentials-marquee{animation:credentials-scroll-right 18s linear infinite;will-change:transform}.credentials-stage:hover .credentials-marquee,.credentials-stage:focus-within .credentials-marquee{animation-play-state:paused}@media(prefers-reduced-motion:reduce){.credentials-marquee{animation:none;transform:none}}"}</style>
+
+      {selectedCredential && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedCredential.platform + " training certificate"}
+          className="fixed inset-0 z-[100] grid place-items-center bg-navy/80 p-4 backdrop-blur-md"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setSelectedCredential(null);
+          }}
+        >
+          <div className="relative w-full max-w-6xl overflow-hidden rounded-2xl border border-white/15 bg-card shadow-2xl">
+            <button
+              type="button"
+              onClick={() => setSelectedCredential(null)}
+              aria-label="Close certificate"
+              className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-navy/80 text-xl text-white shadow-lg transition hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              ×
+            </button>
+            <img
+              src={selectedCredential.image}
+              alt={selectedCredential.alt}
+              width={1400}
+              height={990}
+              className="max-h-[86vh] w-full bg-white object-contain"
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -1395,6 +1660,7 @@ function Home() {
         <CaseStudy />
         <WhyWorkWithMe />
         <About />
+        <Credentials />
         <FAQ />
         <Contact />
       </main>
