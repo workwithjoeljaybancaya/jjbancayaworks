@@ -207,7 +207,7 @@ function SiteMotion() {
         aria-hidden
         className="pointer-events-none fixed inset-x-0 top-0 z-[80] h-[3px] origin-left scale-x-0 bg-gradient-to-r from-sky-400 via-brand to-cyan-300 shadow-[0_0_12px_rgba(14,165,233,.65)]"
       />
-      <style>{"html.motion-ready body{overflow-x:clip}html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:0;translate:0 24px;transition:opacity 750ms cubic-bezier(.22,1,.36,1),translate 750ms cubic-bezier(.22,1,.36,1),scale 750ms cubic-bezier(.22,1,.36,1),rotate 750ms cubic-bezier(.22,1,.36,1),clip-path 950ms cubic-bezier(.22,1,.36,1),filter 650ms ease,box-shadow 300ms ease,border-color 300ms ease;transition-delay:var(--motion-delay,0ms)}html.motion-ready [data-motion-card]{translate:0 18px;scale:.985}html.motion-ready [data-motion=hero-copy]{translate:-46px 0}html.motion-ready [data-motion=hero-demo]{translate:46px 0;scale:.965}html.motion-ready [data-motion=hero-strip]{translate:0 34px;scale:.975}html.motion-ready [data-motion=breakdown-heading]{scale:.94;translate:0 14px}html.motion-ready [data-motion=solution-map]{translate:-40px 0;scale:.97}html.motion-ready [data-motion=solution-copy]{translate:42px 0}html.motion-ready [data-motion=process-heading]{translate:0 -28px}html.motion-ready [data-motion=demo-heading]{scale:.94;translate:0 18px}html.motion-ready [data-motion=demo-stage]{scale:.94;rotate:-.6deg}html.motion-ready [data-motion=demo-heading-secondary]{translate:0 30px}html.motion-ready [data-motion=demo-gallery]{translate:0 34px;scale:.97}html.motion-ready [data-motion=sample-heading]{scale:.94}html.motion-ready [data-motion=sample-left]{translate:-48px 0;rotate:-.7deg}html.motion-ready [data-motion=sample-right]{translate:48px 0;rotate:.7deg}html.motion-ready [data-motion=case-heading]{translate:0 -24px}html.motion-ready [data-motion=case-card]{scale:.9;filter:blur(5px)}html.motion-ready [data-motion=why-heading]{scale:.95;translate:0 18px}html.motion-ready [data-motion=why-callout]{translate:-38px 0}html.motion-ready [data-motion=why-tools]{translate:38px 0}html.motion-ready [data-motion=about-media]{translate:-48px 0;rotate:-1.5deg;scale:.95}html.motion-ready [data-motion=about-copy]{translate:48px 0}html.motion-ready [data-motion=credentials-heading]{translate:0 -24px}html.motion-ready [data-motion=credentials-stage]{translate:0 32px;scale:.98}html.motion-ready [data-motion=faq-heading]{scale:.94}html.motion-ready [data-motion=faq-left]{translate:-38px 0}html.motion-ready [data-motion=faq-right]{translate:38px 0}html.motion-ready [data-motion=contact-copy]{translate:-48px 0}html.motion-ready [data-motion=contact-form]{translate:48px 0;scale:.97}html.motion-ready .motion-visible{opacity:1;translate:0 0;scale:1;rotate:0deg;clip-path:inset(0);filter:none}@media(hover:hover) and (pointer:fine){[data-motion-card].motion-visible:hover{translate:0 -7px;scale:1.015;border-color:color-mix(in oklab,var(--brand) 48%,transparent);box-shadow:0 20px 45px color-mix(in oklab,var(--brand) 18%,transparent)}[data-motion-media].motion-visible{overflow:hidden}[data-motion-media].motion-visible img{transition:scale 700ms cubic-bezier(.22,1,.36,1),filter 400ms ease}[data-motion-media].motion-visible:hover img{scale:1.025;filter:saturate(1.04) contrast(1.02)}.motion-interactive{transition-property:translate,scale,filter,box-shadow,background-color,border-color!important;transition-duration:220ms!important}.motion-interactive:hover{translate:0 -2px;scale:1.025}.motion-interactive:active{translate:0 0;scale:.98}}@media(prefers-reduced-motion:reduce){html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:1!important;translate:0!important;scale:1!important;rotate:0deg!important;clip-path:inset(0)!important;filter:none!important;transition:none!important}.motion-interactive{transition:none!important}}"}</style>
+      <style>{"html{scrollbar-gutter:stable}html,body{max-width:100%;overflow-x:clip}html.motion-ready body{overflow-x:clip}html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:0;translate:0 24px;transition:opacity 750ms cubic-bezier(.22,1,.36,1),translate 750ms cubic-bezier(.22,1,.36,1),scale 750ms cubic-bezier(.22,1,.36,1),rotate 750ms cubic-bezier(.22,1,.36,1),clip-path 950ms cubic-bezier(.22,1,.36,1),filter 650ms ease,box-shadow 300ms ease,border-color 300ms ease;transition-delay:var(--motion-delay,0ms)}html.motion-ready [data-motion-card]{translate:0 18px;scale:.985}html.motion-ready [data-motion=hero-copy]{translate:-46px 0}html.motion-ready [data-motion=hero-demo]{translate:46px 0;scale:.965}html.motion-ready [data-motion=breakdown-heading]{scale:.94;translate:0 14px}html.motion-ready [data-motion=solution-map]{translate:-40px 0;scale:.97}html.motion-ready [data-motion=solution-copy]{translate:42px 0}html.motion-ready [data-motion=process-heading]{translate:0 -28px}html.motion-ready [data-motion=demo-heading]{scale:.94;translate:0 18px}html.motion-ready [data-motion=demo-stage]{scale:.94;rotate:-.6deg}html.motion-ready [data-motion=demo-heading-secondary]{translate:0 30px}html.motion-ready [data-motion=demo-gallery]{translate:0 34px;scale:.97}html.motion-ready [data-motion=sample-heading]{scale:.94}html.motion-ready [data-motion=sample-left]{translate:-48px 0;rotate:-.7deg}html.motion-ready [data-motion=sample-right]{translate:48px 0;rotate:.7deg}html.motion-ready [data-motion=case-heading]{translate:0 -24px}html.motion-ready [data-motion=case-card]{scale:.9;filter:blur(5px)}html.motion-ready [data-motion=why-heading]{scale:.95;translate:0 18px}html.motion-ready [data-motion=why-callout]{translate:-38px 0}html.motion-ready [data-motion=why-tools]{translate:38px 0}html.motion-ready [data-motion=about-media]{translate:-48px 0;rotate:-1.5deg;scale:.95}html.motion-ready [data-motion=about-copy]{translate:48px 0}html.motion-ready [data-motion=credentials-heading]{translate:0 -24px}html.motion-ready [data-motion=credentials-stage]{translate:0 32px;scale:.98}html.motion-ready [data-motion=faq-heading]{scale:.94}html.motion-ready [data-motion=faq-left]{translate:-38px 0}html.motion-ready [data-motion=faq-right]{translate:38px 0}html.motion-ready [data-motion=contact-copy]{translate:-48px 0}html.motion-ready [data-motion=contact-form]{translate:48px 0;scale:.97}html.motion-ready .motion-visible{opacity:1;translate:0 0;scale:1;rotate:0deg;clip-path:inset(0);filter:none}@media(hover:hover) and (pointer:fine){[data-motion-card].motion-visible:hover{translate:0 -7px;scale:1.015;border-color:color-mix(in oklab,var(--brand) 48%,transparent);box-shadow:0 20px 45px color-mix(in oklab,var(--brand) 18%,transparent)}[data-motion-media].motion-visible{overflow:hidden}[data-motion-media].motion-visible img{transition:scale 700ms cubic-bezier(.22,1,.36,1),filter 400ms ease}[data-motion-media].motion-visible:hover img{scale:1.025;filter:saturate(1.04) contrast(1.02)}.motion-interactive{transition-property:translate,scale,filter,box-shadow,background-color,border-color!important;transition-duration:220ms!important}.motion-interactive:hover{translate:0 -2px;scale:1.025}.motion-interactive:active{translate:0 0;scale:.98}}@media(prefers-reduced-motion:reduce){html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:1!important;translate:0!important;scale:1!important;rotate:0deg!important;clip-path:inset(0)!important;filter:none!important;transition:none!important}.motion-interactive{transition:none!important}}"}</style>
     </>
   );
 }
@@ -314,8 +314,6 @@ function Header() {
 
 
 /* ---------------- Hero ---------------- */
-const WORKFLOW = ["Patient Inquiry", "Qualification", "Availability Check", "Consultation Booking", "Confirmation", "Reminder", "Follow-Up"];
-
 const DEMO_STEPS = [
   {
     tag: "New Inquiry",
@@ -495,17 +493,26 @@ function DemoWorkflow() {
                     {step.title}
                   </div>
                   <div className={`text-xs ${state === "upcoming" ? "text-foreground/40" : "text-foreground/65"}`}>{step.detail}</div>
-                  {state !== "upcoming" && (
-                    <div className="mt-1 text-[11px] text-foreground/45">{step.meta}</div>
-                  )}
-                  {state === "active" && !reduced && (
-                    <div className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-border">
+                  <div
+                    aria-hidden={state === "upcoming"}
+                    className={`mt-1 min-h-4 text-[11px] text-foreground/45 ${state === "upcoming" ? "invisible" : "visible"}`}
+                  >
+                    {step.meta}
+                  </div>
+                  <div
+                    aria-hidden
+                    className={`mt-2.5 h-1 w-full overflow-hidden rounded-full bg-border ${state === "active" && !reduced ? "visible" : "invisible"}`}
+                  >
+                    {state === "active" && !reduced ? (
                       <div
+                        key={active}
                         className="h-full rounded-full bg-brand"
                         style={{ animation: `demo-progress ${STEP_MS}ms linear forwards` }}
                       />
-                    </div>
-                  )}
+                    ) : (
+                      <div className="h-full" />
+                    )}
+                  </div>
                 </div>
               </div>
             </li>
@@ -547,23 +554,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Workflow strip */}
-      <div className="mx-auto max-w-7xl px-5 pb-16 lg:px-8 lg:pb-24">
-        <div data-motion="hero-strip" className="rounded-3xl border border-border bg-card p-6 shadow-lg shadow-navy/5 sm:p-8">
-          <div className="mb-5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60">Inquiry-to-Consultation Workflow</div>
-          <ol className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-2">
-            {WORKFLOW.map((step, i) => (
-              <li key={step} className="flex items-center gap-2 lg:flex-1">
-                <div className="flex flex-1 items-center gap-3 rounded-xl border border-border bg-brand-soft/40 px-3.5 py-3">
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-brand-foreground">{i + 1}</span>
-                  <span className="text-sm font-semibold text-foreground">{step}</span>
-                </div>
-                {i < WORKFLOW.length - 1 && <span aria-hidden className="hidden text-brand lg:inline">→</span>}
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
     </section>
   );
 }
