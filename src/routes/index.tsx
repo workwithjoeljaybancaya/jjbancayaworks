@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import aboutImg from "@/assets/about-clinic.jpg";
 import processMapImg from "@/assets/process-map.jpg";
 import joelAvatar from "@/assets/joel-avatar.jpg";
@@ -49,7 +50,7 @@ function CtaPrimary({ href, children, className = "" }: { href: string; children
   return (
     <a
       href={href}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-brand-foreground shadow-lg shadow-brand/20 transition hover:brightness-110 hover:shadow-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
+      className={`motion-interactive inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-brand-foreground shadow-lg shadow-brand/20 transition hover:brightness-110 hover:shadow-brand/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
     >
       {children}
       <span aria-hidden>→</span>
@@ -60,7 +61,7 @@ function CtaSecondary({ href, children, className = "" }: { href: string; childr
   return (
     <a
       href={href}
-      className={`inline-flex items-center justify-center gap-2 rounded-full border border-foreground/15 bg-card px-6 py-3.5 text-sm font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
+      className={`motion-interactive inline-flex items-center justify-center gap-2 rounded-full border border-foreground/15 bg-card px-6 py-3.5 text-sm font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${className}`}
     >
       {children}
     </a>
@@ -119,9 +120,102 @@ function ThemeToggle({ className = "" }: { className?: string }) {
   );
 }
 
+
+/* ---------------- Site motion ---------------- */
+function SiteMotion() {
+  const progressRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const selector = "[data-scroll-reveal], [data-motion-card], [data-motion-media], [data-motion]";
+    const items = Array.from(document.querySelectorAll<HTMLElement>(selector));
+
+    root.classList.add("motion-ready");
+
+    items.forEach((item) => {
+      const parent = item.parentElement;
+      if (!parent) return;
+      const siblings = Array.from(parent.children).filter((child) => child.matches(selector));
+      const position = Math.max(0, siblings.indexOf(item));
+      item.style.setProperty("--motion-delay", String(Math.min(position * 70, 350)) + "ms");
+    });
+
+    let observer: IntersectionObserver | null = null;
+
+    const revealItem = (item: Element) => {
+      item.classList.add("motion-visible");
+      observer?.unobserve(item);
+    };
+
+    const revealVisibleItems = () => {
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      items.forEach((item) => {
+        if (item.classList.contains("motion-visible")) return;
+        const rect = item.getBoundingClientRect();
+        if (rect.top <= viewportHeight * 0.98 && rect.bottom >= 0) revealItem(item);
+      });
+    };
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      items.forEach(revealItem);
+    } else {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) revealItem(entry.target);
+          });
+        },
+        { threshold: 0.01, rootMargin: "0px 0px 8% 0px" }
+      );
+      items.forEach((item) => observer?.observe(item));
+      window.requestAnimationFrame(revealVisibleItems);
+    }
+
+    let frame = 0;
+    const updateProgress = () => {
+      frame = 0;
+      revealVisibleItems();
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+      if (progressRef.current) {
+        progressRef.current.style.transform = "scaleX(" + String(progress) + ")";
+      }
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+      root.classList.remove("motion-ready");
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        ref={progressRef}
+        aria-hidden
+        className="pointer-events-none fixed inset-x-0 top-0 z-[80] h-[3px] origin-left scale-x-0 bg-gradient-to-r from-sky-400 via-brand to-cyan-300 shadow-[0_0_12px_rgba(14,165,233,.65)]"
+      />
+      <style>{"html.motion-ready body{overflow-x:clip}html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:0;translate:0 24px;transition:opacity 750ms cubic-bezier(.22,1,.36,1),translate 750ms cubic-bezier(.22,1,.36,1),scale 750ms cubic-bezier(.22,1,.36,1),rotate 750ms cubic-bezier(.22,1,.36,1),clip-path 950ms cubic-bezier(.22,1,.36,1),filter 650ms ease,box-shadow 300ms ease,border-color 300ms ease;transition-delay:var(--motion-delay,0ms)}html.motion-ready [data-motion-card]{translate:0 18px;scale:.985}html.motion-ready [data-motion=hero-copy]{translate:-46px 0}html.motion-ready [data-motion=hero-demo]{translate:46px 0;scale:.965}html.motion-ready [data-motion=hero-strip]{translate:0 34px;scale:.975}html.motion-ready [data-motion=breakdown-heading]{scale:.94;translate:0 14px}html.motion-ready [data-motion=solution-map]{translate:-40px 0;scale:.97}html.motion-ready [data-motion=solution-copy]{translate:42px 0}html.motion-ready [data-motion=process-heading]{translate:0 -28px}html.motion-ready [data-motion=demo-heading]{scale:.94;translate:0 18px}html.motion-ready [data-motion=demo-stage]{scale:.94;rotate:-.6deg}html.motion-ready [data-motion=demo-heading-secondary]{translate:0 30px}html.motion-ready [data-motion=demo-gallery]{translate:0 34px;scale:.97}html.motion-ready [data-motion=sample-heading]{scale:.94}html.motion-ready [data-motion=sample-left]{translate:-48px 0;rotate:-.7deg}html.motion-ready [data-motion=sample-right]{translate:48px 0;rotate:.7deg}html.motion-ready [data-motion=case-heading]{translate:0 -24px}html.motion-ready [data-motion=case-card]{scale:.9;filter:blur(5px)}html.motion-ready [data-motion=why-heading]{scale:.95;translate:0 18px}html.motion-ready [data-motion=why-callout]{translate:-38px 0}html.motion-ready [data-motion=why-tools]{translate:38px 0}html.motion-ready [data-motion=about-media]{translate:-48px 0;rotate:-1.5deg;scale:.95}html.motion-ready [data-motion=about-copy]{translate:48px 0}html.motion-ready [data-motion=credentials-heading]{translate:0 -24px}html.motion-ready [data-motion=credentials-stage]{translate:0 32px;scale:.98}html.motion-ready [data-motion=faq-heading]{scale:.94}html.motion-ready [data-motion=faq-left]{translate:-38px 0}html.motion-ready [data-motion=faq-right]{translate:38px 0}html.motion-ready [data-motion=contact-copy]{translate:-48px 0}html.motion-ready [data-motion=contact-form]{translate:48px 0;scale:.97}html.motion-ready .motion-visible{opacity:1;translate:0 0;scale:1;rotate:0deg;clip-path:inset(0);filter:none}@media(hover:hover) and (pointer:fine){[data-motion-card].motion-visible:hover{translate:0 -7px;scale:1.015;border-color:color-mix(in oklab,var(--brand) 48%,transparent);box-shadow:0 20px 45px color-mix(in oklab,var(--brand) 18%,transparent)}[data-motion-media].motion-visible{overflow:hidden}[data-motion-media].motion-visible img{transition:scale 700ms cubic-bezier(.22,1,.36,1),filter 400ms ease}[data-motion-media].motion-visible:hover img{scale:1.025;filter:saturate(1.04) contrast(1.02)}.motion-interactive{transition-property:translate,scale,filter,box-shadow,background-color,border-color!important;transition-duration:220ms!important}.motion-interactive:hover{translate:0 -2px;scale:1.025}.motion-interactive:active{translate:0 0;scale:.98}}@media(prefers-reduced-motion:reduce){html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:1!important;translate:0!important;scale:1!important;rotate:0deg!important;clip-path:inset(0)!important;filter:none!important;transition:none!important}.motion-interactive{transition:none!important}}"}</style>
+    </>
+  );
+}
+
 /* ---------------- Header ---------------- */
 function Header() {
   const [open, setOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState<string | null>(null);
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-card/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 py-4 lg:px-8">
@@ -131,16 +225,53 @@ function Header() {
           </span>
           <div className="min-w-0 leading-tight">
             <div className="truncate text-sm font-extrabold text-foreground sm:text-base">Joel Jay Bancaya</div>
-            <div className="hidden text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground sm:block">Dental Clinic Workflow Systems</div>
+            <div className="hidden text-[9px] font-medium uppercase leading-[1.2] tracking-[0.14em] text-muted-foreground sm:block">
+              <span className="block">Dental Clinic</span>
+              <span className="block whitespace-nowrap">AI Automation Specialist</span>
+            </div>
           </div>
         </a>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
-          {NAV.map((n) => (
-            <a key={n.href} href={n.href} className="text-sm font-medium text-foreground/75 transition hover:text-brand">
-              {n.label}
-            </a>
-          ))}
+        <nav
+          className="hidden items-center gap-7 lg:flex"
+          aria-label="Primary"
+          onMouseLeave={() => setActiveNav(null)}
+        >
+          {NAV.map((n) => {
+            const isFocused = activeNav === n.href;
+            const isMuted = activeNav !== null && !isFocused;
+
+            return (
+              <a
+                key={n.href}
+                href={n.href}
+                onMouseEnter={() => setActiveNav(n.href)}
+                onFocus={() => setActiveNav(n.href)}
+                onBlur={() => setActiveNav(null)}
+                className={[
+                  "relative isolate text-sm font-medium transition-[color,opacity,filter,scale,translate] duration-300 ease-out focus-visible:outline-none",
+                  isFocused ? "z-10 -translate-y-1 scale-[1.1] text-brand opacity-100 blur-0" : "text-foreground/75",
+                  isMuted ? "scale-[0.95] opacity-25 blur-[1.2px]" : "opacity-100",
+                ].join(" ")}
+              >
+                <span
+                  aria-hidden
+                  className={[
+                    "absolute -inset-x-3 -inset-y-2 -z-10 rounded-full border border-brand/25 bg-brand-soft/90 shadow-lg shadow-brand/20 transition-[opacity,scale] duration-300",
+                    isFocused ? "scale-100 opacity-100" : "scale-75 opacity-0",
+                  ].join(" ")}
+                />
+                <span className="relative">{n.label}</span>
+                <span
+                  aria-hidden
+                  className={[
+                    "absolute -bottom-2.5 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-brand shadow-[0_0_10px_rgba(14,165,233,.65)] transition-transform duration-300",
+                    isFocused ? "scale-x-100" : "scale-x-0",
+                  ].join(" ")}
+                />
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
@@ -389,36 +520,36 @@ function DemoWorkflow() {
 
 function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden bg-gradient-to-b from-brand-soft/70 via-white to-white">
+    <section id="home" className="relative overflow-hidden bg-gradient-to-b from-brand-soft/70 via-background to-background">
       <div aria-hidden className="pointer-events-none absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-brand/10 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-32 h-[380px] w-[380px] rounded-full bg-brand/5 blur-3xl" />
 
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:px-8 lg:py-24">
-        <div className="min-w-0">
+        <div data-motion="hero-copy" className="min-w-0">
           <SectionEyebrow>For orthodontic & cosmetic dental clinics</SectionEyebrow>
           <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
             Turn More Dental Inquiries Into <span className="text-brand">Confirmed Consultations</span>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/70 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/70 dark:text-foreground/80 sm:text-lg">
             I build connected inquiry, consultation-booking, reminder, and follow-up systems that help dental clinics respond consistently, reduce administrative back-and-forth, and keep staff informed throughout the patient journey.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <CtaPrimary href="#contact">Book a Clinic Workflow Audit</CtaPrimary>
             <CtaSecondary href="#how-it-works">See How the System Works</CtaSecondary>
           </div>
-          <p className="mt-6 max-w-lg text-sm text-foreground/55">
+          <p className="mt-6 max-w-lg text-sm text-foreground/55 dark:text-foreground/70">
             Designed around your clinic's existing process, staff responsibilities, and appointment rules.
           </p>
         </div>
 
-        <div className="relative min-w-0">
+        <div data-motion="hero-demo" className="relative min-w-0">
           <DemoWorkflow />
         </div>
       </div>
 
       {/* Workflow strip */}
       <div className="mx-auto max-w-7xl px-5 pb-16 lg:px-8 lg:pb-24">
-        <div className="rounded-3xl border border-border bg-card p-6 shadow-lg shadow-navy/5 sm:p-8">
+        <div data-motion="hero-strip" className="rounded-3xl border border-border bg-card p-6 shadow-lg shadow-navy/5 sm:p-8">
           <div className="mb-5 text-xs font-semibold uppercase tracking-[0.14em] text-foreground/60">Inquiry-to-Consultation Workflow</div>
           <ol className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-2">
             {WORKFLOW.map((step, i) => (
@@ -448,16 +579,21 @@ function Problems() {
   return (
     <section className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div data-motion="breakdown-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Common breakdowns</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Where Dental Clinics Commonly Lose Inquiries and Appointments</h2>
           <p className="mt-5 text-foreground/65">
             Small breakdowns in response, booking, confirmation, and follow-up can create unnecessary work for staff and a frustrating experience for potential patients.
           </p>
         </div>
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {PROBLEMS.map((p) => (
-            <div key={p.title} className="group rounded-3xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/10">
+        <div className="problem-sequence-grid mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {PROBLEMS.map((p, index) => (
+            <div
+              key={p.title}
+              data-motion-card
+              style={{ animationDelay: `${index * 1300}ms` }}
+              className="sequence-card problem-sequence-card group relative rounded-3xl border border-border bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-brand/10"
+            >
               <div className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-soft text-xl font-bold text-brand">{p.icon}</div>
               <h3 className="mt-5 text-lg font-bold text-foreground">{p.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-foreground/65">{p.body}</p>
@@ -465,6 +601,8 @@ function Problems() {
           ))}
         </div>
       </div>
+
+      <style>{"@keyframes problem-sequence-outline{0%,30%,100%{opacity:0;border-color:transparent;box-shadow:none}8%,22%{opacity:1;border-color:rgba(14,165,233,.68);box-shadow:0 0 0 1px rgba(14,165,233,.16),0 0 26px rgba(14,165,233,.24)}}@keyframes process-sequence-outline{0%,15%,100%{opacity:0;border-color:transparent;box-shadow:none}3%,10%{opacity:1;border-color:rgba(56,189,248,.78);box-shadow:0 0 0 1px rgba(56,189,248,.2),0 0 30px rgba(14,165,233,.3)}}.sequence-card::after{content:\"\";pointer-events:none;position:absolute;inset:-1px;z-index:5;border:1px solid transparent;border-radius:inherit;animation-delay:inherit}.problem-sequence-card::after{animation-name:problem-sequence-outline;animation-duration:5.2s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}.process-sequence-card::after{animation-name:process-sequence-outline;animation-duration:10.4s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}.problem-sequence-grid:hover .problem-sequence-card::after,.process-sequence-paused .process-sequence-card::after{animation:none;opacity:0}@media(prefers-reduced-motion:reduce){.problem-sequence-card::after,.process-sequence-card::after{animation:none!important;opacity:0!important}}"}</style>
     </section>
   );
 }
@@ -493,7 +631,7 @@ function Solution() {
     <section id="solution" className="py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
         <div className="order-2 lg:order-1">
-          <div className="rounded-3xl border border-border bg-white p-4 shadow-xl shadow-navy/5 sm:p-6">
+          <div data-motion-media data-motion="solution-map" className="rounded-3xl border border-border bg-white p-4 shadow-xl shadow-navy/5 sm:p-6">
             <img
               src={processMapImg}
               alt="Dental lead-to-consultation system process map: inquiry received, details completed, inquiry triaged, availability checked, appointment confirmed, patient reminded"
@@ -505,7 +643,7 @@ function Solution() {
           </div>
         </div>
 
-        <div className="order-1 min-w-0 lg:order-2">
+        <div data-motion="solution-copy" className="order-1 min-w-0 lg:order-2">
           <SectionEyebrow>Flagship solution</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Dental Lead-to-Consultation System</h2>
           <p className="mt-5 text-foreground/70">
@@ -513,7 +651,7 @@ function Solution() {
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {SOLUTION_OUTCOMES.map((o) => (
-              <div key={o.title} className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/10">
+              <div key={o.title} data-motion-card className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/10">
                 <div className="mb-3 grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
                   <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12l5 5L20 7"/></svg>
                 </div>
@@ -557,7 +695,7 @@ function HowItWorks() {
       <div aria-hidden className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div data-motion="process-heading" className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Process
           </span>
@@ -567,7 +705,7 @@ function HowItWorks() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className={["mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4", activeStep !== null ? "process-sequence-paused" : ""].join(" ")}>
           {STEPS.map((step, index) => {
             const stepNumber = index + 1;
             const isSelected = activeStep === stepNumber;
@@ -576,10 +714,11 @@ function HowItWorks() {
             return (
               <article
                 key={step.t}
+                style={{ animationDelay: `${index * 1300}ms` }}
                 onMouseEnter={() => setActiveStep(stepNumber)}
                 onMouseLeave={() => setActiveStep(null)}
                 className={[
-                  "relative min-h-[14rem] rounded-3xl border bg-card/5 p-6 backdrop-blur-sm",
+                  "process-sequence-card relative min-h-[14rem] rounded-3xl border bg-card/5 p-6 backdrop-blur-sm",
                   "transition-[transform,opacity,filter,background-color,border-color,box-shadow] duration-300 ease-out",
                   isSelected
                     ? "z-20 -translate-y-2 scale-[1.045] border-brand/80 bg-card/15 opacity-100 shadow-2xl shadow-brand/25 blur-0"
@@ -650,230 +789,342 @@ function Demo() {
     return idx;
   })();
 
-  const seekTo = (t: number) => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.currentTime = t;
-    void v.play().catch(() => {});
+  const seekTo = (time: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.currentTime = time;
+    void video.play().catch(() => {});
   };
 
-  const prev = useCallback(() => setSlide((s) => (s - 1 + WORKFLOW_SLIDES.length) % WORKFLOW_SLIDES.length), []);
-  const next = useCallback(() => setSlide((s) => (s + 1) % WORKFLOW_SLIDES.length), []);
+  const prev = useCallback(() => {
+    setSlide((current) => (current - 1 + WORKFLOW_SLIDES.length) % WORKFLOW_SLIDES.length);
+  }, []);
+
+  const next = useCallback(() => {
+    setSlide((current) => (current + 1) % WORKFLOW_SLIDES.length);
+  }, []);
 
   useEffect(() => {
     if (!lightbox) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(false);
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
+
+    const previousOverflow = document.body.style.overflow;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLightbox(false);
+      if (event.key === "ArrowLeft") prev();
+      if (event.key === "ArrowRight") next();
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [lightbox, prev, next]);
 
-  const onGalleryKey = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
-    if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+  const onGalleryKey = (event: React.KeyboardEvent) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      prev();
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      next();
+    }
   };
 
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e: React.TouchEvent) => {
+  const onTouchStart = (event: React.TouchEvent) => {
+    touchStartX.current = event.touches[0].clientX;
+  };
+
+  const onTouchEnd = (event: React.TouchEvent) => {
     if (touchStartX.current == null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    const distance = event.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(distance) > 40) distance < 0 ? next() : prev();
     touchStartX.current = null;
   };
 
-  return (
-    <section id="demo" className="bg-surface py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <SectionEyebrow>System Demo</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
-            See the Complete Patient Journey in Action
-          </h2>
-          <p className="mt-5 text-foreground/65">
-            Watch how a patient inquiry moves through validation, missing-detail recovery, follow-up, scheduling, booking, staff handoff, and appointment reminders.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-6 lg:grid-cols-2 lg:items-start">
-          <div className="rounded-3xl border border-border bg-card p-4 shadow-lg shadow-navy/5">
-            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-navy">
-              <video
-                ref={videoRef}
-                src={systemDemoVideo}
-                controls
-                playsInline
-                preload="metadata"
-                className="h-full w-full"
-                onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
-                aria-label="System demo walkthrough video"
-              />
-            </div>
-            <p className="mt-3 text-center text-xs text-foreground/60">Sample demonstration—not tied to a real clinic.</p>
-          </div>
-
-          <ol className="grid gap-3" aria-label="Video chapters">
-            {DEMO_CHAPTERS.map((c, i) => {
-              const active = i === activeChapter;
-              return (
-                <li key={c.label}>
-                  <button
-                    type="button"
-                    onClick={() => seekTo(c.time)}
-                    aria-current={active ? "true" : undefined}
-                    className={`w-full rounded-2xl border p-4 text-left transition ${
-                      active
-                        ? "border-brand bg-brand-soft shadow-md"
-                        : "border-border bg-card hover:border-brand/40 hover:bg-brand-soft/40"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className={`inline-flex min-w-[54px] justify-center rounded-full px-2.5 py-1 text-xs font-bold tabular-nums ${active ? "bg-brand text-brand-foreground" : "bg-muted text-foreground/70"}`}>
-                        {formatTime(c.time)}
-                      </span>
-                      <span className="text-base font-bold text-foreground">{c.label}</span>
-                    </div>
-                    <p className="mt-2 text-sm text-foreground/65">{c.desc}</p>
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
-
-        {/* Behind the System */}
-        <div className="mt-20 lg:mt-28">
-          <div className="mx-auto max-w-3xl text-center">
-            <SectionEyebrow>Behind the System</SectionEyebrow>
-            <h3 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl">
-              Explore the Workflows Powering the Patient Journey
-            </h3>
-            <p className="mt-5 text-foreground/65">
-              Six connected workflows manage intake, missing information, follow-up, scheduling, booking, and appointment reminders.
-            </p>
-          </div>
-
-          <div
-            ref={galleryRef}
-            className="mx-auto mt-10 max-w-5xl focus:outline-none"
-            tabIndex={0}
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="Workflow screenshots"
-            onKeyDown={onGalleryKey}
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-          >
-            <div className="rounded-3xl border border-border bg-card p-4 shadow-lg shadow-navy/5">
-              <button
-                type="button"
-                onClick={() => setLightbox(true)}
-                className="group relative block aspect-video w-full overflow-hidden rounded-2xl bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label={`Open screenshot ${slide + 1} of ${WORKFLOW_SLIDES.length}: ${WORKFLOW_SLIDES[slide].title}`}
-              >
-                <img
-                  src={WORKFLOW_SLIDES[slide].src}
-                  alt={WORKFLOW_SLIDES[slide].title}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-contain"
-                />
-              </button>
-              <div className="mt-4 flex flex-col gap-1 px-1 sm:px-2">
-                <div className="text-xs font-semibold uppercase tracking-wider text-brand">
-                  Workflow {slide + 1} of {WORKFLOW_SLIDES.length}
-                </div>
-                <div className="text-lg font-bold text-foreground">{WORKFLOW_SLIDES[slide].title}</div>
-                <p className="text-sm text-foreground/65">{WORKFLOW_SLIDES[slide].desc}</p>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between gap-3">
-                <button
-                  type="button"
-                  onClick={prev}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  aria-label="Previous screenshot"
-                >
-                  <span aria-hidden>←</span> Prev
-                </button>
-
-                <div className="flex items-center gap-2" role="tablist" aria-label="Screenshot navigation">
-                  {WORKFLOW_SLIDES.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      role="tab"
-                      aria-selected={i === slide}
-                      aria-label={`Go to workflow ${i + 1}`}
-                      onClick={() => setSlide(i)}
-                      className={`h-2.5 rounded-full transition-all ${i === slide ? "w-6 bg-brand" : "w-2.5 bg-foreground/25 hover:bg-foreground/50"}`}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={next}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  aria-label="Next screenshot"
-                >
-                  Next <span aria-hidden>→</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {lightbox && (
+  const lightboxViewer = lightbox && typeof document !== "undefined"
+    ? createPortal(
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`${WORKFLOW_SLIDES[slide].title} — enlarged`}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4"
-          onClick={() => setLightbox(false)}
+          aria-labelledby="workflow-lightbox-title"
+          className="fixed inset-0 z-[120] grid place-items-center bg-navy/90 p-3 backdrop-blur-md sm:p-6"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setLightbox(false);
+          }}
         >
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setLightbox(false); }}
-            className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            aria-label="Close lightbox"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-          </button>
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            aria-label="Previous screenshot"
-          >
-            <span aria-hidden className="text-xl">←</span>
-          </button>
-          <img
-            src={WORKFLOW_SLIDES[slide].src}
-            alt={WORKFLOW_SLIDES[slide].title}
-            onClick={(e) => e.stopPropagation()}
-            className="max-h-[85vh] max-w-[92vw] object-contain"
-          />
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); next(); }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            aria-label="Next screenshot"
-          >
-            <span aria-hidden className="text-xl">→</span>
-          </button>
-          <div className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white">
-            {slide + 1} / {WORKFLOW_SLIDES.length}
+          <div className="relative flex max-h-[94vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border border-white/15 bg-navy shadow-2xl">
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
+              <div className="min-w-0">
+                <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-sky-300">
+                  Workflow {slide + 1} of {WORKFLOW_SLIDES.length}
+                </div>
+                <h3 id="workflow-lightbox-title" className="truncate text-sm font-bold text-white sm:text-base">
+                  {WORKFLOW_SLIDES[slide].title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                autoFocus
+                onClick={() => setLightbox(false)}
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                aria-label="Close workflow screenshot"
+              >
+                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="relative min-h-0 flex-1 bg-black/30">
+              <img
+                key={WORKFLOW_SLIDES[slide].src}
+                src={WORKFLOW_SLIDES[slide].src}
+                alt={WORKFLOW_SLIDES[slide].title}
+                className="h-full max-h-[76vh] w-full object-contain"
+              />
+              <button
+                type="button"
+                onClick={prev}
+                className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-navy/80 text-white shadow-lg backdrop-blur transition hover:bg-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-5"
+                aria-label="Previous workflow screenshot"
+              >
+                <span aria-hidden className="text-xl">←</span>
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-navy/80 text-white shadow-lg backdrop-blur transition hover:bg-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-5"
+                aria-label="Next workflow screenshot"
+              >
+                <span aria-hidden className="text-xl">→</span>
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 border-t border-white/10 px-4 py-3 text-xs text-white/65 sm:px-5">
+              <p className="line-clamp-2">{WORKFLOW_SLIDES[slide].desc}</p>
+              <div className="hidden shrink-0 items-center gap-1.5 sm:flex" aria-hidden>
+                {WORKFLOW_SLIDES.map((_, index) => (
+                  <span key={index} className={`h-1.5 rounded-full ${index === slide ? "w-5 bg-sky-400" : "w-1.5 bg-white/25"}`} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )
+    : null;
+
+  return (
+    <>
+      <section id="demo" className="relative overflow-hidden bg-surface py-20 lg:py-28">
+        <div aria-hidden className="pointer-events-none absolute -left-32 top-40 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-32 bottom-40 h-96 w-96 rounded-full bg-sky-300/10 blur-3xl" />
+
+        <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
+          <div data-motion="demo-heading" className="mx-auto max-w-3xl text-center">
+            <SectionEyebrow>System Demo</SectionEyebrow>
+            <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
+              See the Complete Patient Journey in Action
+            </h2>
+            <p className="mt-5 text-foreground/65">
+              Watch how a patient inquiry moves through validation, missing-detail recovery, follow-up, scheduling, booking, staff handoff, and appointment reminders.
+            </p>
+          </div>
+
+          <div data-motion="demo-stage" className="mx-auto mt-12 max-w-6xl overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl shadow-navy/5">
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_23rem]">
+              <div data-motion-media className="border-b border-border bg-navy/95 p-4 sm:p-6 lg:border-b-0 lg:border-r">
+                <div className="mx-auto aspect-square w-full max-w-[38rem] overflow-hidden rounded-2xl bg-black shadow-2xl">
+                  <video
+                    ref={videoRef}
+                    src={systemDemoVideo}
+                    controls
+                    playsInline
+                    preload="auto"
+                    className="h-full w-full object-contain"
+                    onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
+                    aria-label="System demo walkthrough video"
+                  />
+                </div>
+                <div className="mx-auto mt-4 flex max-w-[38rem] items-center justify-between gap-4 text-xs text-white/55">
+                  <span>3:57 walkthrough</span>
+                  <span>Sample demonstration—not tied to a real clinic.</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col p-5 sm:p-6">
+                <div className="mb-5">
+                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-brand">Video Chapters</div>
+                  <h3 className="mt-2 text-xl font-extrabold text-foreground">Jump to a Patient Journey Stage</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground/60">
+                    Select any chapter to continue from that point.
+                  </p>
+                </div>
+
+                <ol className="grid flex-1 gap-3 sm:grid-cols-2 lg:grid-cols-1" aria-label="Video chapters">
+                  {DEMO_CHAPTERS.map((chapter, index) => {
+                    const active = index === activeChapter;
+                    return (
+                      <li key={chapter.label}>
+                        <button
+                          type="button"
+                          onClick={() => seekTo(chapter.time)}
+                          aria-current={active ? "true" : undefined}
+                          className={[
+                            "group h-full w-full rounded-2xl border p-4 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            active
+                              ? "border-brand bg-brand-soft shadow-md shadow-brand/10"
+                              : "border-border bg-surface/55 hover:-translate-y-0.5 hover:border-brand/40 hover:bg-brand-soft/40",
+                          ].join(" ")}
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className={[
+                              "grid h-8 w-8 shrink-0 place-items-center rounded-lg text-xs font-extrabold",
+                              active ? "bg-brand text-brand-foreground" : "bg-muted text-foreground/55",
+                            ].join(" ")}>
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <div className="min-w-0">
+                              <div className="text-[11px] font-bold tabular-nums text-brand">{formatTime(chapter.time)}</div>
+                              <div className="truncate text-sm font-bold text-foreground">{chapter.label}</div>
+                            </div>
+                          </div>
+                          <p className="mt-3 text-xs leading-relaxed text-foreground/60">{chapter.desc}</p>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-20 lg:mt-28">
+            <div data-motion="demo-heading-secondary" className="mx-auto max-w-3xl text-center">
+              <SectionEyebrow>Behind the System</SectionEyebrow>
+              <h3 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl">
+                Explore the Workflows Powering the Patient Journey
+              </h3>
+              <p className="mt-5 text-foreground/65">
+                Select any workflow to inspect its setup. Use the arrows, keyboard controls, or swipe gesture to move through all six.
+              </p>
+            </div>
+
+            <div
+              ref={galleryRef}
+              data-motion="demo-gallery"
+              className="mx-auto mt-10 max-w-6xl rounded-[2rem] border border-border bg-card p-4 shadow-xl shadow-navy/5 focus:outline-none sm:p-6"
+              tabIndex={0}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="Workflow screenshot explorer"
+              onKeyDown={onGalleryKey}
+              onTouchStart={onTouchStart}
+              onTouchEnd={onTouchEnd}
+            >
+              <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-stretch">
+                <div className="flex min-w-0 flex-col">
+                  <button
+                    type="button"
+                    onClick={() => setLightbox(true)}
+                    className="group relative block aspect-video w-full overflow-hidden rounded-2xl border border-white/5 bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    aria-label={`Open full-size screenshot ${slide + 1} of ${WORKFLOW_SLIDES.length}: ${WORKFLOW_SLIDES[slide].title}`}
+                  >
+                    <img
+                      key={WORKFLOW_SLIDES[slide].src}
+                      src={WORKFLOW_SLIDES[slide].src}
+                      alt={WORKFLOW_SLIDES[slide].title}
+                      loading="eager"
+                      decoding="async"
+                      className="h-full w-full object-contain transition duration-700 ease-out group-hover:scale-[1.02] group-hover:brightness-110"
+                    />
+                    <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/70 via-transparent to-transparent opacity-70" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-4 sm:p-5">
+                      <span className="rounded-full border border-white/15 bg-navy/75 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-sky-300 backdrop-blur">
+                        Click to enlarge
+                      </span>
+                      <span className="grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-navy/75 text-white backdrop-blur transition group-hover:bg-brand">
+                        ↗
+                      </span>
+                    </div>
+                  </button>
+
+                  <div className="flex flex-1 flex-col px-1 pt-5 sm:px-2">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-brand">
+                      Workflow {slide + 1} of {WORKFLOW_SLIDES.length}
+                    </div>
+                    <h4 className="mt-1 text-xl font-extrabold text-foreground">{WORKFLOW_SLIDES[slide].title}</h4>
+                    <p className="mt-2 text-sm leading-relaxed text-foreground/65">{WORKFLOW_SLIDES[slide].desc}</p>
+
+                    <div className="mt-auto flex items-center justify-between gap-3 pt-5">
+                      <button
+                        type="button"
+                        onClick={prev}
+                        className="motion-interactive inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-brand/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        aria-label="Previous workflow screenshot"
+                      >
+                        <span aria-hidden>←</span> Previous
+                      </button>
+                      <button
+                        type="button"
+                        onClick={next}
+                        className="motion-interactive inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-brand/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        aria-label="Next workflow screenshot"
+                      >
+                        Next <span aria-hidden>→</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-border bg-surface/60 p-3 sm:p-4">
+                  <div className="mb-3 flex items-center justify-between gap-3 px-1">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-foreground/55">Choose a Workflow</div>
+                    <div className="text-xs font-bold tabular-nums text-brand">{slide + 1}/{WORKFLOW_SLIDES.length}</div>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" role="tablist" aria-label="Workflow screenshot navigation">
+                    {WORKFLOW_SLIDES.map((workflow, index) => {
+                      const active = index === slide;
+                      return (
+                        <button
+                          key={workflow.title}
+                          type="button"
+                          role="tab"
+                          aria-selected={active}
+                          onClick={() => setSlide(index)}
+                          className={[
+                            "flex min-h-[4.2rem] items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            active
+                              ? "border-brand bg-brand-soft shadow-sm"
+                              : "border-transparent bg-card hover:border-brand/30 hover:bg-brand-soft/35",
+                          ].join(" ")}
+                        >
+                          <span className={[
+                            "grid h-8 w-8 shrink-0 place-items-center rounded-lg text-xs font-extrabold",
+                            active ? "bg-brand text-brand-foreground" : "bg-muted text-foreground/50",
+                          ].join(" ")}>
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="line-clamp-2 text-xs font-bold leading-snug text-foreground">{workflow.title}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      )}
-    </section>
+      </section>
+
+      {lightboxViewer}
+    </>
   );
 }
-
 
 /* ---------------- Sample Projects ---------------- */
 const SAMPLE_PROJECTS = [
@@ -910,106 +1161,161 @@ const SAMPLE_PROJECTS = [
 ];
 
 function SampleProjectCard({ project, index }: { project: (typeof SAMPLE_PROJECTS)[number]; index: number }) {
-  const [expanded, setExpanded] = useState(false);
-  const panelId = `sample-project-workflow-${index + 1}`;
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const titleId = `sample-project-title-${index + 1}`;
+
+  useEffect(() => {
+    if (!previewOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setPreviewOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [previewOpen]);
 
   return (
-    <article className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-lg shadow-navy/5 sm:p-8">
-      <div
-        aria-hidden
-        className={`pointer-events-none absolute -top-20 h-52 w-52 rounded-full bg-brand/10 blur-3xl ${
-          index === 0 ? "-right-16" : "-left-16"
-        }`}
-      />
-      <div className="relative">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-            {project.label}
-          </span>
-          <span className="text-xs font-semibold text-foreground/50">{project.channel}</span>
-        </div>
-        <h3 className="mt-6 text-2xl font-extrabold text-foreground sm:text-3xl">{project.title}</h3>
-        <p className="mt-4 text-sm leading-relaxed text-foreground/70 sm:text-base">{project.description}</p>
-
-        <ul className="mt-7 space-y-3">
-          {project.features.map((feature) => (
-            <li key={feature} className="flex items-start gap-3 text-sm leading-relaxed text-foreground/75">
-              <span
-                aria-hidden
-                className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-soft text-xs font-bold text-brand"
-              >
-                ✓
+    <>
+      <article
+        data-motion-card
+        data-motion={index === 0 ? "sample-left" : "sample-right"}
+        aria-labelledby={titleId}
+        className="group flex h-full flex-col overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl shadow-navy/5 transition-colors duration-300 hover:border-brand/40"
+      >
+        <div className="relative aspect-video overflow-hidden border-b border-border bg-navy">
+          <img
+            src={project.image}
+            alt={project.imageAlt}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.035] group-hover:brightness-110"
+          />
+          <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/85 via-navy/5 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-navy/75 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-sky-300 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+                Workflow preview
               </span>
-              {feature}
-            </li>
-          ))}
-        </ul>
-
-        <button
-          type="button"
-          onClick={() => setExpanded((value) => !value)}
-          aria-expanded={expanded}
-          aria-controls={panelId}
-          className="mt-8 inline-flex w-full items-center justify-between gap-3 rounded-2xl border border-border bg-surface px-5 py-4 text-left text-sm font-bold text-foreground transition hover:border-brand/40 hover:bg-brand-soft/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <span>{expanded ? "Hide workflow" : "View workflow"}</span>
-          <span
-            aria-hidden
-            className={`grid h-7 w-7 place-items-center rounded-full bg-brand-soft text-brand transition-transform ${
-              expanded ? "rotate-180" : ""
-            }`}
-          >
-            ↓
-          </span>
-        </button>
-
-        {expanded && (
-          <div id={panelId} className="mt-4 overflow-hidden rounded-2xl border border-border bg-navy">
-            <a
-              href={project.image}
-              target="_blank"
-              rel="noreferrer"
-              className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
-              aria-label={`Open full-size workflow image for ${project.title}`}
-            >
-              <img
-                src={project.image}
-                alt={project.imageAlt}
-                loading="lazy"
-                decoding="async"
-                className="h-auto w-full transition group-hover:brightness-110"
-              />
-              <span className="block border-t border-white/10 px-4 py-3 text-center text-xs font-semibold text-white/70">
-                Click the workflow image to view it full size
-              </span>
-            </a>
+            </div>
+            <span className="rounded-full border border-white/15 bg-navy/75 px-3 py-1 text-[10px] font-semibold text-white/75 backdrop-blur">
+              {String(index + 1).padStart(2, "0")} / {String(SAMPLE_PROJECTS.length).padStart(2, "0")}
+            </span>
           </div>
-        )}
-
-        <div className="mt-8 border-t border-border pt-5 text-xs leading-relaxed text-foreground/55">
-          Demonstration only. This concept does not represent a deployed client system or measured clinic results.
         </div>
-      </div>
-    </article>
+
+        <div className="flex flex-1 flex-col p-6 sm:p-7">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-brand">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+              {project.label}
+            </span>
+            <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-[11px] font-semibold text-foreground/55">
+              {project.channel}
+            </span>
+          </div>
+
+          <h3 id={titleId} className="mt-5 text-xl font-extrabold leading-tight text-foreground sm:text-2xl">
+            {project.title}
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-foreground/65">{project.description}</p>
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            {project.features.map((feature) => (
+              <div
+                key={feature}
+                className="flex min-h-[6.25rem] items-start gap-3 rounded-2xl border border-border/80 bg-surface/70 p-4 transition-colors duration-300 group-hover:bg-surface"
+              >
+                <span
+                  aria-hidden
+                  className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-brand-soft text-xs font-extrabold text-brand"
+                >
+                  ✓
+                </span>
+                <span className="text-xs leading-relaxed text-foreground/70 sm:text-[13px]">{feature}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-auto pt-6">
+            <button
+              type="button"
+              onClick={() => setPreviewOpen(true)}
+              className="motion-interactive inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/20 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              View Full Workflow
+              <span aria-hidden>↗</span>
+            </button>
+            <p className="mt-4 border-t border-border pt-4 text-center text-[11px] leading-relaxed text-foreground/50">
+              Demonstration concept only — not a deployed client system or measured clinic result.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      {previewOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={titleId}
+          className="fixed inset-0 z-[110] grid place-items-center bg-navy/85 p-4 backdrop-blur-md sm:p-8"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setPreviewOpen(false);
+          }}
+        >
+          <div className="relative w-full max-w-7xl overflow-hidden rounded-2xl border border-white/15 bg-navy shadow-2xl">
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
+              <div className="min-w-0">
+                <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-sky-300">{project.label}</div>
+                <div className="truncate text-sm font-semibold text-white">{project.title}</div>
+              </div>
+              <button
+                type="button"
+                autoFocus
+                onClick={() => setPreviewOpen(false)}
+                aria-label="Close workflow preview"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/15 bg-white/10 text-xl text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                ×
+              </button>
+            </div>
+            <img
+              src={project.image}
+              alt={project.imageAlt}
+              className="max-h-[78vh] w-full bg-navy object-contain"
+            />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
 function SampleProjects() {
   return (
-    <section id="sample-projects" className="py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+    <section id="sample-projects" className="relative overflow-hidden bg-surface/45 py-20 lg:py-28">
+      <div aria-hidden className="pointer-events-none absolute -left-36 top-24 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
+      <div aria-hidden className="pointer-events-none absolute -right-32 bottom-16 h-96 w-96 rounded-full bg-sky-300/10 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
+        <div data-motion="sample-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Sample Projects</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
             Demonstration Systems for Dental Clinic Inquiries
           </h2>
           <p className="mt-5 text-foreground/65">
-            These conceptual projects show how patient communication and scheduling workflows could be designed for a dental clinic. They are demonstrations, not live client implementations or case studies.
+            Explore two practical workflow concepts designed around patient communication and consultation scheduling. Each example shows the structure behind the experience without presenting unverified client results.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-6xl items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
           {SAMPLE_PROJECTS.map((project, index) => (
             <SampleProjectCard key={project.title} project={project} index={index} />
           ))}
@@ -1019,13 +1325,12 @@ function SampleProjects() {
   );
 }
 
-
 /* ---------------- Case Study ---------------- */
 function CaseStudy() {
   return (
     <section className="py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div data-motion="case-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Results & case studies</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Clinic Results and Case Studies</h2>
           <p className="mt-5 text-foreground/65">
@@ -1033,7 +1338,7 @@ function CaseStudy() {
           </p>
         </div>
         <div className="mx-auto mt-12 max-w-3xl">
-          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
+          <div data-motion-card data-motion="case-card" className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
             <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-brand/10 blur-3xl" />
             <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-brand/5 blur-3xl" />
             <div className="relative text-center">
@@ -1149,7 +1454,7 @@ function WhyWorkWithMe() {
   return (
     <section className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div data-motion="why-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Why work with me</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Built Around How Your Clinic Already Works</h2>
           <p className="mt-5 text-foreground/65">
@@ -1164,13 +1469,13 @@ function WhyWorkWithMe() {
 
         <style>{"@keyframes why-values-scroll-right{from{transform:translateX(calc(-50% - .625rem))}to{transform:translateX(0)}}@keyframes why-values-scroll-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - .625rem))}}.why-values-right{animation:why-values-scroll-right 22s linear infinite}.why-values-left{animation:why-values-scroll-left 24s linear infinite}.why-values-marquee{will-change:transform}.why-values-paused{animation-play-state:paused!important}@media(prefers-reduced-motion:reduce){.why-values-marquee{animation:none;transform:none}}"}</style>
 
-        <div className="mt-10 rounded-2xl border-l-4 border-brand bg-card p-5 shadow-sm">
+        <div data-motion="why-callout" className="mt-10 rounded-2xl border-l-4 border-brand bg-card p-5 shadow-sm">
           <p className="text-sm text-foreground/80">
             <span className="font-semibold text-foreground">Important:</span> The system supports administrative processes. It does not replace clinical judgment, diagnosis, treatment decisions, or professional patient care.
           </p>
         </div>
 
-        <div className="mt-14 rounded-3xl border border-border bg-card p-8">
+        <div data-motion="why-tools" className="mt-14 rounded-3xl border border-border bg-card p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h3 className="text-lg font-bold text-foreground">Designed to Work With Your Existing Process</h3>
@@ -1196,11 +1501,11 @@ function About() {
     <section id="about" className="py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
         <div className="relative">
-          <div className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
+          <div data-motion-media data-motion="about-media" className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
             <img src={aboutImg} alt="Front-desk staff coordinating patient scheduling" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
           </div>
         </div>
-        <div className="min-w-0">
+        <div data-motion="about-copy" className="min-w-0">
           <SectionEyebrow>About</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Focused on Better Dental Clinic Workflows</h2>
           <div className="mt-6 space-y-4 text-foreground/70">
@@ -1267,7 +1572,7 @@ function Credentials() {
 
   return (
     <section id="credentials" className="overflow-hidden bg-surface py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 text-center lg:px-8">
+      <div data-motion="credentials-heading" className="mx-auto max-w-7xl px-5 text-center lg:px-8">
         <SectionEyebrow>Training &amp; Credentials</SectionEyebrow>
         <h2 className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
           Training Across Leading Automation Platforms
@@ -1283,6 +1588,7 @@ function Credentials() {
       </div>
 
       <div
+        data-motion="credentials-stage"
         className="credentials-stage mt-10 py-5"
         onMouseLeave={() => setActiveCredential(null)}
       >
@@ -1386,7 +1692,7 @@ function FAQ() {
   return (
     <section className="bg-surface py-20 lg:py-28">
       <div className="mx-auto max-w-4xl px-5 lg:px-8">
-        <div className="text-center">
+        <div data-motion="faq-heading" className="text-center">
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Frequently Asked Questions</h2>
         </div>
@@ -1394,7 +1700,7 @@ function FAQ() {
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
-              <div key={f.q} className="overflow-hidden rounded-2xl border border-border bg-card">
+              <div key={f.q} data-motion-card data-motion={i % 2 === 0 ? "faq-left" : "faq-right"} className="overflow-hidden rounded-2xl border border-border bg-card">
                 <button
                   type="button"
                   aria-expanded={isOpen}
@@ -1482,7 +1788,7 @@ function Contact() {
       <div aria-hidden className="pointer-events-none absolute -top-32 right-0 h-[420px] w-[420px] rounded-full bg-brand/20 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-20 h-[380px] w-[380px] rounded-full bg-brand/10 blur-3xl" />
       <div className="relative mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1fr_1.1fr] lg:px-8">
-        <div>
+        <div data-motion="contact-copy">
           <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Workflow audit
           </span>
@@ -1505,7 +1811,7 @@ function Contact() {
           </ul>
         </div>
 
-        <form onSubmit={submit} noValidate className="rounded-3xl border border-white/10 bg-card/[0.03] p-6 shadow-2xl backdrop-blur sm:p-8">
+        <form data-motion="contact-form" onSubmit={submit} noValidate className="rounded-3xl border border-white/10 bg-card/[0.03] p-6 shadow-2xl backdrop-blur sm:p-8">
           {status === "success" ? (
             <div className="grid place-items-center py-16 text-center">
               <div className="grid h-14 w-14 place-items-center rounded-full bg-brand text-2xl">✓</div>
@@ -1582,7 +1888,7 @@ function Contact() {
                 type="submit"
                 disabled={status === "loading"}
                 aria-busy={status === "loading"}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-4 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition hover:brightness-110 disabled:opacity-60"
+                className="motion-interactive mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-4 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition hover:brightness-110 disabled:opacity-60"
               >
                 {status === "loading" ? "Sending…" : status === "error" ? "Retry Sending" : "Book My Clinic Workflow Audit"}
                 <span aria-hidden>→</span>
@@ -1649,6 +1955,7 @@ function Footer() {
 function Home() {
   return (
     <div className="min-h-screen bg-background">
+      <SiteMotion />
       <Header />
       <main>
         <Hero />
