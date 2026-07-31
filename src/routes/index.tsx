@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import aboutImg from "@/assets/about-clinic.jpg";
 import processMapImg from "@/assets/process-map.jpg";
 import joelAvatar from "@/assets/joel-avatar.jpg";
 import systemDemoVideo from "@/assets/demo/system-demo.mp4";
@@ -11,6 +10,7 @@ import wf3 from "@/assets/demo/workflow-03-follow-up.webp";
 import wf4 from "@/assets/demo/workflow-04-triage-booking.webp";
 import wf5 from "@/assets/demo/workflow-05-alternative-slot.webp";
 import wf6 from "@/assets/demo/workflow-06-reminders.webp";
+import wf7 from "@/assets/demo/workflow-07-rescheduling-cancellation.webp";
 import sampleFacebookWorkflow from "@/assets/demo/sample-facebook-page-agent.png";
 import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.png";
 import n8nCertificate from "@/assets/credentials/n8n-training-certificate.webp";
@@ -389,14 +389,14 @@ function DemoWorkflow() {
 
   return (
     <div
-      className="relative rounded-3xl border border-border bg-card p-5 shadow-2xl shadow-brand/15 sm:p-6"
+      className="relative rounded-3xl border border-border bg-card p-3 shadow-2xl shadow-brand/15 sm:p-4"
       role="group"
       aria-label="Animated demo of the inquiry-to-consultation workflow"
     >
       {/* Header */}
-      <div className="flex items-center justify-between gap-3 border-b border-border pb-4">
+      <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand" aria-hidden>
+          <div className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand" aria-hidden>
             <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 7h16M4 12h16M4 17h10" />
             </svg>
@@ -412,7 +412,7 @@ function DemoWorkflow() {
             onClick={() => setPlaying((p) => !p)}
             aria-label={playing ? "Pause demo workflow animation" : "Play demo workflow animation"}
             aria-pressed={!playing}
-            className="inline-flex h-9 items-center gap-1.5 rounded-full border border-foreground/15 bg-card px-3 text-xs font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex h-8 items-center gap-1.5 rounded-full border border-foreground/15 bg-card px-2.5 text-[11px] font-semibold text-foreground transition hover:border-foreground/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {playing ? (
               <>
@@ -430,7 +430,7 @@ function DemoWorkflow() {
       </div>
 
       {/* Progress rail */}
-      <ol className="mt-5 space-y-3" aria-live="polite">
+      <ol className="mt-3 space-y-2" aria-live="polite">
         {DEMO_STEPS.map((step, i) => {
           const state = showCompleted || i < active ? "done" : i === active ? "active" : "upcoming";
           return (
@@ -438,13 +438,13 @@ function DemoWorkflow() {
               {i < DEMO_STEPS.length - 1 && (
                 <span
                   aria-hidden
-                  className={`absolute left-[19px] top-10 h-[calc(100%-8px)] w-0.5 rounded-full transition-colors duration-500 ${
+                  className={`absolute left-[15px] top-8 h-[calc(100%-4px)] w-0.5 rounded-full transition-colors duration-500 ${
                     state === "done" ? "bg-brand" : "bg-border"
                   }`}
                 />
               )}
               <div
-                className={`relative flex items-start gap-3 rounded-2xl border p-3.5 transition-all duration-500 ${
+                className={`relative flex items-start gap-2.5 rounded-xl border p-2.5 transition-all duration-500 ${
                   state === "active"
                     ? "border-brand/40 bg-brand-soft/60 shadow-sm shadow-brand/10"
                     : state === "done"
@@ -453,7 +453,7 @@ function DemoWorkflow() {
                 }`}
               >
                 <div
-                  className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 transition-colors duration-500 ${
+                  className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border-2 transition-colors duration-500 ${
                     state === "done"
                       ? "border-brand bg-brand text-brand-foreground"
                       : state === "active"
@@ -463,17 +463,17 @@ function DemoWorkflow() {
                   aria-hidden
                 >
                   {state === "done" ? (
-                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12l5 5L20 7" />
                     </svg>
                   ) : (
-                    <span className="text-sm font-bold">{i + 1}</span>
+                    <span className="text-xs font-bold">{i + 1}</span>
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span
-                      className={`text-[10px] font-bold uppercase tracking-[0.14em] ${
+                      className={`text-[9px] font-bold uppercase tracking-[0.12em] ${
                         state === "upcoming" ? "text-foreground/40" : "text-brand"
                       }`}
                     >
@@ -489,19 +489,13 @@ function DemoWorkflow() {
                       <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground/50">Complete</span>
                     )}
                   </div>
-                  <div className={`mt-0.5 truncate text-sm font-semibold ${state === "upcoming" ? "text-foreground/50" : "text-foreground"}`}>
+                  <div className={`mt-0.5 truncate text-[13px] font-semibold leading-tight ${state === "upcoming" ? "text-foreground/50" : "text-foreground"}`}>
                     {step.title}
                   </div>
-                  <div className={`text-xs ${state === "upcoming" ? "text-foreground/40" : "text-foreground/65"}`}>{step.detail}</div>
-                  <div
-                    aria-hidden={state === "upcoming"}
-                    className={`mt-1 min-h-4 text-[11px] text-foreground/45 ${state === "upcoming" ? "invisible" : "visible"}`}
-                  >
-                    {step.meta}
-                  </div>
+                  <div className={`truncate text-[11px] leading-tight ${state === "upcoming" ? "text-foreground/40" : "text-foreground/65"}`}>{step.detail}</div>
                   <div
                     aria-hidden
-                    className={`mt-2.5 h-1 w-full overflow-hidden rounded-full bg-border ${state === "active" && !reduced ? "visible" : "invisible"}`}
+                    className={`mt-1.5 h-1 w-full overflow-hidden rounded-full bg-border ${state === "active" && !reduced ? "visible" : "invisible"}`}
                   >
                     {state === "active" && !reduced ? (
                       <div
@@ -531,7 +525,7 @@ function Hero() {
       <div aria-hidden className="pointer-events-none absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-brand/10 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-32 h-[380px] w-[380px] rounded-full bg-brand/5 blur-3xl" />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:px-8 lg:py-24">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:px-8 lg:py-20">
         <div data-motion="hero-copy" className="min-w-0">
           <SectionEyebrow>For orthodontic & cosmetic dental clinics</SectionEyebrow>
           <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
@@ -549,7 +543,7 @@ function Hero() {
           </p>
         </div>
 
-        <div data-motion="hero-demo" className="relative min-w-0">
+        <div data-motion="hero-demo" className="relative min-w-0 lg:w-full lg:max-w-[34rem] lg:justify-self-end">
           <DemoWorkflow />
         </div>
       </div>
@@ -567,7 +561,7 @@ const PROBLEMS = [
 ];
 function Problems() {
   return (
-    <section className="bg-surface py-20 lg:py-28">
+    <section className="bg-surface py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div data-motion="breakdown-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Common breakdowns</SectionEyebrow>
@@ -576,7 +570,7 @@ function Problems() {
             Small breakdowns in response, booking, confirmation, and follow-up can create unnecessary work for staff and a frustrating experience for potential patients.
           </p>
         </div>
-        <div className="problem-sequence-grid mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="problem-sequence-grid mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PROBLEMS.map((p, index) => (
             <div
               key={p.title}
@@ -618,45 +612,52 @@ const SOLUTION_OUTCOMES = [
 ];
 function Solution() {
   return (
-    <section id="solution" className="py-20 lg:py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
-        <div className="order-2 lg:order-1">
-          <div data-motion-media data-motion="solution-map" className="rounded-3xl border border-border bg-white p-4 shadow-xl shadow-navy/5 sm:p-6">
-            <img
-              src={processMapImg}
-              alt="Dental lead-to-consultation system process map: inquiry received, details completed, inquiry triaged, availability checked, appointment confirmed, patient reminded"
-              loading="lazy"
-              width={2048}
-              height={2048}
-              className="mx-auto block h-auto w-full object-contain"
-            />
-          </div>
+    <section id="solution" className="py-16 lg:py-20">
+      <div className="mx-auto max-w-6xl px-5 lg:px-8">
+        <div data-motion="solution-copy" className="mx-auto max-w-3xl text-center">
+          <SectionEyebrow>Flagship solution</SectionEyebrow>
+          <h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
+            Dental Lead-to-Consultation System
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-base">
+            Seven connected workflows coordinate inquiry capture, information recovery, scheduling, booking, reminders, and appointment changes.
+          </p>
         </div>
 
-        <div data-motion="solution-copy" className="order-1 min-w-0 lg:order-2">
-          <SectionEyebrow>Flagship solution</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Dental Lead-to-Consultation System</h2>
-          <p className="mt-5 text-foreground/70">
-            One connected workflow for handling a patient inquiry from first contact through consultation booking and follow-up.
-          </p>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {SOLUTION_OUTCOMES.map((o) => (
-              <div key={o.title} data-motion-card className="rounded-2xl border border-border bg-card p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/10">
-                <div className="mb-3 grid h-9 w-9 place-items-center rounded-xl bg-brand-soft text-brand">
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12l5 5L20 7"/></svg>
+        <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+          <div className="min-w-0">
+            <div data-motion-media data-motion="solution-map" className="mx-auto w-full max-w-[31rem] rounded-3xl border border-border bg-white p-3 shadow-xl shadow-navy/5 sm:p-4">
+              <img
+                src={processMapImg}
+                alt="Dental lead-to-consultation system process map: inquiry received, details completed, inquiry triaged, availability checked, appointment confirmed, patient reminded"
+                loading="lazy"
+                width={2048}
+                height={2048}
+                className="mx-auto block h-auto max-h-[31rem] w-full object-contain"
+              />
+            </div>
+          </div>
+
+          <div className="flex min-w-0 flex-col lg:min-h-[31rem]">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {SOLUTION_OUTCOMES.map((o) => (
+                <div key={o.title} data-motion-card className="rounded-2xl border border-border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/10">
+                  <div className="mb-2.5 grid h-8 w-8 place-items-center rounded-lg bg-brand-soft text-brand">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 12l5 5L20 7"/></svg>
+                  </div>
+                  <h3 className="text-sm font-bold leading-snug text-foreground">{o.title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-foreground/65">{o.body}</p>
                 </div>
-                <h3 className="text-sm font-bold text-foreground sm:text-base">{o.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-foreground/65">{o.body}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 rounded-2xl border-l-4 border-brand bg-brand-soft/50 p-5">
-            <p className="text-sm font-medium text-foreground">
-              Your clinic remains in control of appointment rules, messages, availability, exceptions, and staff handoffs.
-            </p>
-          </div>
-          <div className="mt-8">
-            <CtaPrimary href="#contact">Review My Clinic's Current Workflow</CtaPrimary>
+              ))}
+            </div>
+            <div className="mt-4 rounded-2xl border-l-4 border-brand bg-brand-soft/50 p-4">
+              <p className="text-xs font-medium leading-relaxed text-foreground sm:text-sm">
+                Your clinic remains in control of appointment rules, messages, availability, exceptions, and staff handoffs.
+              </p>
+            </div>
+            <div className="mt-4">
+              <CtaPrimary href="#contact">Review My Clinic's Current Workflow</CtaPrimary>
+            </div>
           </div>
         </div>
       </div>
@@ -680,7 +681,7 @@ function HowItWorks() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
 
   return (
-    <section id="how-it-works" className="relative overflow-hidden bg-navy py-20 text-white lg:py-28">
+    <section id="how-it-works" className="relative overflow-hidden bg-navy py-16 text-white lg:py-20">
       <div aria-hidden className="pointer-events-none absolute -left-24 top-1/3 h-72 w-72 rounded-full bg-brand/10 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
 
@@ -695,7 +696,7 @@ function HowItWorks() {
           </p>
         </div>
 
-        <div className={["mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4", activeStep !== null ? "process-sequence-paused" : ""].join(" ")}>
+        <div className={["mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4", activeStep !== null ? "process-sequence-paused" : ""].join(" ")}>
           {STEPS.map((step, index) => {
             const stepNumber = index + 1;
             const isSelected = activeStep === stepNumber;
@@ -732,7 +733,7 @@ function HowItWorks() {
           })}
         </div>
 
-        <p className="mx-auto mt-12 max-w-3xl text-center text-sm text-white/60">
+        <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-white/60">
           The final workflow is customized to the clinic's services, operating hours, appointment rules, communication channels, and staff responsibilities.
         </p>
       </div>
@@ -742,19 +743,50 @@ function HowItWorks() {
 
 /* ---------------- Demo ---------------- */
 const DEMO_CHAPTERS = [
-  { time: 0, label: "Inquiry and Validation", desc: "See how patient information is captured, organized, and checked before scheduling begins." },
-  { time: 48, label: "Missing Details and Follow-Up", desc: "See how incomplete inquiries are recovered through completion requests and structured follow-ups." },
-  { time: 112, label: "Scheduling and Safe Booking", desc: "See how availability is checked, alternatives are offered, and the selected time is rechecked before confirmation." },
-  { time: 184, label: "Staff Handoff and Reminders", desc: "See how exceptions reach clinic staff while confirmed patients receive scheduled appointment reminders." },
+  { time: 0, label: "Inquiry and Validation", desc: "See how a patient inquiry is captured, validated, and prepared for the consultation journey." },
+  { time: 25, label: "Missing Details and Follow-Up", desc: "See how incomplete information is recovered and unanswered inquiries receive controlled follow-up." },
+  { time: 57, label: "Availability and Booking", desc: "See how clinic rules and calendar availability guide direct booking or suitable alternatives." },
+  { time: 76, label: "Alternative Slots and Safe Confirmation", desc: "See how the patient's selected time is rechecked before the consultation is confirmed." },
+  { time: 101, label: "Appointment Reminders", desc: "See how tracked 48-hour, 24-hour, and 2-hour reminders are sent without duplication." },
+  { time: 115, label: "Rescheduling and Cancellation", desc: "See how confirmed patients can request a controlled schedule change or cancellation." },
 ];
 
 const WORKFLOW_SLIDES = [
-  { src: wf1, title: "Lead Intake and Validation", desc: "Captures the inquiry, checks required information, and routes incomplete records for completion." },
-  { src: wf2, title: "Missing Patient Details Completion", desc: "Merges submitted information into the existing patient record and prepares it for scheduling." },
-  { src: wf3, title: "Incomplete Intake Follow-Up", desc: "Sends controlled follow-ups and records every contact attempt until completion or staff handoff." },
-  { src: wf4, title: "Inquiry Triage and Direct Booking", desc: "Separates routine and special requests, checks availability, and handles direct booking or alternative schedules." },
-  { src: wf5, title: "Alternative Slot Selection", desc: "Validates the patient's selection, rechecks availability, and prevents conflicting or duplicate bookings." },
-  { src: wf6, title: "Appointment Reminder Sequence", desc: "Sends and records 48-hour, 24-hour, and 2-hour appointment reminders." },
+  {
+    src: wf1,
+    title: "Lead Intake and Validation",
+    desc: "Captures each inquiry, validates the patient's contact and consultation details, and sends incomplete inquiries to a secure completion form.",
+  },
+  {
+    src: wf2,
+    title: "Missing Patient Details Completion",
+    desc: "Lets the patient supply missing details, merges them into the same record, and marks valid inquiries ready for scheduling.",
+  },
+  {
+    src: wf3,
+    title: "Incomplete Intake Follow-Up",
+    desc: "Checks incomplete inquiries on a schedule, sends limited follow-up emails, and flags unresponsive leads for staff review.",
+  },
+  {
+    src: wf4,
+    title: "Inquiry Triage, Availability and Direct Booking",
+    desc: "Separates routine inquiries from cases needing staff review, checks the clinic calendar, and either books the preferred time or offers alternatives.",
+  },
+  {
+    src: wf5,
+    title: "Alternative Slot Selection and Rebooking",
+    desc: "Lets the patient choose another time, rechecks availability before booking, confirms the consultation, and notifies the clinic.",
+  },
+  {
+    src: wf6,
+    title: "Appointment Reminder Sequence",
+    desc: "Checks booked consultations and sends tracked 48-hour, 24-hour, and 2-hour reminders without duplicate messages.",
+  },
+  {
+    src: wf7,
+    title: "Appointment Rescheduling and Cancellation",
+    desc: "Gives booked patients a controlled path to reschedule or cancel, updates the calendar and records, and notifies both the patient and clinic team.",
+  },
 ];
 
 function formatTime(sec: number) {
@@ -910,7 +942,7 @@ function Demo() {
 
   return (
     <>
-      <section id="demo" className="relative overflow-hidden bg-surface py-20 lg:py-28">
+      <section id="demo" className="relative overflow-hidden bg-surface py-16 lg:py-20">
         <div aria-hidden className="pointer-events-none absolute -left-32 top-40 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
         <div aria-hidden className="pointer-events-none absolute -right-32 bottom-40 h-96 w-96 rounded-full bg-sky-300/10 blur-3xl" />
 
@@ -921,41 +953,67 @@ function Demo() {
               See the Complete Patient Journey in Action
             </h2>
             <p className="mt-5 text-foreground/65">
-              Watch how a patient inquiry moves through validation, missing-detail recovery, follow-up, scheduling, booking, staff handoff, and appointment reminders.
+              Watch how seven connected workflows move a patient from inquiry and validation through booking, reminders, rescheduling, or cancellation.
             </p>
           </div>
 
-          <div data-motion="demo-stage" className="mx-auto mt-12 max-w-6xl overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl shadow-navy/5">
-            <div className="grid lg:grid-cols-[minmax(0,1fr)_23rem]">
-              <div data-motion-media className="border-b border-border bg-navy/95 p-4 sm:p-6 lg:border-b-0 lg:border-r">
-                <div className="mx-auto aspect-square w-full max-w-[38rem] overflow-hidden rounded-2xl bg-black shadow-2xl">
+          <div data-motion="demo-stage" className="mx-auto mt-8 max-w-6xl">
+            <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card px-5 py-4 shadow-lg shadow-navy/5 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+              <div className="flex items-center gap-3">
+                <span className="relative flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-40" />
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-brand" />
+                </span>
+                <div>
+                  <div className="text-xs font-extrabold uppercase tracking-[0.16em] text-foreground">Interactive System Walkthrough</div>
+                  <div className="mt-0.5 text-xs text-foreground/50">Follow one patient across the complete administrative journey.</div>
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em]">
+                <span className="rounded-full border border-border bg-surface px-3 py-1.5 text-foreground/65">7 Workflows</span>
+                <span className="rounded-full bg-brand-soft px-3 py-1.5 text-brand">2:33 Demo</span>
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] lg:items-start lg:justify-center">
+              <div data-motion-media className="w-full self-start rounded-[2rem] border border-white/10 bg-navy/95 p-3 shadow-xl shadow-navy/10 sm:p-4">
+                <div className="aspect-square w-full overflow-hidden rounded-[1.35rem] bg-black shadow-2xl">
                   <video
                     ref={videoRef}
                     src={systemDemoVideo}
                     controls
                     playsInline
-                    preload="auto"
-                    className="h-full w-full object-contain"
+                    preload="metadata"
+                    className="block h-full w-full object-contain"
                     onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
-                    aria-label="System demo walkthrough video"
+                    aria-label="Dental Lead-to-Consultation System walkthrough"
                   />
                 </div>
-                <div className="mx-auto mt-4 flex max-w-[38rem] items-center justify-between gap-4 text-xs text-white/55">
-                  <span>3:57 walkthrough</span>
-                  <span>Sample demonstration—not tied to a real clinic.</span>
+                <div className="flex flex-col gap-1 px-1 pb-1 pt-3 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                  <span>Dental Lead-to-Consultation System</span>
+                  <span>Fictional demonstration—not connected to a real clinic.</span>
                 </div>
               </div>
 
-              <div className="flex flex-col p-5 sm:p-6">
-                <div className="mb-5">
-                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-brand">Video Chapters</div>
-                  <h3 className="mt-2 text-xl font-extrabold text-foreground">Jump to a Patient Journey Stage</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-foreground/60">
-                    Select any chapter to continue from that point.
-                  </p>
+              <aside className="self-start rounded-[2rem] border border-border bg-card p-4 shadow-xl shadow-navy/5 sm:p-5" aria-label="Video chapter navigation">
+                <div className="flex items-start justify-between gap-4 border-b border-border pb-4">
+                  <div>
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-brand">Video Chapters</div>
+                    <p className="mt-1.5 text-xs leading-relaxed text-foreground/60">Select a timestamp to jump directly to that part.</p>
+                  </div>
+                  <span className="shrink-0 rounded-lg bg-brand-soft px-2.5 py-1.5 text-xs font-extrabold tabular-nums text-brand">
+                    {activeChapter + 1}/{DEMO_CHAPTERS.length}
+                  </span>
                 </div>
 
-                <ol className="grid flex-1 gap-3 sm:grid-cols-2 lg:grid-cols-1" aria-label="Video chapters">
+                <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-muted" aria-hidden>
+                  <div
+                    className="h-full rounded-full bg-brand transition-[width] duration-500"
+                    style={{ width: `${((activeChapter + 1) / DEMO_CHAPTERS.length) * 100}%` }}
+                  />
+                </div>
+
+                <ol className="mt-4 grid grid-cols-2 gap-3" aria-label="Video chapters">
                   {DEMO_CHAPTERS.map((chapter, index) => {
                     const active = index === activeChapter;
                     return (
@@ -965,49 +1023,55 @@ function Demo() {
                           onClick={() => seekTo(chapter.time)}
                           aria-current={active ? "true" : undefined}
                           className={[
-                            "group h-full w-full rounded-2xl border p-4 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            "group relative h-full min-h-[7.25rem] w-full overflow-hidden rounded-xl border px-3 py-3 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                             active
                               ? "border-brand bg-brand-soft shadow-md shadow-brand/10"
                               : "border-border bg-surface/55 hover:-translate-y-0.5 hover:border-brand/40 hover:bg-brand-soft/40",
                           ].join(" ")}
                         >
-                          <div className="flex items-center gap-3">
+                          <span
+                            aria-hidden
+                            className={[
+                              "absolute inset-y-0 left-0 w-1 bg-brand transition-opacity",
+                              active ? "opacity-100" : "opacity-0",
+                            ].join(" ")}
+                          />
+                          <div className="flex items-center justify-between gap-2">
                             <span className={[
-                              "grid h-8 w-8 shrink-0 place-items-center rounded-lg text-xs font-extrabold",
-                              active ? "bg-brand text-brand-foreground" : "bg-muted text-foreground/55",
+                              "grid h-8 w-8 shrink-0 place-items-center rounded-lg text-xs font-extrabold transition",
+                              active ? "bg-brand text-brand-foreground" : "bg-muted text-foreground/55 group-hover:text-brand",
                             ].join(" ")}>
                               {String(index + 1).padStart(2, "0")}
                             </span>
-                            <div className="min-w-0">
-                              <div className="text-[11px] font-bold tabular-nums text-brand">{formatTime(chapter.time)}</div>
-                              <div className="truncate text-sm font-bold text-foreground">{chapter.label}</div>
-                            </div>
+                            <span className="text-[10px] font-bold tabular-nums text-brand">{formatTime(chapter.time)}</span>
                           </div>
-                          <p className="mt-3 text-xs leading-relaxed text-foreground/60">{chapter.desc}</p>
+                          <div className="mt-2 text-sm font-bold leading-tight text-foreground">{chapter.label}</div>
+                          <p className="mt-1.5 line-clamp-2 text-[10px] leading-relaxed text-foreground/55">{chapter.desc}</p>
                         </button>
                       </li>
                     );
                   })}
                 </ol>
-              </div>
+
+              </aside>
             </div>
           </div>
 
-          <div className="mt-20 lg:mt-28">
+          <div className="mt-14 lg:mt-20">
             <div data-motion="demo-heading-secondary" className="mx-auto max-w-3xl text-center">
               <SectionEyebrow>Behind the System</SectionEyebrow>
               <h3 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl">
                 Explore the Workflows Powering the Patient Journey
               </h3>
               <p className="mt-5 text-foreground/65">
-                Select any workflow to inspect its setup. Use the arrows, keyboard controls, or swipe gesture to move through all six.
+                Follow the patient journey in order, from the first inquiry through booking, reminders, rescheduling, or cancellation. Use the arrows, keyboard controls, or swipe gesture to explore all seven workflows.
               </p>
             </div>
 
             <div
               ref={galleryRef}
               data-motion="demo-gallery"
-              className="mx-auto mt-10 max-w-6xl rounded-[2rem] border border-border bg-card p-4 shadow-xl shadow-navy/5 focus:outline-none sm:p-6"
+              className="mx-auto mt-8 max-w-6xl rounded-[2rem] border border-border bg-card p-4 shadow-xl shadow-navy/5 focus:outline-none sm:p-6"
               tabIndex={0}
               role="region"
               aria-roledescription="carousel"
@@ -1016,7 +1080,7 @@ function Demo() {
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             >
-              <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-stretch">
+              <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-stretch">
                 <div className="flex min-w-0 flex-col">
                   <button
                     type="button"
@@ -1050,24 +1114,6 @@ function Demo() {
                     <h4 className="mt-1 text-xl font-extrabold text-foreground">{WORKFLOW_SLIDES[slide].title}</h4>
                     <p className="mt-2 text-sm leading-relaxed text-foreground/65">{WORKFLOW_SLIDES[slide].desc}</p>
 
-                    <div className="mt-auto flex items-center justify-between gap-3 pt-5">
-                      <button
-                        type="button"
-                        onClick={prev}
-                        className="motion-interactive inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-brand/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                        aria-label="Previous workflow screenshot"
-                      >
-                        <span aria-hidden>←</span> Previous
-                      </button>
-                      <button
-                        type="button"
-                        onClick={next}
-                        className="motion-interactive inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2.5 text-sm font-semibold text-foreground transition hover:border-brand/40 hover:bg-brand-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                        aria-label="Next workflow screenshot"
-                      >
-                        Next <span aria-hidden>→</span>
-                      </button>
-                    </div>
                   </div>
                 </div>
 
@@ -1076,7 +1122,7 @@ function Demo() {
                     <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-foreground/55">Choose a Workflow</div>
                     <div className="text-xs font-bold tabular-nums text-brand">{slide + 1}/{WORKFLOW_SLIDES.length}</div>
                   </div>
-                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1" role="tablist" aria-label="Workflow screenshot navigation">
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2" role="tablist" aria-label="Workflow screenshot navigation">
                     {WORKFLOW_SLIDES.map((workflow, index) => {
                       const active = index === slide;
                       return (
@@ -1087,7 +1133,8 @@ function Demo() {
                           aria-selected={active}
                           onClick={() => setSlide(index)}
                           className={[
-                            "flex min-h-[4.2rem] items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            "flex min-h-[4.5rem] items-center gap-3 rounded-xl border px-3 py-2.5 text-left transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                            index === WORKFLOW_SLIDES.length - 1 ? "sm:col-span-2" : "",
                             active
                               ? "border-brand bg-brand-soft shadow-sm"
                               : "border-transparent bg-card hover:border-brand/30 hover:bg-brand-soft/35",
@@ -1290,7 +1337,7 @@ function SampleProjectCard({ project, index }: { project: (typeof SAMPLE_PROJECT
 
 function SampleProjects() {
   return (
-    <section id="sample-projects" className="relative overflow-hidden bg-surface/45 py-20 lg:py-28">
+    <section id="sample-projects" className="relative overflow-hidden bg-surface/45 py-16 lg:py-20">
       <div aria-hidden className="pointer-events-none absolute -left-36 top-24 h-80 w-80 rounded-full bg-brand/10 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -right-32 bottom-16 h-96 w-96 rounded-full bg-sky-300/10 blur-3xl" />
 
@@ -1305,7 +1352,7 @@ function SampleProjects() {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-6xl items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
+        <div className="mx-auto mt-8 grid max-w-6xl items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
           {SAMPLE_PROJECTS.map((project, index) => (
             <SampleProjectCard key={project.title} project={project} index={index} />
           ))}
@@ -1316,40 +1363,6 @@ function SampleProjects() {
 }
 
 /* ---------------- Case Study ---------------- */
-function CaseStudy() {
-  return (
-    <section className="py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div data-motion="case-heading" className="mx-auto max-w-3xl text-center">
-          <SectionEyebrow>Results & case studies</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Clinic Results and Case Studies</h2>
-          <p className="mt-5 text-foreground/65">
-            Verified results will be added after the system has been implemented and measured in a real dental clinic environment.
-          </p>
-        </div>
-        <div className="mx-auto mt-12 max-w-3xl">
-          <div data-motion-card data-motion="case-card" className="relative overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
-            <div aria-hidden className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-brand/10 blur-3xl" />
-            <div aria-hidden className="pointer-events-none absolute -bottom-20 -left-16 h-56 w-56 rounded-full bg-brand/5 blur-3xl" />
-            <div className="relative text-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-brand-soft/50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-brand">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Case Studies Coming Soon
-              </span>
-              <h3 className="mt-5 text-2xl font-extrabold text-foreground sm:text-3xl">Verified Clinic Results Will Be Added Here</h3>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-foreground/70 sm:text-base">
-                This section will feature measured outcomes from real dental clinic implementations, including response times, confirmed consultations, no-show reduction, and staff time saved.
-              </p>
-              <p className="mx-auto mt-6 max-w-lg text-xs text-foreground/55">
-                Only verified results and approved client information will be published.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ---------------- Why Work With Me ---------------- */
 const VALUES = [
   { t: "Clinic-Specific Workflow Design", d: "The system is structured around your consultation process, treatment categories, operating hours, scheduling rules, and communication channels." },
@@ -1437,74 +1450,47 @@ function MovingValueRow({
   );
 }
 
-function WhyWorkWithMe() {
+function AboutApproach() {
   const topValues = VALUES.slice(0, 3).map((value, index) => ({ ...value, number: index + 1 }));
   const bottomValues = VALUES.slice(3, 6).map((value, index) => ({ ...value, number: index + 4 }));
 
   return (
-    <section className="bg-surface py-20 lg:py-28">
+    <section id="about" className="bg-surface py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div data-motion="why-heading" className="mx-auto max-w-3xl text-center">
-          <SectionEyebrow>Why work with me</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Built Around How Your Clinic Already Works</h2>
+          <SectionEyebrow>About My Approach</SectionEyebrow>
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
+            Dental Workflow Systems Built Around Your Clinic
+          </h2>
           <p className="mt-5 text-foreground/65">
-            The goal is not to force your clinic into a generic system. The workflow should support your existing process, staff responsibilities, patient communication style, and appointment rules.
+            I specialize in practical workflow systems for orthodontic and cosmetic dental clinics. My approach starts by understanding your current inquiry, scheduling, communication, and staff-handoff process before recommending what should be automated.
           </p>
         </div>
 
-        <div className="mt-10 space-y-1">
+        <div className="mt-8 space-y-1">
           <MovingValueRow values={topValues} direction="right" />
           <MovingValueRow values={bottomValues} direction="left" />
         </div>
 
         <style>{"@keyframes why-values-scroll-right{from{transform:translateX(calc(-50% - .625rem))}to{transform:translateX(0)}}@keyframes why-values-scroll-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - .625rem))}}.why-values-right{animation:why-values-scroll-right 22s linear infinite}.why-values-left{animation:why-values-scroll-left 24s linear infinite}.why-values-marquee{will-change:transform}.why-values-paused{animation-play-state:paused!important}@media(prefers-reduced-motion:reduce){.why-values-marquee{animation:none;transform:none}}"}</style>
 
-        <div data-motion="why-callout" className="mt-10 rounded-2xl border-l-4 border-brand bg-card p-5 shadow-sm">
-          <p className="text-sm text-foreground/80">
-            <span className="font-semibold text-foreground">Important:</span> The system supports administrative processes. It does not replace clinical judgment, diagnosis, treatment decisions, or professional patient care.
-          </p>
-        </div>
-
-        <div data-motion="why-tools" className="mt-14 rounded-3xl border border-border bg-card p-8">
+        <div data-motion="why-tools" className="mt-8 rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h3 className="text-lg font-bold text-foreground">Designed to Work With Your Existing Process</h3>
-              <p className="mt-2 max-w-2xl text-sm text-foreground/60">
-                Depending on the clinic's current setup, the workflow may connect with existing calendars, forms, email, messaging channels, spreadsheets, booking tools, or clinic-management platforms.
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground/60">
+                Depending on your clinic's setup, the workflow may connect with existing calendars, forms, email, messaging channels, appointment records, or clinic-management platforms.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              {TOOLS.map((t) => (
-                <span key={t} className="rounded-full border border-border bg-brand-soft/50 px-3.5 py-1.5 text-xs font-semibold text-foreground">{t}</span>
+              {TOOLS.map((tool) => (
+                <span key={tool} className="rounded-full border border-border bg-brand-soft/50 px-3.5 py-1.5 text-xs font-semibold text-foreground">
+                  {tool}
+                </span>
               ))}
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- About ---------------- */
-function About() {
-  return (
-    <section id="about" className="py-20 lg:py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:px-8">
-        <div className="relative">
-          <div data-motion-media data-motion="about-media" className="overflow-hidden rounded-3xl border border-border shadow-xl shadow-navy/5">
-            <img src={aboutImg} alt="Front-desk staff coordinating patient scheduling" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
-          </div>
-        </div>
-        <div data-motion="about-copy" className="min-w-0">
-          <SectionEyebrow>About</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Focused on Better Dental Clinic Workflows</h2>
-          <div className="mt-6 space-y-4 text-foreground/70">
-            <p>I specialize in building practical workflow systems for orthodontic and cosmetic dental clinics.</p>
-            <p>My approach begins with understanding how the clinic currently handles patient inquiries, consultation booking, appointment confirmation, reminders, follow-up, and staff handoffs.</p>
-            <p>The goal is to reduce repetitive administrative work, create a more consistent patient communication process, and give clinic staff clearer visibility over inquiries and appointments.</p>
-            <p>Each system is designed around the clinic's existing operations rather than forcing the team to adopt an unnecessary or overly complicated process.</p>
-          </div>
-          <div className="mt-8">
+          <div className="mt-7">
             <CtaPrimary href="#contact">Discuss Your Clinic Workflow</CtaPrimary>
           </div>
         </div>
@@ -1512,7 +1498,6 @@ function About() {
     </section>
   );
 }
-
 
 /* ---------------- Training credentials ---------------- */
 const CREDENTIALS = [
@@ -1561,7 +1546,7 @@ function Credentials() {
   }, [selectedCredential]);
 
   return (
-    <section id="credentials" className="overflow-hidden bg-surface py-20 lg:py-28">
+    <section id="credentials" className="overflow-hidden bg-surface py-16 lg:py-20">
       <div data-motion="credentials-heading" className="mx-auto max-w-7xl px-5 text-center lg:px-8">
         <SectionEyebrow>Training &amp; Credentials</SectionEyebrow>
         <h2 className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
@@ -1579,7 +1564,7 @@ function Credentials() {
 
       <div
         data-motion="credentials-stage"
-        className="credentials-stage mt-10 py-5"
+        className="credentials-stage mt-8 py-4"
         onMouseLeave={() => setActiveCredential(null)}
       >
         <div className={reducedMotion ? "mx-auto flex max-w-7xl snap-x gap-5 overflow-x-auto px-5 pb-4 lg:px-8" : "credentials-marquee flex w-max gap-5 px-5"}>
@@ -1680,13 +1665,13 @@ const FAQS = [
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="bg-surface py-20 lg:py-28">
+    <section className="bg-surface py-16 lg:py-20">
       <div className="mx-auto max-w-4xl px-5 lg:px-8">
         <div data-motion="faq-heading" className="text-center">
           <SectionEyebrow>FAQ</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Frequently Asked Questions</h2>
         </div>
-        <div className="mt-12 space-y-3">
+        <div className="mt-8 space-y-3">
           {FAQS.map((f, i) => {
             const isOpen = open === i;
             return (
@@ -1774,17 +1759,17 @@ function Contact() {
   const errCls = "mt-1 text-xs text-red-300";
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-navy py-20 text-white lg:py-28">
+    <section id="contact" className="relative overflow-hidden bg-navy py-16 text-white lg:py-20">
       <div aria-hidden className="pointer-events-none absolute -top-32 right-0 h-[420px] w-[420px] rounded-full bg-brand/20 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-20 h-[380px] w-[380px] rounded-full bg-brand/10 blur-3xl" />
-      <div className="relative mx-auto grid max-w-7xl items-start gap-12 px-5 lg:grid-cols-[1fr_1.1fr] lg:px-8">
+      <div className="relative mx-auto grid max-w-7xl items-start gap-8 px-5 lg:grid-cols-[1fr_1.1fr] lg:px-8">
         <div data-motion="contact-copy">
           <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Workflow audit
           </span>
-          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">Find Where Your Clinic Is Losing Inquiries and Appointments</h2>
+          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">Request a Clinic Workflow Audit</h2>
           <p className="mt-5 text-white/70">
-            Book a workflow audit to review how your clinic currently handles patient inquiries, consultation booking, appointment confirmation, reminders, follow-up, and staff coordination.
+            Share your current inquiry and appointment process so I can identify practical workflow gaps, integration opportunities, and the clearest next step.
           </p>
           <ul className="mt-8 space-y-3 text-sm text-white/80">
             {[
@@ -1954,9 +1939,7 @@ function Home() {
         <HowItWorks />
         <Demo />
         <SampleProjects />
-        <CaseStudy />
-        <WhyWorkWithMe />
-        <About />
+        <AboutApproach />
         <Credentials />
         <FAQ />
         <Contact />
