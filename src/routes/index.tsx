@@ -1734,46 +1734,6 @@ const OTHER_PROJECTS = [
     image: financialReportingImg,
     alt: "Make.com scenario diagram of an accounting to project reporting bridge",
   },
-  {
-    id: "lead-to-appointment",
-    name: "Lead-to-Appointment Booking Engine",
-    platform: "n8n",
-    industry: "Sales Teams",
-    summary:
-      "Leads are captured, qualified, and scheduled into calendar and video meetings, with approval, decline, and automated rescheduling handled by sub-workflows.",
-    image: leadToAppointmentImg,
-    alt: "n8n workflow diagram of a lead to appointment booking engine",
-  },
-  {
-    id: "messenger-agent",
-    name: "24/7 AI Messenger Support Agent",
-    platform: "n8n",
-    industry: "Customer Support",
-    summary:
-      "Page messages are validated, answered by an AI agent grounded in a business knowledge base, and kept in context through conversation memory.",
-    image: messengerAgentImg,
-    alt: "n8n workflow diagram of a 24/7 AI messenger support agent",
-  },
-  {
-    id: "telegram-assistant",
-    name: "Conversational Scheduling Assistant",
-    platform: "n8n",
-    industry: "Executive Productivity",
-    summary:
-      "A chat-based assistant checks records, reviews calendar availability, and creates appointments from plain-language instructions.",
-    image: telegramAssistantImg,
-    alt: "n8n workflow diagram of a conversational scheduling assistant",
-  },
-  {
-    id: "inquiry-capture",
-    name: "Inquiry Capture & Mobile Alert System",
-    platform: "n8n",
-    industry: "Professional Services",
-    summary:
-      "New inquiries are parsed from the inbox, acknowledged automatically, logged into a central sheet, and pushed to mobile so follow-up happens fast.",
-    image: inquiryCaptureImg,
-    alt: "n8n workflow diagram of an inquiry capture and mobile alert system",
-  },
 ];
 
 function OtherAutomationWork() {
