@@ -27,6 +27,34 @@ import financialReportingImg from "@/assets/projects/financial-reporting.png";
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
 const PAGE_DESC = "Workflow systems for orthodontic and cosmetic dental clinics: patient inquiry response, consultation booking, appointment reminders, staff notifications, and lead follow-up.";
+const SITE_URL = "https://www.automatebancaya.com/";
+const LINKEDIN_URL = "https://www.linkedin.com/in/joel-jay-bancaya-b4a718409/";
+const SOCIAL_IMAGE = new URL(processMapImg, SITE_URL).href;
+const STRUCTURED_DATA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": SITE_URL + "#joel-jay-bancaya",
+      name: "Joel Jay Bancaya",
+      url: SITE_URL,
+      email: "mailto:Joeljaybancaya16@gmail.com",
+      sameAs: [LINKEDIN_URL],
+      address: { "@type": "PostalAddress", addressLocality: "Metro Manila", addressCountry: "PH" },
+      jobTitle: "Dental Clinic AI Automation Specialist",
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": SITE_URL + "#automation-service",
+      name: "Joel Jay Bancaya — Dental Clinic Workflow Systems",
+      url: SITE_URL,
+      email: "mailto:Joeljaybancaya16@gmail.com",
+      areaServed: "Dental clinics",
+      serviceType: "Dental clinic administrative workflow automation",
+      founder: { "@id": SITE_URL + "#joel-jay-bancaya" },
+    },
+  ],
+};
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,9 +63,14 @@ export const Route = createFileRoute("/")({
       { name: "description", content: PAGE_DESC },
       { property: "og:title", content: PAGE_TITLE },
       { property: "og:description", content: PAGE_DESC },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: SOCIAL_IMAGE },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: PAGE_TITLE },
+      { name: "twitter:description", content: PAGE_DESC },
+      { name: "twitter:image", content: SOCIAL_IMAGE },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: SITE_URL }],
   }),
   component: Home,
 });
@@ -283,7 +316,7 @@ function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-          <CtaPrimary href="#contact">Book a Workflow Audit</CtaPrimary>
+          <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -310,7 +343,7 @@ function Header() {
               </a>
             ))}
             <a href="#contact" onClick={() => setOpen(false)} className="mt-2 rounded-full bg-brand px-4 py-3 text-center text-sm font-semibold text-brand-foreground">
-              Book a Workflow Audit
+              Request a Clinic Workflow Audit
             </a>
           </div>
         </div>
@@ -542,7 +575,7 @@ function Hero() {
             I build connected inquiry, consultation-booking, reminder, and follow-up systems that help dental clinics respond consistently, reduce administrative back-and-forth, and keep staff informed throughout the patient journey.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <CtaPrimary href="#contact">Book a Clinic Workflow Audit</CtaPrimary>
+            <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
             <CtaSecondary href="#how-it-works">See How the System Works</CtaSecondary>
           </div>
           <p className="mt-6 max-w-lg text-sm text-foreground/55 dark:text-foreground/70">
@@ -663,7 +696,7 @@ function Solution() {
               </p>
             </div>
             <div className="mt-4">
-              <CtaPrimary href="#contact">Review My Clinic's Current Workflow</CtaPrimary>
+              <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
             </div>
           </div>
         </div>
@@ -675,14 +708,10 @@ function Solution() {
 
 /* ---------------- How It Works ---------------- */
 const STEPS = [
-  { t: "Patient Sends an Inquiry", d: "An inquiry arrives through a connected website form, messaging channel, email, or another supported source." },
-  { t: "The System Responds", d: "The patient receives an immediate clinic-approved response and is guided through the next required details." },
-  { t: "Patient Details Are Collected", d: "The workflow records contact information, treatment interest, patient type, and preferred consultation schedule." },
-  { t: "Availability Is Checked", d: "The system checks the clinic's appointment rules and available consultation times." },
-  { t: "The Consultation Is Booked", d: "An available preferred time is booked. When it is unavailable, the patient receives suitable alternative options." },
-  { t: "Confirmation and Reminders Are Sent", d: "The patient receives clear appointment information and scheduled reminders based on the clinic's process." },
-  { t: "Clinic Staff Are Updated", d: "Relevant staff receive the inquiry, appointment, and follow-up status without manually checking multiple channels." },
-  { t: "Unbooked Leads Receive Follow-Up", d: "Patients who do not complete the booking process receive structured follow-up or are handed over to clinic staff." },
+  { t: "Review the Current Workflow", d: "Review inquiry sources, booking steps, clinic rules, follow-up, and staff handoffs." },
+  { t: "Map Gaps and Requirements", d: "Identify delays, repetitive work, exceptions, approval points, and integration requirements." },
+  { t: "Recommend a Practical Scope", d: "Present the clearest automation opportunity, workflow boundaries, and implementation priorities." },
+  { t: "Build, Test, and Hand Over", d: "Only after scope approval, configure and test the system, document it, and guide the clinic team." },
 ];
 function HowItWorks() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
@@ -695,11 +724,11 @@ function HowItWorks() {
       <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
         <div data-motion="process-heading" className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Process
+            <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Working Process
           </span>
-          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">How the Inquiry-to-Consultation Workflow Works</h2>
+          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">What Happens After You Request an Audit</h2>
           <p className="mx-auto mt-5 max-w-2xl text-white/65">
-            Follow the journey from the first patient inquiry to booking, staff updates, reminders, and structured follow-up.
+            The audit is the first step. It helps define the clearest next action and does not commit your clinic to a system build.
           </p>
         </div>
 
@@ -739,10 +768,6 @@ function HowItWorks() {
             );
           })}
         </div>
-
-        <p className="mx-auto mt-8 max-w-3xl text-center text-sm text-white/60">
-          The final workflow is customized to the clinic's services, operating hours, appointment rules, communication channels, and staff responsibilities.
-        </p>
       </div>
     </section>
   );
@@ -1498,7 +1523,7 @@ function AboutApproach() {
             </div>
           </div>
           <div className="mt-7">
-            <CtaPrimary href="#contact">Discuss Your Clinic Workflow</CtaPrimary>
+            <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
           </div>
         </div>
       </div>
@@ -1576,11 +1601,14 @@ function Credentials() {
       >
         <div className={reducedMotion ? "mx-auto flex max-w-7xl snap-x gap-5 overflow-x-auto px-5 pb-4 lg:px-8" : "credentials-marquee flex w-max gap-5 px-5"}>
           {carouselItems.map((credential, index) => {
+            const isClone = !reducedMotion && index >= CREDENTIALS.length;
             const isMuted = activeCredential !== null && activeCredential !== credential.id;
             return (
               <button
                 key={credential.id + "-" + index}
                 type="button"
+                aria-hidden={isClone}
+                tabIndex={isClone ? -1 : 0}
                 onClick={() => setSelectedCredential(credential)}
                 onMouseEnter={() => setActiveCredential(credential.id)}
                 onFocus={() => setActiveCredential(credential.id)}
@@ -1755,7 +1783,7 @@ function OtherAutomationWork() {
           Automation Systems Built Outside Dental Clinics
         </h2>
         <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-foreground/70 sm:text-lg">
-          Workflow systems delivered across sales, marketing, finance, support, and operations. The
+          Portfolio and demonstration systems built across sales, marketing, finance, support, and operations. The
           same engineering principles behind the clinic system — reliable intake, controlled
           follow-up, safe scheduling, and clear staff handoffs.
         </p>
@@ -1771,11 +1799,14 @@ function OtherAutomationWork() {
       >
         <div className={reducedMotion ? "mx-auto flex max-w-7xl snap-x gap-5 overflow-x-auto px-5 pb-4 lg:px-8" : "portfolio-marquee flex w-max gap-5 px-5"}>
           {carouselItems.map((project, index) => {
+            const isClone = !reducedMotion && index >= OTHER_PROJECTS.length;
             const isMuted = activeProject !== null && activeProject !== project.id;
             return (
               <button
                 key={project.id + "-" + index}
                 type="button"
+                aria-hidden={isClone}
+                tabIndex={isClone ? -1 : 0}
                 onClick={() => setSelectedProject(project)}
                 onMouseEnter={() => setActiveProject(project.id)}
                 onFocus={() => setActiveProject(project.id)}
@@ -1801,7 +1832,10 @@ function OtherAutomationWork() {
                   </div>
                 </div>
                 <div className="p-5">
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="inline-flex rounded-full border border-brand/25 bg-brand-soft/60 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-brand">
+                    Portfolio Project
+                  </div>
+                  <div className="mt-3 flex items-center justify-between gap-4">
                     <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
                       {project.platform}
                     </span>
@@ -1979,6 +2013,9 @@ function Contact() {
           <p className="mt-5 text-white/70">
             Share your current inquiry and appointment process so I can identify practical workflow gaps, integration opportunities, and the clearest next step.
           </p>
+          <p className="mt-3 text-sm text-white/60">
+            After submission, I will review your workflow information and contact you using your preferred method.
+          </p>
           <ul className="mt-8 space-y-3 text-sm text-white/80">
             {[
               "Review of current inquiry & booking flow",
@@ -2008,30 +2045,30 @@ function Contact() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="name" className={labelCls}>Full Name <span className="text-brand">*</span></label>
-                  <input id="name" className={inputCls} value={form.name} onChange={(e) => update("name", e.target.value)} aria-invalid={!!errors.name} required />
+                  <input id="name" name="name" autoComplete="name" className={inputCls} value={form.name} onChange={(e) => update("name", e.target.value)} aria-invalid={!!errors.name} required />
                   {errors.name && <p className={errCls}>{errors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="clinic" className={labelCls}>Clinic Name <span className="text-brand">*</span></label>
-                  <input id="clinic" className={inputCls} value={form.clinic} onChange={(e) => update("clinic", e.target.value)} aria-invalid={!!errors.clinic} required />
+                  <input id="clinic" name="clinic" autoComplete="organization" className={inputCls} value={form.clinic} onChange={(e) => update("clinic", e.target.value)} aria-invalid={!!errors.clinic} required />
                   {errors.clinic && <p className={errCls}>{errors.clinic}</p>}
                 </div>
                 <div>
                   <label htmlFor="email" className={labelCls}>Work Email <span className="text-brand">*</span></label>
-                  <input id="email" type="email" className={inputCls} value={form.email} onChange={(e) => update("email", e.target.value)} aria-invalid={!!errors.email} required />
+                  <input id="email" name="email" type="email" autoComplete="email" className={inputCls} value={form.email} onChange={(e) => update("email", e.target.value)} aria-invalid={!!errors.email} required />
                   {errors.email && <p className={errCls}>{errors.email}</p>}
                 </div>
                 <div>
                   <label htmlFor="phone" className={labelCls}>Phone Number</label>
-                  <input id="phone" type="tel" className={inputCls} value={form.phone} onChange={(e) => update("phone", e.target.value)} />
+                  <input id="phone" name="phone" type="tel" autoComplete="tel" className={inputCls} value={form.phone} onChange={(e) => update("phone", e.target.value)} />
                 </div>
                 <div className="sm:col-span-2">
                   <label htmlFor="website" className={labelCls}>Clinic Website or Facebook Page</label>
-                  <input id="website" className={inputCls} value={form.website} onChange={(e) => update("website", e.target.value)} />
+                  <input id="website" name="website" autoComplete="url" className={inputCls} value={form.website} onChange={(e) => update("website", e.target.value)} />
                 </div>
                 <div>
                   <label htmlFor="clinicType" className={labelCls}>Clinic Type <span className="text-brand">*</span></label>
-                  <select id="clinicType" className={inputCls} value={form.clinicType} onChange={(e) => update("clinicType", e.target.value)} required>
+                  <select id="clinicType" name="clinicType" className={inputCls} value={form.clinicType} onChange={(e) => update("clinicType", e.target.value)} required>
                     <option value="" className="bg-navy">Select…</option>
                     {CLINIC_TYPES.map((c) => <option key={c} value={c} className="bg-navy">{c}</option>)}
                   </select>
@@ -2039,7 +2076,7 @@ function Contact() {
                 </div>
                 <div>
                   <label htmlFor="problem" className={labelCls}>Main Operational Problem <span className="text-brand">*</span></label>
-                  <select id="problem" className={inputCls} value={form.problem} onChange={(e) => update("problem", e.target.value)} required>
+                  <select id="problem" name="problem" className={inputCls} value={form.problem} onChange={(e) => update("problem", e.target.value)} required>
                     <option value="" className="bg-navy">Select…</option>
                     {PROBLEMS_OPTS.map((c) => <option key={c} value={c} className="bg-navy">{c}</option>)}
                   </select>
@@ -2047,11 +2084,11 @@ function Contact() {
                 </div>
                 <div>
                   <label htmlFor="channels" className={labelCls}>Current Inquiry Channels</label>
-                  <input id="channels" className={inputCls} placeholder="e.g. Website, Facebook, Email" value={form.channels} onChange={(e) => update("channels", e.target.value)} />
+                  <input id="channels" name="channels" className={inputCls} placeholder="e.g. Website, Facebook, Email" value={form.channels} onChange={(e) => update("channels", e.target.value)} />
                 </div>
                 <div>
                   <label htmlFor="contactMethod" className={labelCls}>Preferred Contact Method <span className="text-brand">*</span></label>
-                  <select id="contactMethod" className={inputCls} value={form.contactMethod} onChange={(e) => update("contactMethod", e.target.value)} required>
+                  <select id="contactMethod" name="contactMethod" className={inputCls} value={form.contactMethod} onChange={(e) => update("contactMethod", e.target.value)} required>
                     <option value="" className="bg-navy">Select…</option>
                     {CONTACT_METHODS.map((c) => <option key={c} value={c} className="bg-navy">{c}</option>)}
                   </select>
@@ -2059,7 +2096,7 @@ function Contact() {
                 </div>
                 <div className="sm:col-span-2">
                   <label htmlFor="notes" className={labelCls}>Additional Notes</label>
-                  <textarea id="notes" rows={4} className={inputCls} value={form.notes} onChange={(e) => update("notes", e.target.value)} />
+                  <textarea id="notes" name="notes" rows={4} className={inputCls} value={form.notes} onChange={(e) => update("notes", e.target.value)} />
                 </div>
               </div>
               {status === "error" && (
@@ -2073,11 +2110,15 @@ function Contact() {
                 aria-busy={status === "loading"}
                 className="motion-interactive mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-4 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition hover:brightness-110 disabled:opacity-60"
               >
-                {status === "loading" ? "Sending…" : status === "error" ? "Retry Sending" : "Book My Clinic Workflow Audit"}
+                {status === "loading" ? "Sending…" : status === "error" ? "Retry Sending" : "Request a Clinic Workflow Audit"}
                 <span aria-hidden>→</span>
               </button>
               <p className="mt-3 text-center text-xs text-white/50">
                 Fields marked <span className="text-brand">*</span> are required.
+              </p>
+              <p className="mt-2 text-center text-xs text-white/50">
+                By submitting this form, you acknowledge the{" "}
+                <a href="/privacy" className="font-semibold text-sky-300 underline-offset-4 hover:underline">Privacy Policy</a>.
               </p>
             </>
           )}
@@ -2104,7 +2145,11 @@ function Footer() {
             <div className="mt-6 space-y-1.5 text-sm">
               <div><a href="mailto:Joeljaybancaya16@gmail.com" className="hover:text-white">Joeljaybancaya16@gmail.com</a></div>
               <div><a href="tel:+639310905178" className="hover:text-white">+63 931 090 5178</a></div>
-              <div>LinkedIn: Joel Jay Bancaya</div>
+              <div>
+                <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                  LinkedIn: Joel Jay Bancaya
+                </a>
+              </div>
               <div>Metro Manila, Philippines</div>
             </div>
 
@@ -2118,7 +2163,7 @@ function Footer() {
           <div>
             <div className="text-xs font-bold uppercase tracking-wider text-white">Legal</div>
             <ul className="mt-4 space-y-2 text-sm">
-              <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+              <li><a href="/privacy" className="hover:text-white">Privacy Policy</a></li>
             </ul>
           </div>
         </div>
@@ -2138,6 +2183,7 @@ function Footer() {
 function Home() {
   return (
     <div className="min-h-screen bg-background">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }} />
       <SiteMotion />
       <Header />
       <main>
