@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import socialPreview from "../assets/process-map.jpg";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -71,6 +72,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 const TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
 const DESCRIPTION = "Workflow systems for orthodontic and cosmetic dental clinics: patient inquiry response, consultation booking, appointment reminders, staff notifications, and lead follow-up.";
+const SITE_URL = "https://www.automatebancaya.com/";
+const SOCIAL_IMAGE = new URL(socialPreview, SITE_URL).href;
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -82,10 +85,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESCRIPTION },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: SOCIAL_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
+      { name: "twitter:image", content: SOCIAL_IMAGE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
