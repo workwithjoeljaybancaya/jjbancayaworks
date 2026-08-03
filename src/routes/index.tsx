@@ -23,10 +23,6 @@ import intakeConfirmationImg from "@/assets/projects/intake-confirmation.png";
 import appointmentRemindersImg from "@/assets/projects/appointment-reminders.png";
 import documentFilingImg from "@/assets/projects/document-filing.png";
 import financialReportingImg from "@/assets/projects/financial-reporting.png";
-import leadToAppointmentImg from "@/assets/projects/lead-to-appointment.png";
-import messengerAgentImg from "@/assets/projects/messenger-ai-agent.png";
-import telegramAssistantImg from "@/assets/projects/telegram-assistant.png";
-import inquiryCaptureImg from "@/assets/projects/inquiry-capture.png";
 
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
