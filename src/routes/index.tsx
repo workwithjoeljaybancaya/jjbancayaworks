@@ -16,6 +16,17 @@ import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.p
 import n8nCertificate from "@/assets/credentials/n8n-training-certificate.webp";
 import makeCertificate from "@/assets/credentials/make-training-certificate.webp";
 import zapierCertificate from "@/assets/credentials/zapier-training-certificate.webp";
+import crmPipelineImg from "@/assets/projects/crm-lead-pipeline.png";
+import leadEnrichmentImg from "@/assets/projects/lead-enrichment.png";
+import contentRepurposingImg from "@/assets/projects/content-repurposing.png";
+import intakeConfirmationImg from "@/assets/projects/intake-confirmation.png";
+import appointmentRemindersImg from "@/assets/projects/appointment-reminders.png";
+import documentFilingImg from "@/assets/projects/document-filing.png";
+import financialReportingImg from "@/assets/projects/financial-reporting.png";
+import leadToAppointmentImg from "@/assets/projects/lead-to-appointment.png";
+import messengerAgentImg from "@/assets/projects/messenger-ai-agent.png";
+import telegramAssistantImg from "@/assets/projects/telegram-assistant.png";
+import inquiryCaptureImg from "@/assets/projects/inquiry-capture.png";
 
 
 const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
@@ -207,7 +218,7 @@ function SiteMotion() {
         aria-hidden
         className="pointer-events-none fixed inset-x-0 top-0 z-[80] h-[3px] origin-left scale-x-0 bg-gradient-to-r from-sky-400 via-brand to-cyan-300 shadow-[0_0_12px_rgba(14,165,233,.65)]"
       />
-      <style>{"html{scrollbar-gutter:stable}html,body{max-width:100%;overflow-x:clip}html.motion-ready body{overflow-x:clip}html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:0;translate:0 24px;transition:opacity 750ms cubic-bezier(.22,1,.36,1),translate 750ms cubic-bezier(.22,1,.36,1),scale 750ms cubic-bezier(.22,1,.36,1),rotate 750ms cubic-bezier(.22,1,.36,1),clip-path 950ms cubic-bezier(.22,1,.36,1),filter 650ms ease,box-shadow 300ms ease,border-color 300ms ease;transition-delay:var(--motion-delay,0ms)}html.motion-ready [data-motion-card]{translate:0 18px;scale:.985}html.motion-ready [data-motion=hero-copy]{translate:-46px 0}html.motion-ready [data-motion=hero-demo]{translate:46px 0;scale:.965}html.motion-ready [data-motion=breakdown-heading]{scale:.94;translate:0 14px}html.motion-ready [data-motion=solution-map]{translate:-40px 0;scale:.97}html.motion-ready [data-motion=solution-copy]{translate:42px 0}html.motion-ready [data-motion=process-heading]{translate:0 -28px}html.motion-ready [data-motion=demo-heading]{scale:.94;translate:0 18px}html.motion-ready [data-motion=demo-stage]{scale:.94;rotate:-.6deg}html.motion-ready [data-motion=demo-heading-secondary]{translate:0 30px}html.motion-ready [data-motion=demo-gallery]{translate:0 34px;scale:.97}html.motion-ready [data-motion=sample-heading]{scale:.94}html.motion-ready [data-motion=sample-left]{translate:-48px 0;rotate:-.7deg}html.motion-ready [data-motion=sample-right]{translate:48px 0;rotate:.7deg}html.motion-ready [data-motion=case-heading]{translate:0 -24px}html.motion-ready [data-motion=case-card]{scale:.9;filter:blur(5px)}html.motion-ready [data-motion=why-heading]{scale:.95;translate:0 18px}html.motion-ready [data-motion=why-callout]{translate:-38px 0}html.motion-ready [data-motion=why-tools]{translate:38px 0}html.motion-ready [data-motion=about-media]{translate:-48px 0;rotate:-1.5deg;scale:.95}html.motion-ready [data-motion=about-copy]{translate:48px 0}html.motion-ready [data-motion=credentials-heading]{translate:0 -24px}html.motion-ready [data-motion=credentials-stage]{translate:0 32px;scale:.98}html.motion-ready [data-motion=faq-heading]{scale:.94}html.motion-ready [data-motion=faq-left]{translate:-38px 0}html.motion-ready [data-motion=faq-right]{translate:38px 0}html.motion-ready [data-motion=contact-copy]{translate:-48px 0}html.motion-ready [data-motion=contact-form]{translate:48px 0;scale:.97}html.motion-ready .motion-visible{opacity:1;translate:0 0;scale:1;rotate:0deg;clip-path:inset(0);filter:none}@media(hover:hover) and (pointer:fine){[data-motion-card].motion-visible:hover{translate:0 -7px;scale:1.015;border-color:color-mix(in oklab,var(--brand) 48%,transparent);box-shadow:0 20px 45px color-mix(in oklab,var(--brand) 18%,transparent)}[data-motion-media].motion-visible{overflow:hidden}[data-motion-media].motion-visible img{transition:scale 700ms cubic-bezier(.22,1,.36,1),filter 400ms ease}[data-motion-media].motion-visible:hover img{scale:1.025;filter:saturate(1.04) contrast(1.02)}.motion-interactive{transition-property:translate,scale,filter,box-shadow,background-color,border-color!important;transition-duration:220ms!important}.motion-interactive:hover{translate:0 -2px;scale:1.025}.motion-interactive:active{translate:0 0;scale:.98}}@media(prefers-reduced-motion:reduce){html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:1!important;translate:0!important;scale:1!important;rotate:0deg!important;clip-path:inset(0)!important;filter:none!important;transition:none!important}.motion-interactive{transition:none!important}}"}</style>
+      <style>{"html{scrollbar-gutter:stable}html,body{max-width:100%;overflow-x:clip}html.motion-ready body{overflow-x:clip}html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:0;translate:0 24px;transition:opacity 750ms cubic-bezier(.22,1,.36,1),translate 750ms cubic-bezier(.22,1,.36,1),scale 750ms cubic-bezier(.22,1,.36,1),rotate 750ms cubic-bezier(.22,1,.36,1),clip-path 950ms cubic-bezier(.22,1,.36,1),filter 650ms ease,box-shadow 300ms ease,border-color 300ms ease;transition-delay:var(--motion-delay,0ms)}html.motion-ready [data-motion-card]{translate:0 18px;scale:.985}html.motion-ready [data-motion=hero-copy]{translate:-46px 0}html.motion-ready [data-motion=hero-demo]{translate:46px 0;scale:.965}html.motion-ready [data-motion=breakdown-heading]{scale:.94;translate:0 14px}html.motion-ready [data-motion=solution-map]{translate:-40px 0;scale:.97}html.motion-ready [data-motion=solution-copy]{translate:42px 0}html.motion-ready [data-motion=process-heading]{translate:0 -28px}html.motion-ready [data-motion=demo-heading]{scale:.94;translate:0 18px}html.motion-ready [data-motion=demo-stage]{scale:.94;rotate:-.6deg}html.motion-ready [data-motion=demo-heading-secondary]{translate:0 30px}html.motion-ready [data-motion=demo-gallery]{translate:0 34px;scale:.97}html.motion-ready [data-motion=sample-heading]{scale:.94}html.motion-ready [data-motion=sample-left]{translate:-48px 0;rotate:-.7deg}html.motion-ready [data-motion=sample-right]{translate:48px 0;rotate:.7deg}html.motion-ready [data-motion=case-heading]{translate:0 -24px}html.motion-ready [data-motion=case-card]{scale:.9;filter:blur(5px)}html.motion-ready [data-motion=why-heading]{scale:.95;translate:0 18px}html.motion-ready [data-motion=why-callout]{translate:-38px 0}html.motion-ready [data-motion=why-tools]{translate:38px 0}html.motion-ready [data-motion=about-media]{translate:-48px 0;rotate:-1.5deg;scale:.95}html.motion-ready [data-motion=about-copy]{translate:48px 0}html.motion-ready [data-motion=credentials-heading]{translate:0 -24px}html.motion-ready [data-motion=credentials-stage]{translate:0 32px;scale:.98}html.motion-ready [data-motion=portfolio-heading]{translate:0 -24px}html.motion-ready [data-motion=portfolio-stage]{translate:0 32px;scale:.98}html.motion-ready [data-motion=faq-heading]{scale:.94}html.motion-ready [data-motion=faq-left]{translate:-38px 0}html.motion-ready [data-motion=faq-right]{translate:38px 0}html.motion-ready [data-motion=contact-copy]{translate:-48px 0}html.motion-ready [data-motion=contact-form]{translate:48px 0;scale:.97}html.motion-ready .motion-visible{opacity:1;translate:0 0;scale:1;rotate:0deg;clip-path:inset(0);filter:none}@media(hover:hover) and (pointer:fine){[data-motion-card].motion-visible:hover{translate:0 -7px;scale:1.015;border-color:color-mix(in oklab,var(--brand) 48%,transparent);box-shadow:0 20px 45px color-mix(in oklab,var(--brand) 18%,transparent)}[data-motion-media].motion-visible{overflow:hidden}[data-motion-media].motion-visible img{transition:scale 700ms cubic-bezier(.22,1,.36,1),filter 400ms ease}[data-motion-media].motion-visible:hover img{scale:1.025;filter:saturate(1.04) contrast(1.02)}.motion-interactive{transition-property:translate,scale,filter,box-shadow,background-color,border-color!important;transition-duration:220ms!important}.motion-interactive:hover{translate:0 -2px;scale:1.025}.motion-interactive:active{translate:0 0;scale:.98}}@media(prefers-reduced-motion:reduce){html.motion-ready [data-scroll-reveal],html.motion-ready [data-motion-card],html.motion-ready [data-motion-media],html.motion-ready [data-motion]{opacity:1!important;translate:0!important;scale:1!important;rotate:0deg!important;clip-path:inset(0)!important;filter:none!important;transition:none!important}.motion-interactive{transition:none!important}}"}</style>
     </>
   );
 }
@@ -1651,6 +1662,247 @@ function Credentials() {
   );
 }
 
+/* ---------------- Cross-industry automation portfolio ---------------- */
+const OTHER_PROJECTS = [
+  {
+    id: "crm-pipeline",
+    name: "Automated Lead Pipeline & CRM Stages",
+    platform: "Zapier",
+    industry: "Sales & Agency Operations",
+    summary:
+      "A multi-step Zapier build that turns a task board into a working CRM, moving each lead through its stage with the right email, folder, and timed follow-up.",
+    image: crmPipelineImg,
+    alt: "Zapier workflow diagram of an automated lead pipeline with CRM stages",
+  },
+  {
+    id: "lead-enrichment",
+    name: "AI Lead Enrichment & Priority Routing",
+    platform: "Zapier",
+    industry: "B2B Sales",
+    summary:
+      "Form submissions are cleaned, enriched with company and role data, then routed so high-value prospects receive a personalised outreach email automatically.",
+    image: leadEnrichmentImg,
+    alt: "Zapier workflow diagram of AI lead enrichment and priority routing",
+  },
+  {
+    id: "content-repurposing",
+    name: "AI Content Repurposing Engine",
+    platform: "Zapier",
+    industry: "Marketing & Media",
+    summary:
+      "A single uploaded video is transcribed, rewritten into a long-form article, and reshaped into platform-ready social posts published without manual editing.",
+    image: contentRepurposingImg,
+    alt: "Zapier workflow diagram of an AI content repurposing engine",
+  },
+  {
+    id: "intake-confirmation",
+    name: "Instant Intake Confirmation & Team Alerts",
+    platform: "Zapier",
+    industry: "Service Businesses",
+    summary:
+      "Every submission triggers a branded acknowledgement to the customer, an internal alert to the team, and a clean record in a central spreadsheet.",
+    image: intakeConfirmationImg,
+    alt: "Zapier workflow diagram of instant intake confirmation and team alerts",
+  },
+  {
+    id: "appointment-reminders",
+    name: "Booking Confirmation & Reminder Sequence",
+    platform: "Zapier",
+    industry: "Consulting & Coaching",
+    summary:
+      "New bookings are logged, confirmed with a tailored message, and followed by a timed reminder before the meeting to reduce no-shows.",
+    image: appointmentRemindersImg,
+    alt: "Zapier workflow diagram of a booking confirmation and reminder sequence",
+  },
+  {
+    id: "document-filing",
+    name: "AI Document Filing & Audit Trail",
+    platform: "Make.com",
+    industry: "Finance & Administration",
+    summary:
+      "Incoming email attachments are read by an AI agent, renamed descriptively, filed into the correct drive folder, and logged for a complete audit trail.",
+    image: documentFilingImg,
+    alt: "Make.com scenario diagram of AI document filing with an audit trail",
+  },
+  {
+    id: "financial-reporting",
+    name: "Accounting-to-Project Reporting Bridge",
+    platform: "Make.com",
+    industry: "Finance & Operations",
+    summary:
+      "Live accounting transactions are pulled on demand, compiled into a clean CSV report, and delivered straight back into the relevant project task.",
+    image: financialReportingImg,
+    alt: "Make.com scenario diagram of an accounting to project reporting bridge",
+  },
+  {
+    id: "lead-to-appointment",
+    name: "Lead-to-Appointment Booking Engine",
+    platform: "n8n",
+    industry: "Sales Teams",
+    summary:
+      "Leads are captured, qualified, and scheduled into calendar and video meetings, with approval, decline, and automated rescheduling handled by sub-workflows.",
+    image: leadToAppointmentImg,
+    alt: "n8n workflow diagram of a lead to appointment booking engine",
+  },
+  {
+    id: "messenger-agent",
+    name: "24/7 AI Messenger Support Agent",
+    platform: "n8n",
+    industry: "Customer Support",
+    summary:
+      "Page messages are validated, answered by an AI agent grounded in a business knowledge base, and kept in context through conversation memory.",
+    image: messengerAgentImg,
+    alt: "n8n workflow diagram of a 24/7 AI messenger support agent",
+  },
+  {
+    id: "telegram-assistant",
+    name: "Conversational Scheduling Assistant",
+    platform: "n8n",
+    industry: "Executive Productivity",
+    summary:
+      "A chat-based assistant checks records, reviews calendar availability, and creates appointments from plain-language instructions.",
+    image: telegramAssistantImg,
+    alt: "n8n workflow diagram of a conversational scheduling assistant",
+  },
+  {
+    id: "inquiry-capture",
+    name: "Inquiry Capture & Mobile Alert System",
+    platform: "n8n",
+    industry: "Professional Services",
+    summary:
+      "New inquiries are parsed from the inbox, acknowledged automatically, logged into a central sheet, and pushed to mobile so follow-up happens fast.",
+    image: inquiryCaptureImg,
+    alt: "n8n workflow diagram of an inquiry capture and mobile alert system",
+  },
+];
+
+function OtherAutomationWork() {
+  const reducedMotion = usePrefersReducedMotion();
+  const [activeProject, setActiveProject] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<(typeof OTHER_PROJECTS)[number] | null>(null);
+  const carouselItems = reducedMotion ? OTHER_PROJECTS : [...OTHER_PROJECTS, ...OTHER_PROJECTS];
+
+  useEffect(() => {
+    if (!selectedProject) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedProject(null);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [selectedProject]);
+
+  return (
+    <section id="automation-portfolio" className="overflow-hidden bg-background py-16 lg:py-20">
+      <div data-motion="portfolio-heading" className="mx-auto max-w-7xl px-5 text-center lg:px-8">
+        <SectionEyebrow>Wider Automation Portfolio</SectionEyebrow>
+        <h2 className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
+          Automation Systems Built Outside Dental Clinics
+        </h2>
+        <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-foreground/70 sm:text-lg">
+          Workflow systems delivered across sales, marketing, finance, support, and operations. The
+          same engineering principles behind the clinic system — reliable intake, controlled
+          follow-up, safe scheduling, and clear staff handoffs.
+        </p>
+        <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
+          Select any project to view the full workflow architecture.
+        </p>
+      </div>
+
+      <div
+        data-motion="portfolio-stage"
+        className="portfolio-stage mt-8 py-4"
+        onMouseLeave={() => setActiveProject(null)}
+      >
+        <div className={reducedMotion ? "mx-auto flex max-w-7xl snap-x gap-5 overflow-x-auto px-5 pb-4 lg:px-8" : "portfolio-marquee flex w-max gap-5 px-5"}>
+          {carouselItems.map((project, index) => {
+            const isMuted = activeProject !== null && activeProject !== project.id;
+            return (
+              <button
+                key={project.id + "-" + index}
+                type="button"
+                onClick={() => setSelectedProject(project)}
+                onMouseEnter={() => setActiveProject(project.id)}
+                onFocus={() => setActiveProject(project.id)}
+                onBlur={() => setActiveProject(null)}
+                aria-label={"View workflow architecture for " + project.name}
+                className={[
+                  "group w-[min(82vw,24rem)] shrink-0 snap-center overflow-hidden rounded-3xl border border-border bg-card text-left shadow-lg shadow-navy/5",
+                  "transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.04] hover:border-brand/50 hover:shadow-2xl hover:shadow-brand/20",
+                  "focus-visible:-translate-y-2 focus-visible:scale-[1.04] focus-visible:border-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  isMuted ? "scale-[0.98] opacity-40 grayscale blur-[1px]" : "opacity-100",
+                ].join(" ")}
+              >
+                <div className="relative aspect-[16/9] overflow-hidden bg-white">
+                  <img
+                    src={project.image}
+                    alt={project.alt}
+                    loading="lazy"
+                    className="h-full w-full object-cover object-left-top transition duration-500 group-hover:scale-[1.03] group-focus-visible:scale-[1.03]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white">
+                    <span className="text-xs font-bold uppercase tracking-[0.16em]">View workflow</span>
+                    <span aria-hidden className="grid h-8 w-8 place-items-center rounded-full bg-white/15 backdrop-blur">↗</span>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
+                      {project.platform}
+                    </span>
+                    <span className="text-xs font-medium text-muted-foreground">{project.industry}</span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold text-foreground">{project.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground/60">{project.summary}</p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <style>{"@keyframes portfolio-scroll-left{from{transform:translateX(0)}to{transform:translateX(calc(-50% - .625rem))}}.portfolio-marquee{animation:portfolio-scroll-left 60s linear infinite;will-change:transform}.portfolio-stage:hover .portfolio-marquee,.portfolio-stage:focus-within .portfolio-marquee{animation-play-state:paused}@media(prefers-reduced-motion:reduce){.portfolio-marquee{animation:none;transform:none}}"}</style>
+
+      {selectedProject && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedProject.name + " workflow architecture"}
+          className="fixed inset-0 z-[100] grid place-items-center bg-navy/80 p-4 backdrop-blur-md"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setSelectedProject(null);
+          }}
+        >
+          <div className="relative w-full max-w-6xl overflow-hidden rounded-2xl border border-white/15 bg-card shadow-2xl">
+            <button
+              type="button"
+              onClick={() => setSelectedProject(null)}
+              aria-label="Close workflow preview"
+              className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-navy/80 text-xl text-white shadow-lg transition hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              ×
+            </button>
+            <img
+              src={selectedProject.image}
+              alt={selectedProject.alt}
+              className="max-h-[70vh] w-full bg-white object-contain"
+            />
+            <div className="border-t border-border p-5 sm:p-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
+                  {selectedProject.platform}
+                </span>
+                <span className="text-xs font-medium text-muted-foreground">{selectedProject.industry}</span>
+              </div>
+              <h3 className="mt-3 text-xl font-bold text-foreground">{selectedProject.name}</h3>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-foreground/70">{selectedProject.summary}</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 /* ---------------- FAQ ---------------- */
 const FAQS = [
   { q: "Will this replace our receptionist?", a: "No. The system is designed to handle repetitive administrative steps and support your front-desk team. Staff remain responsible for patient care, exceptions, sensitive concerns, and situations that require human judgment." },
@@ -1941,6 +2193,7 @@ function Home() {
         <SampleProjects />
         <AboutApproach />
         <Credentials />
+        <OtherAutomationWork />
         <FAQ />
         <Contact />
       </main>
