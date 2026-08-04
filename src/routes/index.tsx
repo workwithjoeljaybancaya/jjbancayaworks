@@ -1631,13 +1631,13 @@ function Credentials() {
                 ].join(" ")}
               >
                 <div className="relative aspect-[1400/990] overflow-hidden bg-white">
-                  <img
-                    src={credential.image}
-                    alt={credential.alt}
-                    loading="lazy"
-                    width={1400}
-                    height={990}
-                    className="block h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-center bg-no-repeat transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
+                    style={{
+                      backgroundImage: `url("${credential.image}")`,
+                      backgroundSize: "100% 100%",
+                    }}
                   />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white">
                     <span className="text-xs font-bold uppercase tracking-[0.16em]">View certificate</span>
