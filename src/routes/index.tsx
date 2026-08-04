@@ -16,7 +16,6 @@ import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.p
 import { n8nCertificate, promptEngineeringCertificate } from "@/assets/credentials/replacement-certificate-assets";
 import makeCertificate from "@/assets/credentials/make-training-certificate.webp";
 import zapierCertificate from "@/assets/credentials/zapier-training-certificate.webp";
-import promptEngineeringCertificate from "@/assets/credentials/prompt-engineering-certificate.svg";
 import crmPipelineImg from "@/assets/projects/crm-lead-pipeline.png";
 import leadEnrichmentImg from "@/assets/projects/lead-enrichment.png";
 import contentRepurposingImg from "@/assets/projects/content-repurposing.png";
