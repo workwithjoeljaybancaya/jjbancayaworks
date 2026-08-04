@@ -16,6 +16,7 @@ import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.p
 import n8nCertificate from "@/assets/credentials/n8n-training-certificate.webp";
 import makeCertificate from "@/assets/credentials/make-training-certificate.webp";
 import zapierCertificate from "@/assets/credentials/zapier-training-certificate.webp";
+import promptEngineeringCertificate from "@/assets/credentials/prompt-engineering-certificate.svg";
 import crmPipelineImg from "@/assets/projects/crm-lead-pipeline.png";
 import leadEnrichmentImg from "@/assets/projects/lead-enrichment.png";
 import contentRepurposingImg from "@/assets/projects/content-repurposing.png";
@@ -1560,6 +1561,15 @@ const CREDENTIALS = [
     image: zapierCertificate,
     alt: "Certificate of completion for Joel Jay Bancaya in No-Code Automation with Zapier training",
   },
+  {
+    id: "prompt-engineering",
+    platform: "Prompt Engineering",
+    title: "Prompt Engineering — Full Training",
+    provider: "Tara AI Community",
+    date: "August 4, 2026",
+    image: promptEngineeringCertificate,
+    alt: "Certificate of completion for Joel Jay in Prompt Engineering training",
+  },
 ];
 
 function Credentials() {
@@ -1585,8 +1595,8 @@ function Credentials() {
           Training Across Leading Automation Platforms
         </h2>
         <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-foreground/70 sm:text-lg">
-          Hands-on training in n8n, Make.com, and Zapier covering workflow design, triggers, actions,
-          branching, data processing, webhooks, API connections, HTTP requests, and AI agents.
+          Hands-on training in n8n, Make.com, Zapier, and prompt engineering covering workflow design,
+          integrations, data processing, APIs, AI agents, and practical prompt techniques.
         </p>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
           These are training-completion credentials issued by independent training providers.
