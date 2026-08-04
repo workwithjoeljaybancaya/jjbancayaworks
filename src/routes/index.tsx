@@ -13,7 +13,7 @@ import wf6 from "@/assets/demo/workflow-06-reminders.webp";
 import wf7 from "@/assets/demo/workflow-07-rescheduling-cancellation.webp";
 import sampleFacebookWorkflow from "@/assets/demo/sample-facebook-page-agent.png";
 import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.png";
-import n8nCertificate from "@/assets/credentials/n8n-training-certificate.webp";
+import n8nCertificate from "@/assets/credentials/n8n-training-certificate.svg";
 import makeCertificate from "@/assets/credentials/make-training-certificate.webp";
 import zapierCertificate from "@/assets/credentials/zapier-training-certificate.webp";
 import promptEngineeringCertificate from "@/assets/credentials/prompt-engineering-certificate.svg";
