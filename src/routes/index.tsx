@@ -13,7 +13,7 @@ import wf6 from "@/assets/demo/workflow-06-reminders.webp";
 import wf7 from "@/assets/demo/workflow-07-rescheduling-cancellation.webp";
 import sampleFacebookWorkflow from "@/assets/demo/sample-facebook-page-agent.png";
 import sampleTelegramWorkflow from "@/assets/demo/sample-telegram-ai-assistant.png";
-import n8nCertificate from "@/assets/credentials/n8n-training-certificate.svg";
+import { n8nCertificate, promptEngineeringCertificate } from "@/assets/credentials/replacement-certificate-assets";
 import makeCertificate from "@/assets/credentials/make-training-certificate.webp";
 import zapierCertificate from "@/assets/credentials/zapier-training-certificate.webp";
 import promptEngineeringCertificate from "@/assets/credentials/prompt-engineering-certificate.svg";
@@ -1638,7 +1638,7 @@ function Credentials() {
                     loading="lazy"
                     width={1400}
                     height={990}
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
+                    className="block h-full w-full object-cover transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
                   />
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white">
                     <span className="text-xs font-bold uppercase tracking-[0.16em]">View certificate</span>
