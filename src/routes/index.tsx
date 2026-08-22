@@ -1799,7 +1799,7 @@ function OtherAutomationWork() {
       <div data-motion="portfolio-heading" className="mx-auto max-w-7xl px-5 text-center lg:px-8">
         <SectionEyebrow>Wider Automation Portfolio</SectionEyebrow>
         <h2 className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
-          Automation Systems Built Outside Dental Clinics
+          Systems I've Built
         </h2>
         <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-foreground/70 sm:text-lg">
           Portfolio and demonstration systems built across sales, marketing, finance, support, and operations. The
@@ -2207,6 +2207,7 @@ function Home() {
       <Header />
       <main>
         <Hero />
+        <OtherAutomationWork />
         <Problems />
         <Solution />
         <HowItWorks />
@@ -2214,7 +2215,6 @@ function Home() {
         <SampleProjects />
         <AboutApproach />
         <Credentials />
-        <OtherAutomationWork />
         <FAQ />
         <Contact />
       </main>
