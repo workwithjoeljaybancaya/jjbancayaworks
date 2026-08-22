@@ -25,8 +25,8 @@ import documentFilingImg from "@/assets/projects/document-filing.png";
 import financialReportingImg from "@/assets/projects/financial-reporting.png";
 
 
-const PAGE_TITLE = "Dental Clinic Automation Specialist | Inquiry & Consultation Booking Systems";
-const PAGE_DESC = "Workflow systems for orthodontic and cosmetic dental clinics: patient inquiry response, consultation booking, appointment reminders, staff notifications, and lead follow-up.";
+const PAGE_TITLE = "AI Automation Specialist | Workflow Systems for Lead Intake, Scheduling & Follow-Up";
+const PAGE_DESC = "AI workflow systems for lead intake, inquiry response, appointment booking, reminders, staff notifications, and customer follow-up.";
 const SITE_URL = "https://www.automatebancaya.com/";
 const LINKEDIN_URL = "https://www.linkedin.com/in/joel-jay-bancaya-b4a718409/";
 const SOCIAL_IMAGE = new URL(processMapImg, SITE_URL).href;
@@ -41,16 +41,16 @@ const STRUCTURED_DATA = {
       email: "mailto:Joeljaybancaya16@gmail.com",
       sameAs: [LINKEDIN_URL],
       address: { "@type": "PostalAddress", addressLocality: "Metro Manila", addressCountry: "PH" },
-      jobTitle: "Dental Clinic AI Automation Specialist",
+      jobTitle: "AI Automation Specialist",
     },
     {
       "@type": "ProfessionalService",
       "@id": SITE_URL + "#automation-service",
-      name: "Joel Jay Bancaya — Dental Clinic Workflow Systems",
+      name: "Joel Jay Bancaya — AI Workflow Systems",
       url: SITE_URL,
       email: "mailto:Joeljaybancaya16@gmail.com",
-      areaServed: "Dental clinics",
-      serviceType: "Dental clinic administrative workflow automation",
+      areaServed: "Service businesses",
+      serviceType: "Administrative workflow automation",
       founder: { "@id": SITE_URL + "#joel-jay-bancaya" },
     },
   ],
@@ -266,7 +266,6 @@ function Header() {
           <div className="min-w-0 leading-tight">
             <div className="truncate text-sm font-extrabold text-foreground sm:text-base">Joel Jay Bancaya</div>
             <div className="hidden text-[9px] font-medium uppercase leading-[1.2] tracking-[0.14em] text-muted-foreground sm:block">
-              <span className="block">Dental Clinic</span>
               <span className="block whitespace-nowrap">AI Automation Specialist</span>
             </div>
           </div>
@@ -358,8 +357,8 @@ const DEMO_STEPS = [
   {
     tag: "New Inquiry",
     title: "New Inquiry Received",
-    detail: "Patient interested in braces consultation",
-    meta: "via clinic website form",
+    detail: "Customer requesting an appointment",
+    meta: "via website form",
   },
   {
     tag: "Availability Checked",
@@ -368,14 +367,14 @@ const DEMO_STEPS = [
     meta: "Jul 22 · Jul 24 · Jul 26",
   },
   {
-    tag: "Consultation Booked",
-    title: "Consultation Booked",
+    tag: "Appointment Booked",
+    title: "Appointment Booked",
     detail: "July 24 · 1:30 PM · Confirmed",
-    meta: "Dr. Reyes · Orthodontics",
+    meta: "Assigned to available specialist",
   },
   {
-    tag: "Clinic Notified",
-    title: "Clinic Notified",
+    tag: "Team Notified",
+    title: "Team Notified",
     detail: "Calendar updated · Front desk notified",
     meta: "Staff alert sent",
   },
@@ -431,7 +430,7 @@ function DemoWorkflow() {
     <div
       className="relative rounded-3xl border border-border bg-card p-3 shadow-2xl shadow-brand/15 sm:p-4"
       role="group"
-      aria-label="Animated demo of the inquiry-to-consultation workflow"
+      aria-label="Animated demo of the inquiry-to-booking workflow"
     >
       {/* Header */}
       <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
@@ -443,7 +442,7 @@ function DemoWorkflow() {
           </div>
           <div className="min-w-0">
             <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand">Demo Workflow</div>
-            <div className="truncate text-sm font-semibold text-foreground">Inquiry → Consultation</div>
+            <div className="truncate text-sm font-semibold text-foreground">Inquiry → Booking</div>
           </div>
         </div>
         {canControl && (
@@ -567,19 +566,19 @@ function Hero() {
 
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:px-8 lg:py-20">
         <div data-motion="hero-copy" className="min-w-0">
-          <SectionEyebrow>For orthodontic & cosmetic dental clinics</SectionEyebrow>
+          <SectionEyebrow>AI automation for service businesses</SectionEyebrow>
           <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
-            Turn More Dental Inquiries Into <span className="text-brand">Confirmed Consultations</span>
+            Turn More Inquiries Into <span className="text-brand">Confirmed Bookings</span>
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/70 dark:text-foreground/80 sm:text-lg">
-            I build connected inquiry, consultation-booking, reminder, and follow-up systems that help dental clinics respond consistently, reduce administrative back-and-forth, and keep staff informed throughout the patient journey.
+            I build connected inquiry-response, booking, reminder, and follow-up systems that help service businesses reply consistently, reduce administrative back-and-forth, and keep staff informed from first contact to confirmed appointment.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
+            <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
             <CtaSecondary href="#how-it-works">See How the System Works</CtaSecondary>
           </div>
           <p className="mt-6 max-w-lg text-sm text-foreground/55 dark:text-foreground/70">
-            Designed around your clinic's existing process, staff responsibilities, and appointment rules.
+            Designed around your existing process, staff responsibilities, and appointment rules.
           </p>
         </div>
 
@@ -594,10 +593,10 @@ function Hero() {
 
 /* ---------------- Problems ---------------- */
 const PROBLEMS = [
-  { icon: "⏱", title: "Slow or Missed Inquiry Responses", body: "Patients may contact several clinics at once. Delayed or inconsistent responses can cause qualified inquiries to go unanswered." },
-  { icon: "↺", title: "Too Much Booking Back-and-Forth", body: "Staff spend time repeatedly checking dates, confirming details, and offering alternative consultation schedules." },
-  { icon: "✕", title: "Unconfirmed Appointments and No-Shows", body: "Without consistent confirmation and reminder processes, consultation slots may remain uncertain or be missed." },
-  { icon: "…", title: "Leads Receive No Structured Follow-Up", body: "Potential patients who inquire but do not immediately book can be forgotten when follow-up depends entirely on manual tracking." },
+  { icon: "⏱", title: "Slow or Missed Inquiry Responses", body: "Customers often contact several businesses at once. Delayed or inconsistent responses can cause qualified leads to go unanswered." },
+  { icon: "↺", title: "Too Much Booking Back-and-Forth", body: "Staff spend time repeatedly checking dates, confirming details, and offering alternative appointment schedules." },
+  { icon: "✕", title: "Unconfirmed Appointments and No-Shows", body: "Without consistent confirmation and reminder processes, appointment slots may remain uncertain or be missed." },
+  { icon: "…", title: "Leads Receive No Structured Follow-Up", body: "Leads who inquire but do not immediately book can be forgotten when follow-up depends entirely on manual tracking." },
 ];
 function Problems() {
   return (
@@ -605,9 +604,9 @@ function Problems() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div data-motion="breakdown-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Common breakdowns</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Where Dental Clinics Commonly Lose Inquiries and Appointments</h2>
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Where Businesses Commonly Lose Leads and Appointments</h2>
           <p className="mt-5 text-foreground/65">
-            Small breakdowns in response, booking, confirmation, and follow-up can create unnecessary work for staff and a frustrating experience for potential patients.
+            Small breakdowns in response, booking, confirmation, and follow-up can create unnecessary work for staff and a frustrating experience for potential customers.
           </p>
         </div>
         <div className="problem-sequence-grid mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -656,8 +655,11 @@ function Solution() {
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <div data-motion="solution-copy" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Flagship solution</SectionEyebrow>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70">
+            Here's a deep dive into one system I built end-to-end — a 7-workflow patient booking pipeline for dental clinics.
+          </p>
           <h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
-            Dental Lead-to-Consultation System
+            Flagship Case Study: Dental Lead-to-Consultation System
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-base">
             Seven connected workflows coordinate inquiry capture, information recovery, scheduling, booking, reminders, and appointment changes.
@@ -1492,10 +1494,10 @@ function AboutApproach() {
         <div data-motion="why-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>About My Approach</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
-            Dental Workflow Systems Built Around Your Clinic
+            Automation Systems Built Around Your Business
           </h2>
           <p className="mt-5 text-foreground/65">
-            I specialize in practical workflow systems for orthodontic and cosmetic dental clinics. My approach starts by understanding your current inquiry, scheduling, communication, and staff-handoff process before recommending what should be automated.
+            My approach starts by understanding your current inquiry, scheduling, communication, and handoff process before recommending what should be automated — the same method applies whether you run a clinic, a studio, an agency, or any appointment-based business. Dental clinics are simply the area where I have the deepest hands-on experience.
           </p>
         </div>
 
@@ -1914,14 +1916,14 @@ function OtherAutomationWork() {
 
 /* ---------------- FAQ ---------------- */
 const FAQS = [
-  { q: "Will this replace our receptionist?", a: "No. The system is designed to handle repetitive administrative steps and support your front-desk team. Staff remain responsible for patient care, exceptions, sensitive concerns, and situations that require human judgment." },
-  { q: "Can it work with our existing calendar or tools?", a: "Possibly. Compatibility depends on the tools your clinic currently uses and the access they provide. The workflow audit identifies what can be connected and where a practical alternative may be needed." },
-  { q: "What happens when a preferred time is unavailable?", a: "The workflow can suggest suitable alternative consultation times based on the clinic's availability, operating hours, appointment duration, and scheduling rules." },
-  { q: "Can staff approve messages before they are sent?", a: "Yes. Approval steps can be included for selected messages, exceptions, or sensitive situations when the clinic wants staff review." },
-  { q: "Can patients reschedule?", a: "A rescheduling process can be included based on the clinic's policies, notice requirements, available times, and staff approval rules." },
-  { q: "How is patient information handled?", a: "The workflow should collect only the information needed for the administrative process. Access, storage, retention, and security must be reviewed based on the clinic's tools, policies, and applicable legal requirements." },
+  { q: "Will this replace our receptionist?", a: "No. The system is designed to handle repetitive administrative steps and support your front-desk team. Staff remain responsible for customer care, exceptions, sensitive concerns, and situations that require human judgment." },
+  { q: "Can it work with our existing calendar or tools?", a: "Possibly. Compatibility depends on the tools your business currently uses and the access they provide. The workflow audit identifies what can be connected and where a practical alternative may be needed." },
+  { q: "What happens when a preferred time is unavailable?", a: "The workflow can suggest suitable alternative appointment times based on your availability, operating hours, appointment duration, and scheduling rules." },
+  { q: "Can staff approve messages before they are sent?", a: "Yes. Approval steps can be included for selected messages, exceptions, or sensitive situations when your team wants staff review." },
+  { q: "Can customers reschedule?", a: "A rescheduling process can be included based on your policies, notice requirements, available times, and staff approval rules." },
+  { q: "How is customer information handled?", a: "The workflow should collect only the information needed for the administrative process. Access, storage, retention, and security must be reviewed based on your tools, policies, and applicable legal requirements." },
   { q: "How long does implementation take?", a: "The timeline depends on the number of communication channels, scheduling rules, approval steps, integrations, and testing requirements. A clearer estimate is provided after the workflow audit." },
-  { q: "Do you provide ongoing support?", a: "Ongoing monitoring, maintenance, troubleshooting, and workflow improvements can be included based on the clinic's needs." },
+  { q: "Do you provide ongoing support?", a: "Ongoing monitoring, maintenance, troubleshooting, and workflow improvements can be included based on your business needs." },
 ];
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
@@ -2160,7 +2162,7 @@ function Footer() {
               </span>
               <span className="text-base font-extrabold text-white">Joel Jay Bancaya</span>
             </div>
-            <p className="mt-4 max-w-md text-sm">Workflow systems for orthodontic and cosmetic dental clinics.</p>
+            <p className="mt-4 max-w-md text-sm">AI workflow systems for lead intake, booking, and follow-up.</p>
             <div className="mt-6 space-y-1.5 text-sm">
               <div><a href="mailto:Joeljaybancaya16@gmail.com" className="hover:text-white">Joeljaybancaya16@gmail.com</a></div>
               <div><a href="tel:+639310905178" className="hover:text-white">+63 931 090 5178</a></div>
@@ -2191,7 +2193,7 @@ function Footer() {
         </div>
         <div className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center">
           <div>© {new Date().getFullYear()} Joel Jay Bancaya. All rights reserved.</div>
-          <div>Dental clinic workflow systems</div>
+          <div>AI workflow systems for lead intake, booking, and follow-up</div>
         </div>
       </div>
     </footer>
