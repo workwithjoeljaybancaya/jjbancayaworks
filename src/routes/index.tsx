@@ -315,7 +315,7 @@ function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-          <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
+          <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -342,7 +342,7 @@ function Header() {
               </a>
             ))}
             <a href="#contact" onClick={() => setOpen(false)} className="mt-2 rounded-full bg-brand px-4 py-3 text-center text-sm font-semibold text-brand-foreground">
-              Request a Clinic Workflow Audit
+              Request a Workflow Audit
             </a>
           </div>
         </div>
@@ -698,7 +698,7 @@ function Solution() {
               </p>
             </div>
             <div className="mt-4">
-              <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
+              <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
             </div>
           </div>
         </div>
@@ -710,10 +710,10 @@ function Solution() {
 
 /* ---------------- How It Works ---------------- */
 const STEPS = [
-  { t: "Review the Current Workflow", d: "Review inquiry sources, booking steps, clinic rules, follow-up, and staff handoffs." },
+  { t: "Review the Current Workflow", d: "Review inquiry sources, booking steps, business rules, follow-up, and staff handoffs." },
   { t: "Map Gaps and Requirements", d: "Identify delays, repetitive work, exceptions, approval points, and integration requirements." },
   { t: "Recommend a Practical Scope", d: "Present the clearest automation opportunity, workflow boundaries, and implementation priorities." },
-  { t: "Build, Test, and Hand Over", d: "Only after scope approval, configure and test the system, document it, and guide the clinic team." },
+  { t: "Build, Test, and Hand Over", d: "Only after scope approval, configure and test the system, document it, and guide your team." },
 ];
 function HowItWorks() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
@@ -730,7 +730,7 @@ function HowItWorks() {
           </span>
           <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">What Happens After You Request an Audit</h2>
           <p className="mx-auto mt-5 max-w-2xl text-white/65">
-            The audit is the first step. It helps define the clearest next action and does not commit your clinic to a system build.
+            The audit is the first step. It helps define the clearest next action and does not commit your business to a system build.
           </p>
         </div>
 
@@ -779,7 +779,7 @@ function HowItWorks() {
 const DEMO_CHAPTERS = [
   { time: 0, label: "Inquiry and Validation", desc: "See how a patient inquiry is captured, validated, and prepared for the consultation journey." },
   { time: 25, label: "Missing Details and Follow-Up", desc: "See how incomplete information is recovered and unanswered inquiries receive controlled follow-up." },
-  { time: 57, label: "Availability and Booking", desc: "See how clinic rules and calendar availability guide direct booking or suitable alternatives." },
+  { time: 57, label: "Availability and Booking", desc: "See how business rules and calendar availability guide direct booking or suitable alternatives." },
   { time: 76, label: "Alternative Slots and Safe Confirmation", desc: "See how the patient's selected time is rechecked before the consultation is confirmed." },
   { time: 101, label: "Appointment Reminders", desc: "See how tracked 48-hour, 24-hour, and 2-hour reminders are sent without duplication." },
   { time: 115, label: "Rescheduling and Cancellation", desc: "See how confirmed patients can request a controlled schedule change or cancellation." },
@@ -1399,12 +1399,12 @@ function SampleProjects() {
 /* ---------------- Case Study ---------------- */
 /* ---------------- Why Work With Me ---------------- */
 const VALUES = [
-  { t: "Clinic-Specific Workflow Design", d: "The system is structured around your consultation process, treatment categories, operating hours, scheduling rules, and communication channels." },
-  { t: "Human Handoff When Needed", d: "Unusual questions, sensitive concerns, and exceptions can be routed to the appropriate clinic staff member." },
-  { t: "Clinic-Approved Communication", d: "Messages, follow-up rules, reminder timing, and patient instructions are reviewed and approved by the clinic." },
+  { t: "Business-Specific Workflow Design", d: "The system is structured around your booking process, service categories, operating hours, scheduling rules, and communication channels." },
+  { t: "Human Handoff When Needed", d: "Unusual questions, sensitive concerns, and exceptions can be routed to a team member." },
+  { t: "Approved Communication", d: "Messages, follow-up rules, reminder timing, and customer instructions are reviewed and approved by your team." },
   { t: "Clear Inquiry and Appointment Tracking", d: "Staff can see where each inquiry stands without relying only on memory or scattered conversations." },
-  { t: "Documentation and Staff Guidance", d: "The clinic receives clear documentation and guidance for using, reviewing, and managing the workflow." },
-  { t: "Ongoing Monitoring and Support", d: "The workflow can be reviewed, maintained, and adjusted as clinic processes change." },
+  { t: "Documentation and Staff Guidance", d: "Your team receives clear documentation and guidance for using, reviewing, and managing the workflow." },
+  { t: "Ongoing Monitoring and Support", d: "The workflow can be reviewed, maintained, and adjusted as business processes change." },
 ];
 const TOOLS = ["Calendar", "Website Forms", "Email", "Messaging", "Appointment Records", "Staff Notifications"];
 function MovingValueRow({
@@ -1513,7 +1513,7 @@ function AboutApproach() {
             <div>
               <h3 className="text-lg font-bold text-foreground">Designed to Work With Your Existing Process</h3>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground/60">
-                Depending on your clinic's setup, the workflow may connect with existing calendars, forms, email, messaging channels, appointment records, or clinic-management platforms.
+                Depending on your business's setup, the workflow may connect with existing calendars, forms, email, messaging channels, appointment records, or business-management platforms.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -1525,7 +1525,7 @@ function AboutApproach() {
             </div>
           </div>
           <div className="mt-7">
-            <CtaPrimary href="#contact">Request a Clinic Workflow Audit</CtaPrimary>
+            <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
           </div>
         </div>
       </div>
@@ -2030,7 +2030,7 @@ function Contact() {
           <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Workflow audit
           </span>
-          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">Request a Clinic Workflow Audit</h2>
+          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">Request a Workflow Audit</h2>
           <p className="mt-5 text-white/70">
             Share your current inquiry and appointment process so I can identify practical workflow gaps, integration opportunities, and the clearest next step.
           </p>
@@ -2131,7 +2131,7 @@ function Contact() {
                 aria-busy={status === "loading"}
                 className="motion-interactive mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-4 text-sm font-bold text-brand-foreground shadow-lg shadow-brand/30 transition hover:brightness-110 disabled:opacity-60"
               >
-                {status === "loading" ? "Sending…" : status === "error" ? "Retry Sending" : "Request a Clinic Workflow Audit"}
+                {status === "loading" ? "Sending…" : status === "error" ? "Retry Sending" : "Request a Workflow Audit"}
                 <span aria-hidden>→</span>
               </button>
               <p className="mt-3 text-center text-xs text-white/50">
