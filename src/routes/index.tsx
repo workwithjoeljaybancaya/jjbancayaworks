@@ -1967,7 +1967,7 @@ type FormState = {
   name: string; clinic: string; email: string; phone: string; website: string;
   clinicType: string; problem: string; channels: string; contactMethod: string; notes: string;
 };
-const CLINIC_TYPES = ["Orthodontic Clinic", "Cosmetic Dental Clinic", "General Dental Clinic", "Multi-Specialty Dental Clinic", "Other"];
+const CLINIC_TYPES = ["Dental/Medical Practice", "Professional Services", "Sales & Agency", "E-commerce", "Other"];
 const PROBLEMS_OPTS = ["Slow Inquiry Response", "Appointment Booking", "Unconfirmed Consultations", "No-Shows", "Lead Follow-Up", "Front-Desk Workload", "Inquiry Tracking", "Other"];
 const CONTACT_METHODS = ["Email", "Phone Call", "Messaging App"];
 
@@ -1985,9 +1985,9 @@ function Contact() {
   function validate() {
     const e: Partial<Record<keyof FormState, string>> = {};
     if (!form.name.trim()) e.name = "Please enter your name.";
-    if (!form.clinic.trim()) e.clinic = "Please enter your clinic name.";
+    if (!form.clinic.trim()) e.clinic = "Please enter your business name.";
     if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = "Please enter a valid email.";
-    if (!form.clinicType) e.clinicType = "Please select a clinic type.";
+    if (!form.clinicType) e.clinicType = "Please select a business type.";
     if (!form.problem) e.problem = "Please select a main problem.";
     if (!form.contactMethod) e.contactMethod = "Please select a contact method.";
     setErrors(e);
@@ -2058,7 +2058,7 @@ function Contact() {
               <div className="grid h-14 w-14 place-items-center rounded-full bg-brand text-2xl">✓</div>
               <h3 className="mt-6 text-xl font-bold">Thank you.</h3>
               <p className="mt-3 max-w-md text-sm text-white/70">
-                Your clinic workflow details have been received. I will review the information and contact you using your preferred method.
+                Your workflow details have been received. I will review the information and contact you using your preferred method.
               </p>
             </div>
           ) : (
@@ -2070,7 +2070,7 @@ function Contact() {
                   {errors.name && <p className={errCls}>{errors.name}</p>}
                 </div>
                 <div>
-                  <label htmlFor="clinic" className={labelCls}>Clinic Name <span className="text-brand">*</span></label>
+                  <label htmlFor="clinic" className={labelCls}>Business Name <span className="text-brand">*</span></label>
                   <input id="clinic" name="clinic" autoComplete="organization" className={inputCls} value={form.clinic} onChange={(e) => update("clinic", e.target.value)} aria-invalid={!!errors.clinic} required />
                   {errors.clinic && <p className={errCls}>{errors.clinic}</p>}
                 </div>
@@ -2084,11 +2084,11 @@ function Contact() {
                   <input id="phone" name="phone" type="tel" autoComplete="tel" className={inputCls} value={form.phone} onChange={(e) => update("phone", e.target.value)} />
                 </div>
                 <div className="sm:col-span-2">
-                  <label htmlFor="website" className={labelCls}>Clinic Website or Facebook Page</label>
+                  <label htmlFor="website" className={labelCls}>Business Website or Facebook Page</label>
                   <input id="website" name="website" autoComplete="url" className={inputCls} value={form.website} onChange={(e) => update("website", e.target.value)} />
                 </div>
                 <div>
-                  <label htmlFor="clinicType" className={labelCls}>Clinic Type <span className="text-brand">*</span></label>
+                  <label htmlFor="clinicType" className={labelCls}>Business Type <span className="text-brand">*</span></label>
                   <select id="clinicType" name="clinicType" className={inputCls} value={form.clinicType} onChange={(e) => update("clinicType", e.target.value)} required>
                     <option value="" className="bg-navy">Select…</option>
                     {CLINIC_TYPES.map((c) => <option key={c} value={c} className="bg-navy">{c}</option>)}
