@@ -1379,7 +1379,7 @@ function SampleProjects() {
         <div data-motion="sample-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Sample Projects</SectionEyebrow>
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
-            Demonstration Systems for Dental Clinic Inquiries
+            Additional Workflow Concepts
           </h2>
           <p className="mt-5 text-foreground/65">
             Explore two practical workflow concepts designed around patient communication and consultation scheduling. Each example shows the structure behind the experience without presenting unverified client results.
