@@ -624,7 +624,9 @@ function Problems() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div data-motion="breakdown-heading" className="mx-auto max-w-3xl text-center">
           <SectionEyebrow>Common breakdowns</SectionEyebrow>
-          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">Where Businesses Commonly Lose Leads and Appointments</h2>
+          <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
+  Where Manual Processes Slow Businesses Down
+</h2>
           <p className="mt-5 text-foreground/65">
             Small breakdowns in response, booking, confirmation, and follow-up can create unnecessary work for staff and a frustrating experience for potential customers.
           </p>
