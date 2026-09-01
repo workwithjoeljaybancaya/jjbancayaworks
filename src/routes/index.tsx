@@ -718,7 +718,7 @@ function Solution() {
               ))}
             </div>
             <p className="text-xs font-medium leading-relaxed text-foreground sm:text-sm">
-  Your clinic remains in control of appointment rules, messages, availability, exceptions, and staff handoffs.
+  The business remains in control of its rules, communication, exceptions, and human handoffs while automation handles the repetitive work.
 </p>
             </div>
             <div className="mt-4">
