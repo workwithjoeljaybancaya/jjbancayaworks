@@ -577,7 +577,7 @@ function Hero() {
 
   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
     <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
-    <CtaSecondary href="#sample-projects">Explore My Work</CtaSecondary>
+    <CtaSecondary href="#automation-portfolio">Explore My Work</CtaSecondary>
   </div>
 
   <p className="mt-6 max-w-lg text-sm text-foreground/55 dark:text-foreground/70">
