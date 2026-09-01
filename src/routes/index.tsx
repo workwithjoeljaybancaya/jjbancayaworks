@@ -720,7 +720,6 @@ function Solution() {
             <p className="text-xs font-medium leading-relaxed text-foreground sm:text-sm">
   The business remains in control of its rules, communication, exceptions, and human handoffs while automation handles the repetitive work.
 </p>
-            </div>
             <div className="mt-4">
               <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
             </div>
