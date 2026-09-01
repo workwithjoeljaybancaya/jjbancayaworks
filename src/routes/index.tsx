@@ -80,7 +80,6 @@ const NAV = [
   { label: "Solution", href: "#solution" },
   { label: "How It Works", href: "#how-it-works" },
   { label: "Demo", href: "#demo" },
-  { label: "Sample Projects", href: "#sample-projects" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
