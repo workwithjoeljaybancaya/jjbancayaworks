@@ -1642,6 +1642,26 @@ const OTHER_PROJECTS = [
     image: financialReportingImg,
     alt: "Make.com scenario diagram of an accounting to project reporting bridge",
   },
+  {
+    id: "ai-patient-chat-assistant",
+    name: "24/7 AI Patient Chat Assistant (Messenger)",
+    platform: "n8n",
+    industry: "Customer Support",
+    summary:
+      "A demonstration of how a dental clinic could respond to common Messenger inquiries after hours while keeping clinical questions and sensitive concerns with the clinic team.",
+    image: sampleFacebookWorkflow,
+    alt: "Sample n8n workflow for a Facebook Messenger patient chat assistant",
+  },
+  {
+    id: "ai-front-desk-assistant",
+    name: "AI Front-Desk Assistant (Chat-Based Scheduling)",
+    platform: "n8n",
+    industry: "Scheduling Automation",
+    summary:
+      "A demonstration of a chat-based scheduling flow that could guide prospective patients from an initial inquiry to a requested consultation slot using clinic-defined rules.",
+    image: sampleTelegramWorkflow,
+    alt: "Sample n8n workflow for a chat-based scheduling assistant connected to records and Google Calendar",
+  },
 ];
 
 function OtherAutomationWork() {
