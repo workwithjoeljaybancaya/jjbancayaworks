@@ -676,16 +676,19 @@ function Solution() {
     <section id="solution" className="py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-5 lg:px-8">
         <div data-motion="solution-copy" className="mx-auto max-w-3xl text-center">
-          <SectionEyebrow>Flagship solution</SectionEyebrow>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70">
-            Here's a deep dive into one system I built end-to-end — a 7-workflow patient booking pipeline for dental clinics.
-          </p>
-          <h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
-            Flagship Case Study: Dental Lead-to-Consultation System
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-base">
-            Seven connected workflows coordinate inquiry capture, information recovery, scheduling, booking, reminders, and appointment changes.
-          </p>
+          <SectionEyebrow>Featured Case Study</SectionEyebrow>
+
+<p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70">
+  A deep dive into one complete automation system I designed and built end-to-end, from initial inquiry through ongoing workflow management.
+</p>
+
+<h2 className="mt-4 text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
+  Dental Lead-to-Consultation System
+</h2>
+
+<p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70 sm:text-base">
+  Seven connected workflows coordinate information capture, validation, scheduling, communication, reminders, and appointment changes — with clear handoffs between automation and staff.
+</p>
         </div>
 
         <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
