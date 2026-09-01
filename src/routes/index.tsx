@@ -566,21 +566,25 @@ function Hero() {
 
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:px-8 lg:py-20">
         <div data-motion="hero-copy" className="min-w-0">
-          <SectionEyebrow>AI automation for service businesses</SectionEyebrow>
-          <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
-            Turn More Inquiries Into <span className="text-brand">Confirmed Bookings</span>
-          </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/70 dark:text-foreground/80 sm:text-lg">
-            I build connected inquiry-response, booking, reminder, and follow-up systems that help service businesses reply consistently, reduce administrative back-and-forth, and keep staff informed from first contact to confirmed appointment.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
-            <CtaSecondary href="#how-it-works">See How the System Works</CtaSecondary>
-          </div>
-          <p className="mt-6 max-w-lg text-sm text-foreground/55 dark:text-foreground/70">
-            Designed around your existing process, staff responsibilities, and appointment rules.
-          </p>
-        </div>
+  <SectionEyebrow>AI Automation Specialist</SectionEyebrow>
+
+  <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">
+    AI Systems That Run Your Business <span className="text-brand">Operations on Autopilot</span>
+  </h1>
+
+  <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/70 dark:text-foreground/80 sm:text-lg">
+    I design and build AI-powered workflow systems that connect your tools, eliminate repetitive work, and keep leads, data, documents, customer requests, and internal processes moving without constant manual intervention.
+  </p>
+
+  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+    <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
+    <CtaSecondary href="#sample-projects">Explore My Work</CtaSecondary>
+  </div>
+
+  <p className="mt-6 max-w-lg text-sm text-foreground/55 dark:text-foreground/70">
+    Every system starts with understanding your current process, bottlenecks, business rules, and team responsibilities.
+  </p>
+</div>
 
         <div data-motion="hero-demo" className="relative min-w-0 lg:w-full lg:max-w-[34rem] lg:justify-self-end">
           <DemoWorkflow />
