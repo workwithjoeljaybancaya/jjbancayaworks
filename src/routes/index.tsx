@@ -1976,14 +1976,38 @@ function OtherAutomationWork() {
 
 /* ---------------- FAQ ---------------- */
 const FAQS = [
-  { q: "Will this replace our receptionist?", a: "No. The system is designed to handle repetitive administrative steps and support your front-desk team. Staff remain responsible for customer care, exceptions, sensitive concerns, and situations that require human judgment." },
-  { q: "Can it work with our existing calendar or tools?", a: "Possibly. Compatibility depends on the tools your business currently uses and the access they provide. The workflow audit identifies what can be connected and where a practical alternative may be needed." },
-  { q: "What happens when a preferred time is unavailable?", a: "The workflow can suggest suitable alternative appointment times based on your availability, operating hours, appointment duration, and scheduling rules." },
-  { q: "Can staff approve messages before they are sent?", a: "Yes. Approval steps can be included for selected messages, exceptions, or sensitive situations when your team wants staff review." },
-  { q: "Can customers reschedule?", a: "A rescheduling process can be included based on your policies, notice requirements, available times, and staff approval rules." },
-  { q: "How is customer information handled?", a: "The workflow should collect only the information needed for the administrative process. Access, storage, retention, and security must be reviewed based on your tools, policies, and applicable legal requirements." },
-  { q: "How long does implementation take?", a: "The timeline depends on the number of communication channels, scheduling rules, approval steps, integrations, and testing requirements. A clearer estimate is provided after the workflow audit." },
-  { q: "Do you provide ongoing support?", a: "Ongoing monitoring, maintenance, troubleshooting, and workflow improvements can be included based on your business needs." },
+  {
+    q: "What types of business processes can you automate?",
+    a: "I can automate repetitive processes across lead management, customer communication, scheduling, data entry, document processing, reporting, CRM updates, notifications, and internal operations. The right solution depends on how your business currently works and where the biggest bottlenecks are.",
+  },
+  {
+    q: "How do you decide what should be automated?",
+    a: "I start by understanding the existing process rather than assuming what should be automated. We look at the steps involved, repetitive tasks, manual handoffs, delays, errors, business rules, and the tools your team already uses. From there, I identify where automation can create the most practical value.",
+  },
+  {
+    q: "Do you replace the software my business already uses?",
+    a: "Usually, no. The goal is often to connect and improve the tools you already use. I can integrate systems through APIs, webhooks, automation platforms, and other available connections so information can move between them more efficiently.",
+  },
+  {
+    q: "Where does AI fit into the automation?",
+    a: "AI is used where the workflow requires understanding, classification, extraction, summarization, content generation, or other tasks that are difficult to handle with simple rules. I use AI as part of the system where it provides a practical advantage rather than adding AI just for the sake of it.",
+  },
+  {
+    q: "What happens when a process requires human judgment?",
+    a: "The system can route exceptions and decisions that require human judgment to the appropriate team member. The goal is not to remove people from the process, but to let automation handle predictable work while people focus on decisions that actually require them.",
+  },
+  {
+    q: "Can you work with the tools we already use?",
+    a: "Yes. Depending on the available integrations, I can work with platforms such as CRMs, Google Workspace, spreadsheets, calendars, email, messaging platforms, automation platforms, databases, and other business software through APIs or webhooks.",
+  },
+  {
+    q: "How long does an automation project take?",
+    a: "It depends on the complexity of the process, the number of systems involved, and the amount of testing required. A focused workflow can be relatively quick to implement, while a larger multi-step system requires more discovery, development, testing, and refinement.",
+  },
+  {
+    q: "Can you improve an automation system that already exists?",
+    a: "Yes. I can review an existing workflow, identify reliability or process issues, simplify unnecessary steps, improve integrations, and redesign parts of the system where the current automation is not producing the intended result.",
+  },
 ];
 function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
