@@ -597,10 +597,26 @@ function Hero() {
 
 /* ---------------- Problems ---------------- */
 const PROBLEMS = [
-  { icon: "⏱", title: "Slow or Missed Inquiry Responses", body: "Customers often contact several businesses at once. Delayed or inconsistent responses can cause qualified leads to go unanswered." },
-  { icon: "↺", title: "Too Much Booking Back-and-Forth", body: "Staff spend time repeatedly checking dates, confirming details, and offering alternative appointment schedules." },
-  { icon: "✕", title: "Unconfirmed Appointments and No-Shows", body: "Without consistent confirmation and reminder processes, appointment slots may remain uncertain or be missed." },
-  { icon: "…", title: "Leads Receive No Structured Follow-Up", body: "Leads who inquire but do not immediately book can be forgotten when follow-up depends entirely on manual tracking." },
+  {
+    icon: "⏱",
+    title: "Repetitive Work Eats Staff Time",
+    body: "Teams spend hours copying information, sending routine messages, updating records, and completing tasks that follow the same predictable steps.",
+  },
+  {
+    icon: "↔",
+    title: "Disconnected Tools Create Extra Work",
+    body: "Information gets manually moved between forms, spreadsheets, email, CRMs, calendars, and other systems that should be working together.",
+  },
+  {
+    icon: "⚠",
+    title: "Important Requests Fall Through the Cracks",
+    body: "Leads, customer requests, follow-ups, approvals, and internal tasks can be missed when processes depend entirely on people remembering what to do next.",
+  },
+  {
+    icon: "…",
+    title: "Reporting and Data Processing Take Too Long",
+    body: "Teams spend unnecessary time collecting, cleaning, organizing, and reporting information that could be processed automatically.",
+  },
 ];
 function Problems() {
   return (
