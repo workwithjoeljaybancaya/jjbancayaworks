@@ -1434,12 +1434,30 @@ function SampleProjects() {
 /* ---------------- Case Study ---------------- */
 /* ---------------- Why Work With Me ---------------- */
 const VALUES = [
-  { t: "Business-Specific Workflow Design", d: "The system is structured around your booking process, service categories, operating hours, scheduling rules, and communication channels." },
-  { t: "Human Handoff When Needed", d: "Unusual questions, sensitive concerns, and exceptions can be routed to a team member." },
-  { t: "Approved Communication", d: "Messages, follow-up rules, reminder timing, and customer instructions are reviewed and approved by your team." },
-  { t: "Clear Inquiry and Appointment Tracking", d: "Staff can see where each inquiry stands without relying only on memory or scattered conversations." },
-  { t: "Documentation and Staff Guidance", d: "Your team receives clear documentation and guidance for using, reviewing, and managing the workflow." },
-  { t: "Ongoing Monitoring and Support", d: "The workflow can be reviewed, maintained, and adjusted as business processes change." },
+  {
+    t: "Business-Specific Workflow Design",
+    d: "I design systems around the way your business actually operates instead of forcing a generic automation into your existing process.",
+  },
+  {
+    t: "Process Before Automation",
+    d: "I first understand the current workflow, tools, responsibilities, and business rules before deciding what should be automated.",
+  },
+  {
+    t: "Automation Where It Matters",
+    d: "The goal is not to automate everything. I focus on the repetitive, time-consuming, and error-prone parts of the process where automation creates real value.",
+  },
+  {
+    t: "Human Handoff When Needed",
+    d: "Automation handles predictable work while exceptions, sensitive situations, and decisions requiring judgment are routed to the right person.",
+  },
+  {
+    t: "Connected Systems",
+    d: "I connect the tools your team already uses so information can move between systems without unnecessary manual data entry.",
+  },
+  {
+    t: "Built for Continuous Improvement",
+    d: "Workflows can be monitored, reviewed, and improved as your business processes, tools, and requirements evolve.",
+  },
 ];
 const TOOLS = ["Calendar", "Website Forms", "Email", "Messaging", "Appointment Records", "Staff Notifications"];
 function MovingValueRow({
