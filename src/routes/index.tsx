@@ -655,20 +655,20 @@ function Problems() {
 /* ---------------- Flagship Solution ---------------- */
 const SOLUTION_OUTCOMES = [
   {
-    title: "Complete Patient Information",
-    body: "Captures inquiry details, identifies missing information, and follows up when completion is needed.",
+    title: "Structured Information Capture",
+    body: "Collects and validates the information required by the business before moving the request to the next stage.",
   },
   {
-    title: "Smarter Consultation Scheduling",
-    body: "Checks the preferred schedule, confirms available appointments, and offers alternatives when necessary.",
+    title: "Automated Decision Logic",
+    body: "Applies business rules to determine what should happen next instead of relying on manual decisions for every request.",
   },
   {
-    title: "Clear Patient Communication",
-    body: "Sends acknowledgements, booking confirmations, and scheduled appointment reminders.",
+    title: "Connected Workflow Execution",
+    body: "Moves information between systems and triggers the appropriate actions across the workflow.",
   },
   {
-    title: "Staff Visibility and Control",
-    body: "Notifies the clinic team, escalates special cases, and keeps appointment statuses organized.",
+    title: "Human Handoff and Visibility",
+    body: "Keeps staff informed and routes exceptions or situations requiring human judgment to the right person.",
   },
 ];
 function Solution() {
