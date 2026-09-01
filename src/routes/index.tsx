@@ -2119,7 +2119,7 @@ function Home() {
         <Solution />
         <HowItWorks />
         <Demo />
-        <SampleProjects />
+        
         <AboutApproach />
         <Credentials />
         <FAQ />
