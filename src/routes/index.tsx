@@ -1861,15 +1861,13 @@ function OtherAutomationWork() {
   return (
     <section id="automation-portfolio" className="overflow-hidden bg-background py-16 lg:py-20">
       <div data-motion="portfolio-heading" className="mx-auto max-w-7xl px-5 text-center lg:px-8">
-        <SectionEyebrow>Wider Automation Portfolio</SectionEyebrow>
+        <SectionEyebrow>Cross-Industry Automation Portfolio</SectionEyebrow>
         <h2 className="mx-auto mt-5 max-w-4xl text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
           Systems I've Built
         </h2>
         <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-foreground/70 sm:text-lg">
-          Portfolio and demonstration systems built across sales, marketing, finance, support, and operations. The
-          same engineering principles behind the clinic system — reliable intake, controlled
-          follow-up, safe scheduling, and clear staff handoffs.
-        </p>
+  Portfolio and demonstration systems built across sales, marketing, finance, support, and operations. Each project shows how automation can connect tools, move information, apply business rules, and reduce repetitive manual work.
+</p>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
           Select any project to view the full workflow architecture.
         </p>
