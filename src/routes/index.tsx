@@ -1866,7 +1866,7 @@ function OtherAutomationWork() {
           Systems I've Built
         </h2>
         <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-foreground/70 sm:text-lg">
-  Portfolio and demonstration systems built across sales, marketing, finance, support, and operations. Each project shows how automation can connect tools, move information, apply business rules, and reduce repetitive manual work.
+  Real and demonstration workflows across sales, marketing, finance, support, and operations — showing how I connect systems, automate repetitive work, and turn manual processes into reliable workflows.
 </p>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
           Select any project to view the full workflow architecture.
