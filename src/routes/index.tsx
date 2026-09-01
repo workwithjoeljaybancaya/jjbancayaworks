@@ -628,8 +628,8 @@ function Problems() {
   Where Manual Processes Slow Businesses Down
 </h2>
           <p className="mt-5 text-foreground/65">
-            Small breakdowns in response, booking, confirmation, and follow-up can create unnecessary work for staff and a frustrating experience for potential customers.
-          </p>
+  Repetitive tasks, disconnected tools, manual handoffs, and inconsistent processes create unnecessary work and make it harder for teams to operate efficiently.
+</p>
         </div>
         <div className="problem-sequence-grid mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PROBLEMS.map((p, index) => (
