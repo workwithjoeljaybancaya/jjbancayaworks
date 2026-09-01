@@ -1459,7 +1459,16 @@ const VALUES = [
     d: "Workflows can be monitored, reviewed, and improved as your business processes, tools, and requirements evolve.",
   },
 ];
-const TOOLS = ["Calendar", "Website Forms", "Email", "Messaging", "Appointment Records", "Staff Notifications"];
+const TOOLS = [
+  "CRM",
+  "Forms",
+  "Email",
+  "Messaging",
+  "Spreadsheets",
+  "Calendars",
+  "APIs",
+  "Team Notifications",
+];
 function MovingValueRow({
   values,
   direction,
