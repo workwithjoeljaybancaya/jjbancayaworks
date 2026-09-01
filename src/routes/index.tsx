@@ -1489,7 +1489,7 @@ function MovingValueRow({
     <div
       className="why-values-row relative overflow-hidden py-5"
       onMouseLeave={() => setActiveValue(null)}
-      aria-label={direction === "right" ? "Clinic value cards moving right" : "Clinic value cards moving left"}
+      aria-label={direction === "right" ? "Business value cards moving right" : "Business value cards moving left"}
     >
       <div
         className={[
