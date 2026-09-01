@@ -1549,9 +1549,9 @@ function AboutApproach() {
           <h2 className="mt-5 text-3xl font-extrabold text-foreground sm:text-4xl lg:text-5xl">
             Automation Systems Built Around Your Business
           </h2>
-          <p className="mt-5 text-foreground/65">
-            My approach starts by understanding your current inquiry, scheduling, communication, and handoff process before recommending what should be automated — the same method applies whether you run a clinic, a studio, an agency, or any appointment-based business. Dental clinics are simply the area where I have the deepest hands-on experience.
-          </p>
+         <p className="mt-5 text-foreground/65">
+  My approach starts with understanding how your business actually operates — the people, processes, tools, rules, and bottlenecks involved. From there, I identify where automation can remove repetitive work, improve consistency, and help your team operate more efficiently.
+</p>
         </div>
 
         <div className="mt-8 space-y-1">
