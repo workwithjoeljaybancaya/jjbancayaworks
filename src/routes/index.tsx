@@ -717,10 +717,9 @@ function Solution() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 rounded-2xl border-l-4 border-brand bg-brand-soft/50 p-4">
-              <p className="text-xs font-medium leading-relaxed text-foreground sm:text-sm">
-                Your clinic remains in control of appointment rules, messages, availability, exceptions, and staff handoffs.
-              </p>
+            <p className="text-xs font-medium leading-relaxed text-foreground sm:text-sm">
+  Your clinic remains in control of appointment rules, messages, availability, exceptions, and staff handoffs.
+</p>
             </div>
             <div className="mt-4">
               <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
