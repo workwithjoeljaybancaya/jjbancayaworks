@@ -430,7 +430,7 @@ function DemoWorkflow() {
     <div
       className="relative rounded-3xl border border-border bg-card p-3 shadow-2xl shadow-brand/15 sm:p-4"
       role="group"
-      aria-label="Animated demo of the inquiry-to-booking workflow"
+      aria-label="Animated demonstration of an AI-powered business workflow"
     >
       {/* Header */}
       <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
