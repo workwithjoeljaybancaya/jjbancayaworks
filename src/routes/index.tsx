@@ -733,10 +733,22 @@ function Solution() {
 
 /* ---------------- How It Works ---------------- */
 const STEPS = [
-  { t: "Review the Current Workflow", d: "Review inquiry sources, booking steps, business rules, follow-up, and staff handoffs." },
-  { t: "Map Gaps and Requirements", d: "Identify delays, repetitive work, exceptions, approval points, and integration requirements." },
-  { t: "Recommend a Practical Scope", d: "Present the clearest automation opportunity, workflow boundaries, and implementation priorities." },
-  { t: "Build, Test, and Hand Over", d: "Only after scope approval, configure and test the system, document it, and guide your team." },
+  {
+    t: "Understand the Business",
+    d: "I learn how your team currently handles the process, what tools are involved, and what the business needs the workflow to accomplish.",
+  },
+  {
+    t: "Identify Bottlenecks",
+    d: "We identify repetitive work, delays, manual handoffs, missed opportunities, and other points where the current process is slowing the business down.",
+  },
+  {
+    t: "Map the Current Process",
+    d: "I map the existing workflow from start to finish so we can see exactly where information enters, moves, changes, and requires human decisions.",
+  },
+  {
+    t: "Design & Build the System",
+    d: "I design the automation around your actual business rules, then connect the necessary tools, AI, APIs, and workflows.",
+  },
 ];
 function HowItWorks() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
