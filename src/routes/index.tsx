@@ -355,34 +355,34 @@ function Header() {
 /* ---------------- Hero ---------------- */
 const DEMO_STEPS = [
   {
-    tag: "New Inquiry",
-    title: "New Inquiry Received",
-    detail: "Customer requesting an appointment",
-    meta: "via website form",
+    tag: "Request Received",
+    title: "New Request Received",
+    detail: "A customer or team request enters the workflow",
+    meta: "via form, email, chat, or connected app",
   },
   {
-    tag: "Availability Checked",
-    title: "Checking Schedule",
-    detail: "Three suitable schedules found",
-    meta: "Jul 22 · Jul 24 · Jul 26",
+    tag: "Information Processed",
+    title: "Information Processed",
+    detail: "Relevant data is extracted, validated, and organized",
+    meta: "AI + workflow rules applied",
   },
   {
-    tag: "Appointment Booked",
-    title: "Appointment Booked",
-    detail: "July 24 · 1:30 PM · Confirmed",
-    meta: "Assigned to available specialist",
+    tag: "Business Rules Applied",
+    title: "Next Action Determined",
+    detail: "The system decides what should happen next",
+    meta: "based on your business rules",
+  },
+  {
+    tag: "Action Completed",
+    title: "Task Automatically Completed",
+    detail: "Data is updated and the required action is triggered",
+    meta: "across connected business tools",
   },
   {
     tag: "Team Notified",
-    title: "Team Notified",
-    detail: "Calendar updated · Front desk notified",
-    meta: "Staff alert sent",
-  },
-  {
-    tag: "Follow-Up Scheduled",
-    title: "Follow-Up Scheduled",
-    detail: "Reminder scheduled 24 hours before",
-    meta: "SMS + email reminder",
+    title: "People Stay in the Loop",
+    detail: "Staff receive the information or handoff when needed",
+    meta: "with a clear record of what happened",
   },
 ];
 
