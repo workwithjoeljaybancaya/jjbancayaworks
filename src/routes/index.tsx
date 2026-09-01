@@ -763,10 +763,10 @@ function HowItWorks() {
           <span className="inline-flex items-center gap-2 rounded-full bg-card/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/80">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Working Process
           </span>
-          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">What Happens After You Request an Audit</h2>
+          <h2 className="mt-5 text-3xl font-extrabold sm:text-4xl lg:text-5xl">How I Turn Manual Processes Into Automated Systems</h2>
           <p className="mx-auto mt-5 max-w-2xl text-white/65">
-            The audit is the first step. It helps define the clearest next action and does not commit your business to a system build.
-          </p>
+  I don't start by building automation. I start by understanding how your business actually works, finding the bottlenecks, and designing a system around the process.
+</p>
         </div>
 
         <div className={["mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4", activeStep !== null ? "process-sequence-paused" : ""].join(" ")}>
