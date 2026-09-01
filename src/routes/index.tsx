@@ -442,7 +442,7 @@ function DemoWorkflow() {
           </div>
           <div className="min-w-0">
             <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand">Demo Workflow</div>
-            <div className="truncate text-sm font-semibold text-foreground">Inquiry → Booking</div>
+            <div className="truncate text-sm font-semibold text-foreground">Request → Resolved</div>
           </div>
         </div>
         {canControl && (
