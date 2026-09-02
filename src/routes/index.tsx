@@ -1667,11 +1667,11 @@ const OTHER_PROJECTS = [
   },
     {
     id: "appointment-rescheduling-system",
-    name: "Automated Appointment Rescheduling System",
+    name: "Appointment Rescheduling & Re-Appointment System",
     platform: "n8n",
     industry: "Operations Automation",
     summary:
-      "A multi-workflow automation system that manages appointment declines, cooldown rules, availability checks, re-appointment approval, and follow-up actions while keeping records and staff notifications synchronized.",
+      "One connected system for appointment changes: it identifies the affected booking, applies cooldown and availability rules, routes decline or re-appointment decisions for approval, then continues the right follow-up while records and staff notifications stay in sync.",
     image: appointmentReschedulingMainImg,
     alt: "n8n workflow showing the automated appointment rescheduling system",
     images: [
@@ -1688,38 +1688,12 @@ const OTHER_PROJECTS = [
       {
         src: appointmentReschedulingDeclineImg,
         title: "Automated Appointment Rescheduling System",
-        alt: "n8n workflow showing the automated appointment rescheduling system",
+        alt: "n8n workflow showing the automated appointment rescheduling and decline handling workflow",
       },
     ],
   },
-  {
-  id: "appointment-rescheduling-system",
-  name: "Automated Appointment Rescheduling System",
-  platform: "n8n",
-  industry: "Operations Automation",
-  summary:
-    "A multi-workflow automation system that manages appointment declines, cooldown rules, availability checks, re-appointment approval, and follow-up actions while keeping records and staff notifications synchronized.",
-  image: appointmentReschedulingMainImg,
-  alt: "n8n workflow showing the automated appointment rescheduling system",
-  images: [
-    {
-      src: appointmentReschedulingMainImg,
-      title: "Lead-to-Appointment Automation System",
-      alt: "n8n workflow showing the lead-to-appointment automation system",
-    },
-    {
-      src: leadReappointmentApprovalImg,
-      title: "Lead Re-Appointment Approval Workflow",
-      alt: "n8n workflow showing the lead re-appointment approval workflow",
-    },
-    {
-      src: appointmentReschedulingDeclineImg,
-      title: "Automated Appointment Rescheduling System",
-      alt: "n8n workflow showing the automated appointment rescheduling system",
-    },
-  ],
-},
 ];
+
 
 function OtherAutomationWork() {
   const reducedMotion = usePrefersReducedMotion();
