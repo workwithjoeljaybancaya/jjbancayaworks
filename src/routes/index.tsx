@@ -23,6 +23,9 @@ import intakeConfirmationImg from "@/assets/projects/intake-confirmation.png";
 import appointmentRemindersImg from "@/assets/projects/appointment-reminders.png";
 import documentFilingImg from "@/assets/projects/document-filing.png";
 import financialReportingImg from "@/assets/projects/financial-reporting.png";
+import appointmentReschedulingMainImg from "@/assets/projects/appointment-rescheduling-main.png";
+import leadReappointmentApprovalImg from "@/assets/projects/lead-reappointment-approval.png";
+import appointmentReschedulingDeclineImg from "@/assets/projects/appointment-rescheduling-decline.png";
 
 
 const PAGE_TITLE = "AI Automation Specialist | Workflow Systems for Lead Intake, Scheduling & Follow-Up";
