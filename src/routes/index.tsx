@@ -1821,76 +1821,25 @@ const changeProjectSlide = (
                 ].join(" ")}
               >
                 <div className="relative aspect-[16/9] overflow-hidden bg-white">
-  {(() => {
-    const images = getProjectImages(project);
-    const currentSlide = projectSlides[project.id] ?? 0;
-    const currentImage = images[currentSlide];
+                  <img
+                    src={project.image}
+                    alt={project.alt}
+                    loading="lazy"
+                    className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white pointer-events-none">
+                    <span className="text-xs font-bold uppercase tracking-[0.16em]">
+                      View workflow
+                    </span>
+                    <span
+                      aria-hidden
+                      className="grid h-8 w-8 place-items-center rounded-full bg-white/15 backdrop-blur"
+                    >
+                      ↗
+                    </span>
+                  </div>
+                </div>
 
-    return (
-      <>
-        <img
-          src={currentImage.src}
-          alt={currentImage.alt}
-          loading="lazy"
-          className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
-        />
-
-        {images.length > 1 && (
-          <>
-            <button
-              type="button"
-              aria-label={`Previous workflow image for ${project.name}`}
-              onClick={(event) =>
-                changeProjectSlide(
-                  event,
-                  project.id,
-                  -1,
-                  images.length,
-                )
-              }
-              className="absolute left-3 top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-lg text-white shadow-lg backdrop-blur transition hover:bg-navy"
-            >
-              ‹
-            </button>
-
-            <button
-              type="button"
-              aria-label={`Next workflow image for ${project.name}`}
-              onClick={(event) =>
-                changeProjectSlide(
-                  event,
-                  project.id,
-                  1,
-                  images.length,
-                )
-              }
-              className="absolute right-3 top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-lg text-white shadow-lg backdrop-blur transition hover:bg-navy"
-            >
-              ›
-            </button>
-
-            <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-navy/75 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-              {currentSlide + 1} / {images.length}
-            </div>
-          </>
-        )}
-
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white pointer-events-none">
-          <span className="text-xs font-bold uppercase tracking-[0.16em]">
-            View workflow
-          </span>
-
-          <span
-            aria-hidden
-            className="grid h-8 w-8 place-items-center rounded-full bg-white/15 backdrop-blur"
-          >
-            ↗
-          </span>
-        </div>
-      </>
-    );
-  })()}
-</div>
                 <div className="p-5">
                   <div className="inline-flex rounded-full border border-brand/25 bg-brand-soft/60 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-brand">
                     Portfolio Project
