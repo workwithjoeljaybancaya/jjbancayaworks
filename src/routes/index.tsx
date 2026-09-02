@@ -1851,7 +1851,7 @@ const changeProjectSlide = (
               className="absolute left-3 top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-lg text-white shadow-lg backdrop-blur transition hover:bg-navy"
             >
               ‹
-            </div>
+            </button>
 
             <button
               type="button"
