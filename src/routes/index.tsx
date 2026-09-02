@@ -1697,8 +1697,37 @@ const OTHER_PROJECTS = [
 function OtherAutomationWork() {
   const reducedMotion = usePrefersReducedMotion();
   const [activeProject, setActiveProject] = useState<string | null>(null);
-  const [selectedProject, setSelectedProject] = useState<(typeof OTHER_PROJECTS)[number] | null>(null);
+const [selectedProject, setSelectedProject] = useState<(typeof OTHER_PROJECTS)[number] | null>(null);
+const [projectSlides, setProjectSlides] = useState<Record<string, number>>({});
   const carouselItems = reducedMotion ? OTHER_PROJECTS : [...OTHER_PROJECTS, ...OTHER_PROJECTS];
+  const getProjectImages = (project: (typeof OTHER_PROJECTS)[number]) =>
+  project.images ?? [
+    {
+      src: project.image,
+      title: project.name,
+      alt: project.alt,
+    },
+  ];
+
+const changeProjectSlide = (
+  event: React.MouseEvent,
+  projectId: string,
+  direction: number,
+  imageCount: number,
+) => {
+  event.stopPropagation();
+
+  setProjectSlides((current) => {
+    const currentSlide = current[projectId] ?? 0;
+    const nextSlide =
+      (currentSlide + direction + imageCount) % imageCount;
+
+    return {
+      ...current,
+      [projectId]: nextSlide,
+    };
+  });
+};
 
   useEffect(() => {
     if (!selectedProject) return;
