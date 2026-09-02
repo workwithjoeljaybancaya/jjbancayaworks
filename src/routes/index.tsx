@@ -1739,7 +1739,9 @@ const changeProjectSlide = (
 
   useEffect(() => {
     if (!selectedProject) return;
+    setProjectSlides((current) => ({ ...current, [selectedProject.id]: 0 }));
     const onKeyDown = (event: KeyboardEvent) => {
+
       if (event.key === "Escape") setSelectedProject(null);
     };
     document.addEventListener("keydown", onKeyDown);
