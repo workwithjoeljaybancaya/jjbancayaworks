@@ -1667,11 +1667,11 @@ const OTHER_PROJECTS = [
   },
     {
     id: "appointment-rescheduling-system",
-    name: "Automated Appointment Rescheduling System",
+    name: "Appointment Rescheduling & Re-Appointment System",
     platform: "n8n",
     industry: "Operations Automation",
     summary:
-      "A multi-workflow automation system that manages appointment declines, cooldown rules, availability checks, re-appointment approval, and follow-up actions while keeping records and staff notifications synchronized.",
+      "One connected system for appointment changes: it identifies the affected booking, applies cooldown and availability rules, routes decline or re-appointment decisions for approval, then continues the right follow-up while records and staff notifications stay in sync.",
     image: appointmentReschedulingMainImg,
     alt: "n8n workflow showing the automated appointment rescheduling system",
     images: [
@@ -1688,38 +1688,12 @@ const OTHER_PROJECTS = [
       {
         src: appointmentReschedulingDeclineImg,
         title: "Automated Appointment Rescheduling System",
-        alt: "n8n workflow showing the automated appointment rescheduling system",
+        alt: "n8n workflow showing the automated appointment rescheduling and decline handling workflow",
       },
     ],
   },
-  {
-  id: "appointment-rescheduling-system",
-  name: "Automated Appointment Rescheduling System",
-  platform: "n8n",
-  industry: "Operations Automation",
-  summary:
-    "A multi-workflow automation system that manages appointment declines, cooldown rules, availability checks, re-appointment approval, and follow-up actions while keeping records and staff notifications synchronized.",
-  image: appointmentReschedulingMainImg,
-  alt: "n8n workflow showing the automated appointment rescheduling system",
-  images: [
-    {
-      src: appointmentReschedulingMainImg,
-      title: "Lead-to-Appointment Automation System",
-      alt: "n8n workflow showing the lead-to-appointment automation system",
-    },
-    {
-      src: leadReappointmentApprovalImg,
-      title: "Lead Re-Appointment Approval Workflow",
-      alt: "n8n workflow showing the lead re-appointment approval workflow",
-    },
-    {
-      src: appointmentReschedulingDeclineImg,
-      title: "Automated Appointment Rescheduling System",
-      alt: "n8n workflow showing the automated appointment rescheduling system",
-    },
-  ],
-},
 ];
+
 
 function OtherAutomationWork() {
   const reducedMotion = usePrefersReducedMotion();
@@ -1765,7 +1739,9 @@ const changeProjectSlide = (
 
   useEffect(() => {
     if (!selectedProject) return;
+    setProjectSlides((current) => ({ ...current, [selectedProject.id]: 0 }));
     const onKeyDown = (event: KeyboardEvent) => {
+
       if (event.key === "Escape") setSelectedProject(null);
     };
     document.addEventListener("keydown", onKeyDown);
@@ -1821,76 +1797,25 @@ const changeProjectSlide = (
                 ].join(" ")}
               >
                 <div className="relative aspect-[16/9] overflow-hidden bg-white">
-  {(() => {
-    const images = getProjectImages(project);
-    const currentSlide = projectSlides[project.id] ?? 0;
-    const currentImage = images[currentSlide];
+                  <img
+                    src={project.image}
+                    alt={project.alt}
+                    loading="lazy"
+                    className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white pointer-events-none">
+                    <span className="text-xs font-bold uppercase tracking-[0.16em]">
+                      View workflow
+                    </span>
+                    <span
+                      aria-hidden
+                      className="grid h-8 w-8 place-items-center rounded-full bg-white/15 backdrop-blur"
+                    >
+                      ↗
+                    </span>
+                  </div>
+                </div>
 
-    return (
-      <>
-        <img
-          src={currentImage.src}
-          alt={currentImage.alt}
-          loading="lazy"
-          className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02] group-focus-visible:scale-[1.02]"
-        />
-
-        {images.length > 1 && (
-          <>
-            <button
-              type="button"
-              aria-label={`Previous workflow image for ${project.name}`}
-              onClick={(event) =>
-                changeProjectSlide(
-                  event,
-                  project.id,
-                  -1,
-                  images.length,
-                )
-              }
-              className="absolute left-3 top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-lg text-white shadow-lg backdrop-blur transition hover:bg-navy"
-            >
-              ‹
-            </button>
-
-            <button
-              type="button"
-              aria-label={`Next workflow image for ${project.name}`}
-              onClick={(event) =>
-                changeProjectSlide(
-                  event,
-                  project.id,
-                  1,
-                  images.length,
-                )
-              }
-              className="absolute right-3 top-1/2 z-10 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-lg text-white shadow-lg backdrop-blur transition hover:bg-navy"
-            >
-              ›
-            </button>
-
-            <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-navy/75 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-              {currentSlide + 1} / {images.length}
-            </div>
-          </>
-        )}
-
-        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-navy/90 via-navy/35 to-transparent px-5 pb-4 pt-16 text-white pointer-events-none">
-          <span className="text-xs font-bold uppercase tracking-[0.16em]">
-            View workflow
-          </span>
-
-          <span
-            aria-hidden
-            className="grid h-8 w-8 place-items-center rounded-full bg-white/15 backdrop-blur"
-          >
-            ↗
-          </span>
-        </div>
-      </>
-    );
-  })()}
-</div>
                 <div className="p-5">
                   <div className="inline-flex rounded-full border border-brand/25 bg-brand-soft/60 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-brand">
                     Portfolio Project
@@ -1931,11 +1856,53 @@ const changeProjectSlide = (
             >
               ×
             </button>
-            <img
-              src={selectedProject.image}
-              alt={selectedProject.alt}
-              className="max-h-[70vh] w-full bg-white object-contain"
-            />
+            {(() => {
+              const images = getProjectImages(selectedProject);
+              const currentSlide = projectSlides[selectedProject.id] ?? 0;
+              const currentImage = images[currentSlide];
+              return (
+                <div className="relative bg-white">
+                  <img
+                    src={currentImage.src}
+                    alt={currentImage.alt}
+                    className="max-h-[70vh] w-full bg-white object-contain"
+                  />
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        aria-label="Previous workflow image"
+                        onClick={(event) =>
+                          changeProjectSlide(event, selectedProject.id, -1, images.length)
+                        }
+                        className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-xl text-white shadow-lg backdrop-blur transition hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        ‹
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Next workflow image"
+                        onClick={(event) =>
+                          changeProjectSlide(event, selectedProject.id, 1, images.length)
+                        }
+                        className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-xl text-white shadow-lg backdrop-blur transition hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        ›
+                      </button>
+                      <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-navy/75 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+                        {currentSlide + 1} / {images.length}
+                      </div>
+                    </>
+                  )}
+                  {images.length > 1 && (
+                    <div className="border-t border-border bg-card px-5 pt-4 text-xs font-bold uppercase tracking-[0.14em] text-brand">
+                      {currentImage.title}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             <div className="border-t border-border p-5 sm:p-6">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
