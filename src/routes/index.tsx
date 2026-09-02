@@ -1665,30 +1665,30 @@ const OTHER_PROJECTS = [
     image: sampleTelegramWorkflow,
     alt: "Sample n8n workflow for a chat-based scheduling assistant connected to records and Google Calendar",
   },
-    {
+  {
     id: "appointment-rescheduling-system",
-    name: "Appointment Rescheduling & Re-Appointment System",
+    name: "Complete Lead-to-Appointment Automation System",
     platform: "n8n",
     industry: "Operations Automation",
     summary:
-      "One connected system for appointment changes: it identifies the affected booking, applies cooldown and availability rules, routes decline or re-appointment decisions for approval, then continues the right follow-up while records and staff notifications stay in sync.",
+      "A complete lead-to-appointment automation system built around a core workflow and supporting sub-workflows for appointment rescheduling and re-appointment approval. The system connects lead intake, appointment processing, scheduling logic, approval decisions, and follow-up actions into one coordinated workflow architecture.",
     image: appointmentReschedulingMainImg,
-    alt: "n8n workflow showing the automated appointment rescheduling system",
+    alt: "n8n workflow showing the core lead-to-appointment automation workflow",
     images: [
       {
         src: appointmentReschedulingMainImg,
-        title: "Lead-to-Appointment Automation System",
-        alt: "n8n workflow showing the lead-to-appointment automation system",
+        title: "Core Lead-to-Appointment Automation Workflow",
+        alt: "n8n workflow showing the core lead-to-appointment automation workflow",
       },
       {
         src: leadReappointmentApprovalImg,
-        title: "Lead Re-Appointment Approval Workflow",
-        alt: "n8n workflow showing the lead re-appointment approval workflow",
+        title: "Lead Re-Appointment Approval Sub-Workflow",
+        alt: "n8n workflow showing the lead re-appointment approval sub-workflow",
       },
       {
         src: appointmentReschedulingDeclineImg,
-        title: "Automated Appointment Rescheduling System",
-        alt: "n8n workflow showing the automated appointment rescheduling and decline handling workflow",
+        title: "Appointment Rescheduling Sub-Workflow",
+        alt: "n8n workflow showing the appointment rescheduling sub-workflow",
       },
     ],
   },
