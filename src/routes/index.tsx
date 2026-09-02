@@ -1931,11 +1931,53 @@ const changeProjectSlide = (
             >
               ×
             </button>
-            <img
-              src={selectedProject.image}
-              alt={selectedProject.alt}
-              className="max-h-[70vh] w-full bg-white object-contain"
-            />
+            {(() => {
+              const images = getProjectImages(selectedProject);
+              const currentSlide = projectSlides[selectedProject.id] ?? 0;
+              const currentImage = images[currentSlide];
+              return (
+                <div className="relative bg-white">
+                  <img
+                    src={currentImage.src}
+                    alt={currentImage.alt}
+                    className="max-h-[70vh] w-full bg-white object-contain"
+                  />
+                  {images.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        aria-label="Previous workflow image"
+                        onClick={(event) =>
+                          changeProjectSlide(event, selectedProject.id, -1, images.length)
+                        }
+                        className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-xl text-white shadow-lg backdrop-blur transition hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        ‹
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="Next workflow image"
+                        onClick={(event) =>
+                          changeProjectSlide(event, selectedProject.id, 1, images.length)
+                        }
+                        className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-navy/75 text-xl text-white shadow-lg backdrop-blur transition hover:bg-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      >
+                        ›
+                      </button>
+                      <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-navy/75 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+                        {currentSlide + 1} / {images.length}
+                      </div>
+                    </>
+                  )}
+                  {images.length > 1 && (
+                    <div className="border-t border-border bg-card px-5 pt-4 text-xs font-bold uppercase tracking-[0.14em] text-brand">
+                      {currentImage.title}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+
             <div className="border-t border-border p-5 sm:p-6">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
