@@ -1904,7 +1904,7 @@ const changeProjectSlide = (
                   <h3 className="mt-4 text-lg font-bold text-foreground">{project.name}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-foreground/60">{project.summary}</p>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
