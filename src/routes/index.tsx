@@ -1665,6 +1665,33 @@ const OTHER_PROJECTS = [
     image: sampleTelegramWorkflow,
     alt: "Sample n8n workflow for a chat-based scheduling assistant connected to records and Google Calendar",
   },
+    {
+    id: "appointment-rescheduling-system",
+    name: "Automated Appointment Rescheduling System",
+    platform: "n8n",
+    industry: "Operations Automation",
+    summary:
+      "A multi-workflow automation system that manages appointment declines, cooldown rules, availability checks, re-appointment approval, and follow-up actions while keeping records and staff notifications synchronized.",
+    image: appointmentReschedulingMainImg,
+    alt: "n8n workflow showing the automated appointment rescheduling system",
+    images: [
+      {
+        src: appointmentReschedulingMainImg,
+        title: "Lead-to-Appointment Automation System",
+        alt: "n8n workflow showing the lead-to-appointment automation system",
+      },
+      {
+        src: leadReappointmentApprovalImg,
+        title: "Lead Re-Appointment Approval Workflow",
+        alt: "n8n workflow showing the lead re-appointment approval workflow",
+      },
+      {
+        src: appointmentReschedulingDeclineImg,
+        title: "Automated Appointment Rescheduling System",
+        alt: "n8n workflow showing the automated appointment rescheduling system",
+      },
+    ],
+  },
 ];
 
 function OtherAutomationWork() {
