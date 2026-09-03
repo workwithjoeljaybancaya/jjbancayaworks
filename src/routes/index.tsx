@@ -2223,7 +2223,7 @@ function Footer() {
               </span>
               <span className="text-base font-extrabold text-white">Joel Jay Bancaya</span>
             </div>
-            <p className="mt-4 max-w-md text-sm">AI workflow systems for lead intake, booking, and follow-up.</p>
+            <p className="mt-4 max-w-md text-sm">AI automation systems that streamline lead management, operations, and customer workflows.</p>
             <div className="mt-6 space-y-1.5 text-sm">
               <div><a href="mailto:Joeljaybancaya16@gmail.com" className="hover:text-white">Joeljaybancaya16@gmail.com</a></div>
               <div><a href="tel:+639310905178" className="hover:text-white">+63 931 090 5178</a></div>
@@ -2250,11 +2250,11 @@ function Footer() {
           </div>
         </div>
         <div className="mt-12 rounded-2xl border border-white/10 bg-card/[0.03] p-5 text-xs leading-relaxed text-white/60">
-          This website describes administrative workflow and automation services. It does not provide dental, medical, legal, or regulatory advice.
+          This website showcases AI automation systems and workflow solutions. Services are tailored to each business's operational needs.
         </div>
         <div className="mt-8 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center">
           <div>© {new Date().getFullYear()} Joel Jay Bancaya. All rights reserved.</div>
-          <div>AI workflow systems for lead intake, booking, and follow-up</div>
+          <div>AI automation systems that streamline lead management, operations, and customer workflows.</div>
         </div>
       </div>
     </footer>
