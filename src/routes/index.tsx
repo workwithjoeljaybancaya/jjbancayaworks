@@ -26,6 +26,10 @@ import financialReportingImg from "@/assets/projects/financial-reporting.png";
 import appointmentReschedulingMainImg from "@/assets/projects/appointment-rescheduling-main.png";
 import leadReappointmentApprovalImg from "@/assets/projects/lead-reappointment-approval.png";
 import appointmentReschedulingDeclineImg from "@/assets/projects/appointment-rescheduling-decline.png";
+import clientCareOrchestratorImg from "@/assets/projects/client-care-orchestrator.png";
+import reviewRequestSequenceImg from "@/assets/projects/review-request-sequence.png";
+import reviewFeedbackRouterImg from "@/assets/projects/review-feedback-router.png";
+
 
 
 const PAGE_TITLE = "AI Automation Specialist | Workflow Systems for Lead Intake, Scheduling & Follow-Up";
@@ -1689,6 +1693,33 @@ const OTHER_PROJECTS = [
         src: appointmentReschedulingDeclineImg,
         title: "Appointment Rescheduling Sub-Workflow",
         alt: "n8n workflow showing the appointment rescheduling sub-workflow",
+      },
+    ],
+  },
+  {
+    id: "client-lifecycle-review-retention",
+    name: "Client Lifecycle, Review & Retention Automation System",
+    platform: "n8n",
+    industry: "Operations Automation",
+    summary:
+      "An automated post-service client lifecycle system that coordinates personalized aftercare, review requests, customer feedback, service recovery, retention follow-ups, and re-engagement. The system uses connected workflows to collect customer ratings, route positive feedback toward reviews, escalate low ratings for private recovery, and continue treatment-specific follow-up sequences based on customer status.",
+    image: clientCareOrchestratorImg,
+    alt: "n8n workflow showing the client care, retention and service recovery orchestrator",
+    images: [
+      {
+        src: clientCareOrchestratorImg,
+        title: "Client Care, Retention & Service Recovery Orchestrator",
+        alt: "n8n workflow showing the client care, retention and service recovery orchestrator",
+      },
+      {
+        src: reviewRequestSequenceImg,
+        title: "Post-Appointment Review Request & Reminder Sequence",
+        alt: "n8n workflow showing the post-appointment review request and reminder sequence",
+      },
+      {
+        src: reviewFeedbackRouterImg,
+        title: "Review Rating & Feedback Router",
+        alt: "n8n workflow showing the review rating and feedback router",
       },
     ],
   },
