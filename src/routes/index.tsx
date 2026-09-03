@@ -84,8 +84,8 @@ export const Route = createFileRoute("/")({
 
 const NAV = [
   { label: "Home", href: "#home" },
-  { label: "Solution", href: "#solution" },
-  { label: "How It Works", href: "#how-it-works" },
+  { label: "Systems", href: "#automation-portfolio" },
+  { label: "Process", href: "#how-it-works" },
   { label: "Demo", href: "#demo" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
@@ -321,7 +321,7 @@ function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
-          <CtaPrimary href="#contact">Request a Workflow Audit</CtaPrimary>
+          <CtaPrimary href="#contact">Let's Work Together</CtaPrimary>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
