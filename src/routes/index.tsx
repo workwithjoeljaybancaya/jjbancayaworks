@@ -348,7 +348,7 @@ function Header() {
               </a>
             ))}
             <a href="#contact" onClick={() => setOpen(false)} className="mt-2 rounded-full bg-brand px-4 py-3 text-center text-sm font-semibold text-brand-foreground">
-              Request a Workflow Audit
+              Let's Work Together
             </a>
           </div>
         </div>
