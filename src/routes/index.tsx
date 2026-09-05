@@ -2054,6 +2054,54 @@ const changeProjectSlide = (
               </div>
               <h3 className="mt-3 text-xl font-bold text-foreground">{selectedProject.name}</h3>
               <p className="mt-2 max-w-3xl text-sm leading-relaxed text-foreground/70">{selectedProject.summary}</p>
+
+              {"details" in selectedProject && selectedProject.details && (
+                <div className="mt-6 space-y-6 text-sm leading-relaxed text-foreground/70">
+                  <div>
+                    <h4 className="text-base font-bold text-foreground">What it does</h4>
+                    <p className="mt-2">{selectedProject.details.whatItDoes}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-base font-bold text-foreground">How it works</h4>
+                    <ul className="mt-2 list-disc space-y-2 pl-5">
+                      {selectedProject.details.howItWorks.map((item) => (
+                        <li key={item.title}>
+                          <span className="font-semibold text-foreground">{item.title}.</span> {item.description}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="text-base font-bold text-foreground">Appointment operations</h4>
+                    <ul className="mt-2 list-disc space-y-2 pl-5">
+                      {selectedProject.details.workflows.map((workflow) => (
+                        <li key={workflow.title}>
+                          <span className="font-semibold text-foreground">{workflow.title}.</span> {workflow.description}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="text-base font-bold text-foreground">Supporting sub-workflows</h4>
+                    <p className="mt-2">{selectedProject.details.supportingSubWorkflows}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-base font-bold text-foreground">System flow</h4>
+                    <p className="mt-2 font-medium text-foreground/80">
+                      {selectedProject.details.systemFlow.join(" → ")}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-base font-bold text-foreground">Why it matters</h4>
+                    <p className="mt-2">{selectedProject.details.value}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
