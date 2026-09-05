@@ -1729,6 +1729,111 @@ const OTHER_PROJECTS = [
       },
     ],
   },
+  {
+    id: "ai-voice-receptionist",
+    name: "AI Voice Receptionist & Appointment Automation System",
+    platform: "Retell AI + n8n",
+    industry: "Dental / Healthcare Automation",
+    summary:
+      "An AI-powered voice receptionist connected to a multi-workflow automation backend that handles patient inquiries and appointment operations — from checking availability to booking, searching, rescheduling, and cancelling appointments.",
+    image: voiceReceptionistArchitecture.url,
+    alt: "Retell AI voice agent architecture for a dental clinic appointment automation system",
+    images: [
+      {
+        src: voiceReceptionistArchitecture.url,
+        title: "AI Voice Receptionist & Appointment Automation Architecture",
+        alt: "Retell AI voice agent architecture for a dental clinic appointment automation system",
+      },
+      {
+        src: voiceReceptionistWorkflow01.url,
+        title: "Workflow 1 — Check Calendar Availability",
+        alt: "n8n workflow that checks calendar availability for appointment slots",
+      },
+      {
+        src: voiceReceptionistWorkflow02.url,
+        title: "Workflow 2 — Book Appointment",
+        alt: "n8n workflow that books a new appointment and updates patient records",
+      },
+      {
+        src: voiceReceptionistWorkflow03.url,
+        title: "Workflow 3 — Search Appointment",
+        alt: "n8n workflow that searches for an existing patient appointment",
+      },
+      {
+        src: voiceReceptionistWorkflow04.url,
+        title: "Workflow 4 — Reschedule Appointment",
+        alt: "n8n workflow that reschedules an existing appointment",
+      },
+      {
+        src: voiceReceptionistWorkflow05.url,
+        title: "Workflow 5 — Cancel Appointment",
+        alt: "n8n workflow that cancels an existing appointment",
+      },
+    ],
+    details: {
+      whatItDoes:
+        "This system acts as an AI voice receptionist for a dental clinic. Instead of requiring staff to manually handle every appointment-related phone call, the AI receptionist understands the caller's request and triggers the appropriate automation workflow. The system supports answering appointment-related inquiries, checking available times, booking appointments, searching existing appointments, rescheduling, cancelling, checking patient records, applying clinic scheduling rules, and returning the right response to the caller.",
+      howItWorks: [
+        {
+          title: "Retell AI — Voice Interface",
+          description:
+            "The caller speaks with the AI voice receptionist. Retell AI handles the conversation, understands the caller's intent, collects the required information, and sends the request to the automation backend.",
+        },
+        {
+          title: "n8n — Automation Orchestration",
+          description:
+            "n8n acts as the backend automation layer. Based on the caller's request, it routes the request to the appropriate workflow.",
+        },
+        {
+          title: "Appointment Operations",
+          description:
+            "The system uses separate workflows for different appointment operations: checking calendar availability, booking new appointments, searching existing appointments, rescheduling, and cancelling.",
+        },
+      ],
+      workflows: [
+        {
+          title: "Workflow 1 — Check Calendar Availability",
+          description:
+            "Receives the request from Retell AI, determines the required service duration, checks calendar events, applies clinic-hour rules and time preferences, and returns suitable available appointment slots.",
+        },
+        {
+          title: "Workflow 2 — Book Appointment",
+          description:
+            "Receives the booking request, checks whether the patient already exists, creates a new patient record when necessary, determines the required service duration, checks whether the requested slot is available, creates the calendar appointment, updates the patient/appointment record, and sends the booking result back to Retell AI.",
+        },
+        {
+          title: "Workflow 3 — Search Appointment",
+          description:
+            "Receives the request from Retell AI, finds the patient's record, retrieves appointment information, identifies the patient's upcoming appointment, and returns the appointment information to the voice receptionist.",
+        },
+        {
+          title: "Workflow 4 — Reschedule Appointment",
+          description:
+            "Retrieves the existing appointment, applies the clinic's rescheduling policy, checks the requested new slot, confirms whether the new slot is available, updates the calendar appointment, updates the appointment record, and returns the result to Retell AI.",
+        },
+        {
+          title: "Workflow 5 — Cancel Appointment",
+          description:
+            "Retrieves the existing appointment, checks the cancellation policy, determines whether the cancellation is allowed, deletes or cancels the calendar event, updates the appointment record, and returns the result to Retell AI.",
+        },
+      ],
+      supportingSubWorkflows:
+        "The availability and booking processes use supporting sub-workflows for service duration lookup, patient record lookup, and clinic-hours filtering. These supporting workflows keep the main workflows modular and allow business rules to be reused across different appointment operations.",
+      systemFlow: [
+        "Caller",
+        "Retell AI Voice Receptionist",
+        "Intent & Information Collection",
+        "n8n Automation Backend",
+        "Appropriate Appointment Workflow",
+        "Calendar / Patient Database",
+        "Result",
+        "Retell AI",
+        "Caller",
+      ],
+      value:
+        "The system reduces manual appointment handling, gives patients a consistent first point of contact, and connects voice conversations directly with scheduling and patient-record operations. It demonstrates the ability to build connected automation systems rather than isolated workflows.",
+    },
+  },
 ];
 
 
