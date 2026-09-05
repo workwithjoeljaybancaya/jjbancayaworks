@@ -1984,7 +1984,7 @@ const changeProjectSlide = (
           role="dialog"
           aria-modal="true"
           aria-label={selectedProject.name + " workflow architecture"}
-          className="fixed inset-0 z-[100] grid place-items-center bg-navy/80 p-4 backdrop-blur-md"
+         className="fixed inset-0 z-[100] overflow-y-auto bg-navy/80 p-4 backdrop-blur-md"
           onMouseDown={(event) => {
             if (event.currentTarget === event.target) setSelectedProject(null);
           }}
