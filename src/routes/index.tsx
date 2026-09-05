@@ -1989,7 +1989,7 @@ const changeProjectSlide = (
             if (event.currentTarget === event.target) setSelectedProject(null);
           }}
         >
-          <div className="relative w-full max-w-6xl overflow-hidden rounded-2xl border border-white/15 bg-card shadow-2xl">
+          <div className="relative flex w-full max-w-6xl max-h-[90vh] flex-col overflow-hidden rounded-2xl border border-white/15 bg-card shadow-2xl">
             <button
               type="button"
               onClick={() => setSelectedProject(null)}
@@ -2003,7 +2003,7 @@ const changeProjectSlide = (
               const currentSlide = projectSlides[selectedProject.id] ?? 0;
               const currentImage = images[currentSlide];
               return (
-                <div className="relative bg-white">
+                <div className="relative shrink-0 bg-white">
                   <img
                     src={currentImage.src}
                     alt={currentImage.alt}
@@ -2045,7 +2045,7 @@ const changeProjectSlide = (
               );
             })()}
 
-            <div className="border-t border-border p-5 sm:p-6">
+            <div className="min-h-0 flex-1 overflow-y-auto border-t border-border p-5 sm:p-6">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
                   {selectedProject.platform}
