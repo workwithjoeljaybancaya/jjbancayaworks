@@ -1989,7 +1989,7 @@ const changeProjectSlide = (
             if (event.currentTarget === event.target) setSelectedProject(null);
           }}
         >
-          <div className="relative flex w-full max-w-6xl max-h-[90vh] flex-col overflow-hidden rounded-2xl border border-white/15 bg-card shadow-2xl">
+          <div className="relative mx-auto my-4 flex w-full max-w-6xl flex-col rounded-2xl border border-white/15 bg-card shadow-2xl">
             <button
               type="button"
               onClick={() => setSelectedProject(null)}
