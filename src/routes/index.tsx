@@ -29,6 +29,12 @@ import appointmentReschedulingDeclineImg from "@/assets/projects/appointment-res
 import clientCareOrchestratorImg from "@/assets/projects/client-care-orchestrator.png";
 import reviewRequestSequenceImg from "@/assets/projects/review-request-sequence.png";
 import reviewFeedbackRouterImg from "@/assets/projects/review-feedback-router.png";
+import voiceReceptionistArchitecture from "@/assets/projects/voice-receptionist-architecture.png.asset.json";
+import voiceReceptionistWorkflow01 from "@/assets/projects/voice-receptionist-workflow-01-check-availability.png.asset.json";
+import voiceReceptionistWorkflow02 from "@/assets/projects/voice-receptionist-workflow-02-book-appointment.png.asset.json";
+import voiceReceptionistWorkflow03 from "@/assets/projects/voice-receptionist-workflow-03-search-appointment.png.asset.json";
+import voiceReceptionistWorkflow04 from "@/assets/projects/voice-receptionist-workflow-04-reschedule-appointment.png.asset.json";
+import voiceReceptionistWorkflow05 from "@/assets/projects/voice-receptionist-workflow-05-cancel-appointment.png.asset.json";
 
 
 
