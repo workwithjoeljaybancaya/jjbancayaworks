@@ -2045,7 +2045,7 @@ const changeProjectSlide = (
               );
             })()}
 
-            <div className="min-h-0 flex-1 overflow-y-auto border-t border-border p-5 sm:p-6">
+            <div className="border-t border-border p-5 sm:p-6">
               <div className="flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-brand">
                   {selectedProject.platform}
